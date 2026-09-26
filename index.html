@@ -28,6 +28,7 @@ window.POKEDEX_CONFIG = {
 </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
+  <script src="./mega-picker.js" defer></script>
 
 </head>
 <body>
@@ -186,6 +187,7 @@ document.addEventListener('keydown',evt=>{if(evt.key==='Escape'){if(!$('modalSha
 $('modalShade').addEventListener('click',evt=>{if(evt.target===$('modalShade'))closeModal()});
 ['classFilter','statusFilter','sort'].forEach(k=>{$(k).addEventListener('change',()=>{app.displayLimit=24;render()})});
 window.addEventListener('beforeunload',evt=>{if(app.editor?.dirty){evt.preventDefault();evt.returnValue=''}});
+window.POKEDEX_MEGA_SETUP?.({app, isEditable, modalShell, openEditor, newForm, renderEditor, editorDirty, toast, slug, esc, byId});
 app.displayLimit=24;
 init().catch(e=>{console.error(e);toast('Falha ao iniciar: '+errMsg(e),'error')});
 })();
