@@ -12,7 +12,7 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
   const STATS = [['hp','HP'],['atk','Attack'],['def','Defense'],['spa','Sp.Atk'],['spd','Sp.Def'],['spe','Speed']];
   const STAT_DEFAULT = {hp:50,atk:50,def:50,spa:50,spd:50,spe:50};
   const ACTIONS = new Set(['chainWizard','chainFromDetail','chainFromEditor','chainAdd',
-    'chainRemove','chainUp','chainDown','chainSave','chainEditStage']);
+    'chainRemove','chainUp','chainDown','chainSave','chainEditStage','chainSplit','chainSplitSave']);
   const own = (obj,key) => Object.prototype.hasOwnProperty.call(obj,key);
   const clone = x => JSON.parse(JSON.stringify(x));
   const clean = val => String(val ?? '').trim();
@@ -279,12 +279,13 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
           <span class="chain-drawer-image">${artTag(m)}</span>
           <span><b>${safe(m.name)}</b><small>${safe(m.type1)}${m.type2?' / '+safe(m.type2):''}</small>
           ${i&&m.evolution?.requirements?`<small class="chain-evo-req">${safe(m.evolution.requirements)}</small>`:''}</span>
-        </button>${i<members.length-1?'<span class="chain-drawer-arrow">→</span>':''}`).join('')}</div>`:
+        </button>${i<members.length-1?'<span class="chain-drawer-arrow">·</span>':''}`).join('')}</div>`:
       `<div class="drawer-list">${old.previous?`Anterior: ${safe(old.previous)}<br>`:''}${old.next?`Próxima: ${safe(old.next)}`:''}</div>`;
     const box=document.createElement('section');box.id='chainDrawerSection';box.className='chain-drawer-section';
     box.innerHTML=`<h3 class="subheading">⤳ LINHA EVOLUTIVA</h3>${markup}
        ${isEditable()?`<button class="btn btn-outline btn-sm" data-action="chainFromDetail" data-id="${safe(s.id)}">＋ ${members.length?'Continuar esta linha':'Criar evolução a partir deste Pokémon'}</button>`:''}`;
     target.appendChild(box);
+    if(isEditable())box.insertAdjacentHTML('beforeend',`<button class="btn btn-good btn-sm" data-action="chainSplit" data-id="${safe(s.id)}" style="margin-top:10px">＋ Adicionar evolução alternativa existente</button>`);
     hydrateArt(box);
   }
 
@@ -402,6 +403,87 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     `;
     document.head.append(style);
   }
+
+  // V5.0: ramificações entre espécies já cadastradas, sem recriar suas fichas.
+  let splitParent=null;
+  function openSplit(id){
+    if(!isEditable())return toast('Entre como GM para vincular evoluções.','warning');
+    const parent=byId(app.items,id);
+    if(!parent)return toast('Selecione um Pokémon cadastrado.','warning');
+    splitParent=parent.id;
+    const candidates=gmItems().filter(s=>s.id!==id).sort((a,b)=>a.name.localeCompare(b.name));
+    modalShell('Adicionar evolução alternativa', 'Vincule Pokémon já cadastrados, oficiais, reworks ou Fakemon. Nenhuma ficha será duplicada.',
+      `<div class="modal-body"><div class="chain-info"><strong>${safe(parent.name)} → ?</strong>Selecione uma evolução para criar uma nova ramificação. As evoluções anteriores serão mantidas.</div>
+      <div class="field-grid" style="margin-top:20px">
+      <label class="field">Buscar Pokémon existente<input id="splitSearch" type="search" placeholder="Ex.: Pupitar de Elysium" autocomplete="off"></label>
+      <label class="field">Evolução<select id="splitChild">${candidates.map(s=>`<option value="${safe(s.id)}">${safe(s.name)} · ${safe(s.classification)}</option>`).join('')}</select></label>
+      <label class="field">Método / condição<input id="splitRequirement" placeholder="Ex.: Nível 30"></label>
+      <label class="field">Nível (opcional)<input id="splitLevel" type="number" min="1" max="999" placeholder="30"></label></div>
+      <p class="chain-footnote">A alteração será salva como rascunho. Publique os Pokémon alterados depois para atualizar a Pokédex dos jogadores.</p></div>`,
+      '<button class="btn btn-outline" data-action="closeModal">Cancelar</button><button class="btn btn-primary" data-action="chainSplitSave" id="splitSaveButton">Vincular evolução</button>');
+    document.getElementById('modal').dataset.kind='chain-split';
+    document.getElementById('splitSearch').addEventListener('input',e=>{
+      const q=e.target.value.trim().toLocaleLowerCase();
+      const select=document.getElementById('splitChild');
+      select.innerHTML=candidates.filter(s=>(s.name+' '+s.slug).toLocaleLowerCase().includes(q))
+        .map(s=>`<option value="${safe(s.id)}">${safe(s.name)} · ${safe(s.classification)}</option>`).join('');
+    });
+  }
+  async function saveSplit(){
+    const parent=byId(app.items,splitParent);
+    const child=byId(app.items,document.getElementById('splitChild')?.value);
+    const requirement=clean(document.getElementById('splitRequirement')?.value);
+    const level=clean(document.getElementById('splitLevel')?.value);
+    if(!parent||!child||parent.id===child.id)return toast('Selecione dois Pokémon diferentes.','error');
+    if(level&&(!/^\\d{1,3}$/.test(level)||+level<1||+level>999))return toast('Nível inválido.','error');
+    if(!requirement&&!level)return toast('Informe o método ou nível de evolução.','error');
+    if((parent.evolution?.nextIds||[]).includes(child.id))return toast('Esta evolução já está vinculada.','warning');
+    if(child.evolution?.previousId&&child.evolution.previousId!==parent.id)return toast('Esta espécie já tem outra pré-evolução. Edite primeiro o vínculo existente.','warning');
+    if(parent.evolution?.previousId===child.id)return toast('Não é possível criar um ciclo evolutivo.','error');
+    const pc=parent.evolution?.chainId,cc=child.evolution?.chainId;
+    if(pc&&cc&&pc!==cc)return toast('Estas espécies pertencem a linhas diferentes. Una ou remova o vínculo anterior antes.','warning');
+    const cid=pc||cc||crypto.randomUUID();
+    const pe={...parent.evolution,chainId:cid,stage:Number(parent.evolution?.stage)||0,
+      nextIds:[...new Set([...(parent.evolution?.nextIds||[]),child.id])],
+      next:[...new Set([parent.evolution?.next,child.name].filter(Boolean))].join(' / ')};
+    const ce={...child.evolution,chainId:cid,stage:(Number(parent.evolution?.stage)||0)+1,
+      previousId:parent.id,previous:parent.name,requirements:requirement||'Nível '+level,level};
+    const btn=document.getElementById('splitSaveButton');if(btn){btn.disabled=true;btn.textContent='Vinculando…';}
+    try{
+      if(app.mode==='demo'){
+        for(const [item,evo] of [[parent,pe],[child,ce]]){
+          item.evolution=evo;item.revision=(item.revision||1)+1;
+          item.updatedAt=new Date().toISOString();
+        }
+        await demoPersist();
+      }else{
+        // Both writes use revision guards to avoid overwriting concurrent GM edits.
+        const p=await app.client.from('pokedex_species').update({evolution:pe})
+          .eq('id',parent.id).eq('revision',parent.revision).select('id').maybeSingle();
+        if(p.error)throw p.error;
+        if(!p.data)throw Error('A pré-evolução foi modificada em outra sessão. Atualize a página.');
+        const c=await app.client.from('pokedex_species').update({evolution:ce})
+          .eq('id',child.id).eq('revision',child.revision).select('id').maybeSingle();
+        if(c.error||!c.data){
+          // Roll back only if the parent still has the evolution written by this operation.
+          const rollback=await app.client.from('pokedex_species').update({evolution:parent.evolution||{}})
+            .eq('id',parent.id).contains('evolution',{chainId:cid,nextIds:pe.nextIds});
+          if(rollback.error)console.warn('Reversão manual pode ser necessária',rollback.error);
+          throw c.error||Error('A evolução foi alterada em outra sessão.');
+        }
+        await loadCatalog();
+      }
+      closeModal(true);render();toast('Evolução alternativa vinculada. Publique as fichas alteradas quando estiverem prontas.','success');
+    }catch(e){toast('Erro ao vincular: '+(e.message||e),'error');}
+    finally{if(btn&&document.contains(btn)){btn.disabled=false;btn.textContent='Vincular evolução';}}
+  }
+  document.addEventListener('click',event=>{
+    const el=event.target.closest('[data-action]');
+    if(!el||!['chainSplit','chainSplitSave'].includes(el.dataset.action))return;
+    event.preventDefault();event.stopImmediatePropagation();
+    if(el.dataset.action==='chainSplit')openSplit(el.dataset.id);
+    else saveSplit();
+  },true);
   addButtons();
   window.POKEDEX_EVOLUTION={renderDrawer};
 };
