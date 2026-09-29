@@ -15,6 +15,28 @@
 @media(max-width:480px){.catalog-grid{grid-template-columns:1fr 1fr}.hero .btn{font-size:11px}.hero p{font-size:11px}.card-image{height:122px}.card-number{font-size:9px}.card-heading h3{font-size:14px}.card-heading .badge{font-size:8px;padding:4px}.type{font-size:9px;padding:4px 7px}.card-meta{gap:2px;flex-direction:column}.footer{font-size:8px;flex-wrap:wrap}.field-grid,.field-grid.thirds{grid-template-columns:1fr}.stat-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.mini-grid{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.filters select{font-size:11px}.topbar .btn{max-width:130px;overflow:hidden;text-overflow:ellipsis}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
+
+/* Modal usability: persistent action bar, visible controls and mobile-safe scrolling. */
+.modal-shade{z-index:1000;overflow-y:auto;overscroll-behavior:contain;align-items:center}
+.modal{max-height:calc(100dvh - 32px);min-height:0;overflow:hidden;isolation:isolate}
+.modal-head{flex:0 0 auto;position:relative;z-index:3;background:#111b29}
+.modal-body{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding-bottom:28px}
+.modal-foot{position:relative;z-index:4;flex:0 0 auto;display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap;box-shadow:0 -9px 24px #050c18a8}
+.modal-foot .btn{position:relative;z-index:5;min-height:42px}
+.modal-foot>div{display:flex;flex-wrap:wrap;gap:8px}
+.modal-tabs{flex:0 0 auto;scrollbar-width:thin}
+.modal .btn,.modal button,.chain-mini{touch-action:manipulation}
+@media(max-width:760px){
+ .modal-shade{padding:0;align-items:stretch}
+ .modal{width:100%;max-height:100dvh;height:100dvh;border-radius:0}
+ .modal-body{padding:16px 15px 34px}
+ .modal-foot{padding:12px 14px max(14px,env(safe-area-inset-bottom));justify-content:stretch}
+ .modal-foot>.btn,.modal-foot>div{flex:1 1 auto}
+ .modal-foot>div>.btn{flex:1 1 auto}
+ .modal-head{padding:14px 16px}
+ .modal-head h2{font-size:19px}
+ .chain-stage-top nav{flex-wrap:wrap}
+}
 </style>
   <!-- Pode substituir os campos públicos abaixo ou editar config.js no pacote. NÃO INSIRA service_role. -->
   <script>
