@@ -10,6 +10,54 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
   const titleCase=s=>String(s||'').split('-').map(w=>w? w[0].toUpperCase()+w.slice(1):'').join(' ');
   const wait=ms=>new Promise(r=>setTimeout(r,ms));
   let extrasKey='', extrasLoading=null, megaEditor=null, reworkResult=null, libraryTab='ability', pickerTarget='editor';
+  const moveLookups=new WeakMap();
+
+  function moveLookupStatus(move,message,failed=false){
+    const index=app.editor?.model.moves.indexOf(move)??-1;
+    if(index<0)return;
+    const status=document.querySelector(`[data-move-lookup-status="${index}"]`);
+    if(status){status.textContent=message;status.classList.toggle('form-warning',failed)}
+  }
+
+  function cancelMoveLookup(move){
+    const pending=moveLookups.get(move);
+    if(pending?.timer)clearTimeout(pending.timer);
+    moveLookups.delete(move);
+  }
+
+  function queueMoveLookup(index,immediate=false){
+    const editor=app.editor,move=editor?.model.moves[Number(index)];
+    const lookup=window.POKEDEX_MOVE_LOOKUP;
+    if(!move||!lookup)return;
+    cancelMoveLookup(move);
+    const query=move.name.trim();
+    if(!query){moveLookupStatus(move,'Digite o nome para preencher os dados automaticamente.');return}
+    const pending={query,editor,timer:null};
+    moveLookups.set(move,pending);
+    moveLookupStatus(move,'Buscando dados do movimento…');
+    const current=()=>app.editor===editor&&editor.model.moves.includes(move)
+      &&moveLookups.get(move)===pending&&lookup.normalize(move.name)===lookup.normalize(query);
+    const run=async()=>{
+      try{
+        const data=await lookup.lookup(query,app.moveLibrary);
+        if(!current())return;
+        const index=editor.model.moves.indexOf(move);
+        for(const field of ['name','type','category','power','accuracy','accuracyCanonical','text']){
+          move[field]=data[field];
+          const input=document.querySelector(`[data-move-index="${index}"][data-subfield="${field}"]`);
+          if(input)input.value=data[field]??'';
+        }
+        const nameInput=document.querySelector(`[data-move-index="${index}"][data-subfield="name"]`);
+        const heading=nameInput?.closest('.repeat-entry')?.querySelector('.repeat-entry-head > span');
+        if(heading)heading.textContent=move.name+' · '+(index+1);
+        editorDirty();
+        moveLookupStatus(move,'✓ '+data.name+' preenchido · '+data.source+(data.accuracy==null?' · Sem teste de precisão':''));
+      }catch(error){
+        if(current())moveLookupStatus(move,error.message||'Não foi possível buscar. Você pode preencher manualmente.',true);
+      }finally{if(moveLookups.get(move)===pending)moveLookups.delete(move)}
+    };
+    if(immediate)run();else pending.timer=setTimeout(run,700);
+  }
 
   app.customMegas=app.customMegas||[];
   app.publicCustomMegas=app.publicCustomMegas||[];
@@ -409,6 +457,23 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
     if(app.editor.tab==='moves'&&!body.querySelector('[data-action="toolPickMove"]')){
       const first=body.querySelector('.repeat-list');if(first)first.insertAdjacentHTML('beforebegin','<button class="btn btn-outline btn-sm mb" data-action="toolPickMove">＋ Adicionar da Biblioteca</button>');
     }
+    if(app.editor.tab==='moves'){
+      if(!document.getElementById('gmMoveNames')){
+        body.insertAdjacentHTML('beforeend','<datalist id="gmMoveNames"></datalist>');
+        const list=document.getElementById('gmMoveNames');
+        window.POKEDEX_MOVE_LOOKUP?.names(app.moveLibrary).then(names=>{
+          if(list.isConnected)list.innerHTML=names.map(name=>`<option value="${esc(name)}"></option>`).join('');
+        });
+      }
+      body.querySelectorAll('[data-move-index][data-subfield="name"]').forEach(input=>{
+        if(input.dataset.moveLookupReady)return;
+        const index=input.dataset.moveIndex;
+        input.dataset.moveLookupReady='1';input.setAttribute('list','gmMoveNames');
+        input.setAttribute('autocomplete','off');input.setAttribute('aria-label','Nome do movimento '+(Number(index)+1));
+        input.placeholder='Ex.: Flamethrower ou Swords Dance';
+        input.insertAdjacentHTML('afterend',`<button type="button" class="btn btn-outline btn-sm" style="align-self:flex-start" data-action="toolLookupMove" data-index="${index}">⌕ Buscar move</button><small role="status" aria-live="polite" data-move-lookup-status="${index}">Digite o nome para preencher os dados automaticamente.</small>`);
+      });
+    }
   }
 
   async function action(el){
@@ -444,15 +509,24 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
     else if(a==='toolLibraryCopyMove'){const x=app.moveLibrary.find(v=>v.id===id);if(x)await copyText(x.name+' — '+x.type+' — '+x.category+' — Power '+(x.power??'—')+' — Accuracy '+(x.accuracy??'—')+'% — '+x.description)}
     else if(a==='toolPickAbility')picker('ability','editor');
     else if(a==='toolPickMove')picker('move','editor');
+    else if(a==='toolLookupMove')queueMoveLookup(el.dataset.index,true);
     else if(a==='toolUseAbility'){const x=app.abilityLibrary.find(v=>v.id===id);if(!x)return;if(pickerTarget==='mega'&&megaEditor){megaEditor.abilities=[{name:x.name,text:x.description}];openMegaEditor();toast('Ability adicionada à Mega.','success')}else if(app.editor){app.editor.model.abilities.push({name:x.name,text:x.description});editorDirty();renderEditor();toast('Ability adicionada ao Pokémon.','success')}}
     else if(a==='toolUseMove'){const x=app.moveLibrary.find(v=>v.id===id);if(x&&app.editor){app.editor.model.moves.push({name:x.name,type:x.type,category:x.category,power:x.power??0,accuracy:x.accuracy,accuracyCanonical:x.canonicalAccuracy,learn:'',text:x.description});editorDirty();renderEditor();toast('Move adicionado ao Pokémon.','success')}}
     else if(a==='toolReturnEditor'){if(pickerTarget==='mega'&&megaEditor)openMegaEditor();else if(app.editor)renderEditor();else closeModal(true)}
   }
 
-  const own=new Set(['toolCreateFakemon','toolReworkWizard','toolReworkSearch','toolReworkUse','toolMegaWizard','toolMegaSearch','toolMegaContinue','toolMegaSave','toolMegaPublish','toolMegaDetail','toolMegaEdit','toolMegaPublishExisting','toolMegaUnpublish','toolMegaArchive','toolMegaDelete','toolMegaPickAbility','toolLibrary','toolLibraryTab','toolAbilityNew','toolAbilityEdit','toolAbilitySave','toolAbilityDelete','toolMoveNew','toolMoveEdit','toolMoveSave','toolMoveDelete','toolLibraryBack','toolLibraryCopyAbility','toolLibraryCopyMove','toolPickAbility','toolPickMove','toolUseAbility','toolUseMove','toolReturnEditor']);
+  const own=new Set(['toolCreateFakemon','toolReworkWizard','toolReworkSearch','toolReworkUse','toolMegaWizard','toolMegaSearch','toolMegaContinue','toolMegaSave','toolMegaPublish','toolMegaDetail','toolMegaEdit','toolMegaPublishExisting','toolMegaUnpublish','toolMegaArchive','toolMegaDelete','toolMegaPickAbility','toolLibrary','toolLibraryTab','toolAbilityNew','toolAbilityEdit','toolAbilitySave','toolAbilityDelete','toolMoveNew','toolMoveEdit','toolMoveSave','toolMoveDelete','toolLibraryBack','toolLibraryCopyAbility','toolLibraryCopyMove','toolPickAbility','toolPickMove','toolLookupMove','toolUseAbility','toolUseMove','toolReturnEditor']);
   document.addEventListener('click',ev=>{const el=ev.target.closest('[data-action]');if(!el||!own.has(el.dataset.action))return;ev.preventDefault();ev.stopImmediatePropagation();Promise.resolve(action(el)).catch(e=>toast(e.message||e,'error'))},true);
   document.addEventListener('input',ev=>{
-    const el=ev.target;if(!megaEditor)return;
+    const el=ev.target;
+    if(el.dataset.moveIndex!=null&&el.closest('#editorBody')){
+      const move=app.editor?.model.moves[Number(el.dataset.moveIndex)];
+      if(el.dataset.subfield==='name')queueMoveLookup(el.dataset.moveIndex);
+      else if(move&&el.dataset.subfield!=='learn'){
+        cancelMoveLookup(move);moveLookupStatus(move,'Dados editados manualmente.');
+      }
+    }
+    if(!megaEditor)return;
     if(el.dataset.megaField!=null){megaEditor[el.dataset.megaField]=el.value;if(el.dataset.megaField==='slug')megaEditor.slugEdited=true;if(el.dataset.megaField==='name'&&!megaEditor.slugEdited)megaEditor.slug='mega-'+slug(el.value).replace(/^mega-/,'');}
     else if(el.dataset.megaStat){megaEditor.baseStats[el.dataset.megaStat]=Math.trunc(Number(el.value)||0);const b=document.getElementById('customMegaBST');if(b)b.textContent=statsTotal(megaEditor.baseStats)}
     else if(el.dataset.megaAbility){megaEditor.abilities=megaEditor.abilities?.length?megaEditor.abilities:[{name:'',text:''}];megaEditor.abilities[0][el.dataset.megaAbility]=el.value}
@@ -465,6 +539,9 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
   });
   document.addEventListener('keydown',ev=>{
     if(ev.key!=='Enter')return;
+    if(ev.target.matches('[data-move-index][data-subfield="name"]')){
+      ev.preventDefault();queueMoveLookup(ev.target.dataset.moveIndex,true);
+    }
     if(ev.target.id==='reworkPokeSearch'){ev.preventDefault();searchRework()}
     if(ev.target.id==='customMegaBaseSearch'){ev.preventDefault();searchMegaBase()}
   });
