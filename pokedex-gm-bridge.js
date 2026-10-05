@@ -215,6 +215,12 @@
         writeCache(cache);
         status(catalog.length+' espécie(s) publicadas • catálogo online');
         render();
+        if(typeof current!=='undefined' && current){
+          var activeMatch=catalog.find(currentMatch);
+          if(activeMatch && activeMatch.forms.some(function(f){return f.formType==='mega';})){
+            addMegas(activeMatch,true);
+          }
+        }
         return catalog;
       } catch(err) {
         lastError = err.message || 'Falha de conexão';
@@ -242,9 +248,10 @@
     var api = current.apiData || {};
     var currentKeys = [current.name,api.speciesName,api.pokemonName,api.integratedSpeciesId,api.gmCatalogId]
       .map(key).filter(Boolean);
+    var currentDex = Number(current.dex || api.pokemonId || 0);
     return [species.id,species.gmId,species.name,species.slug]
       .map(key).some(function(k){return currentKeys.indexOf(k)>=0;})
-      || !!(species.dex && Number(current.dex)===Number(species.dex));
+      || !!(species.dex && currentDex && Number(species.dex)===currentDex);
   }
   function addMegas(species,quiet) {
     if(!species || !currentMatch(species)) {
@@ -284,9 +291,28 @@
     if (typeof openMegaGimmickModal==='function') {
       originalMegaModal=openMegaGimmickModal;
       openMegaGimmickModal=function() {
-        var match=catalog.find(currentMatch);
-        if(match && match.forms.some(function(f){return f.formType==='mega';})) addMegas(match,true);
-        return originalMegaModal.apply(this,arguments);
+        /* MEGA_OPEN_REFRESH_V2
+           Abre o modal imediatamente, mas sincroniza novamente o catálogo.
+           Isso evita perder Megas criadas depois do cache local da ficha. */
+        var args=arguments;
+        var result=originalMegaModal.apply(this,args);
+        var sync=function(){
+          var match=catalog.find(currentMatch);
+          if(match && match.forms.some(function(f){return f.formType==='mega';})){
+            addMegas(match,true);
+            if(typeof renderCustomMegaOptions==='function') renderCustomMegaOptions();
+            var status=document.getElementById('megaGimmickStatus');
+            var gmCount=match.forms.filter(function(f){return f.formType==='mega' && f.independentMega;}).length;
+            if(status && gmCount){
+              status.textContent=gmCount+' Mega(s) publicada(s) pela Pokédex GM sincronizada(s) com esta ficha.';
+            }
+          }
+        };
+        sync();
+        Promise.resolve(refresh(true)).then(sync).catch(function(err){
+          console.warn('Pokédex GM Mega sync:',err);
+        });
+        return result;
       };
     }
     if (typeof loadMegaOptions==='function') {
