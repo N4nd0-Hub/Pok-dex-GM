@@ -7,7 +7,8 @@
   var PUBLIC_KEY = 'sb_publishable_a7zlErG9omVgrP_W9MK-4w_yjvP3Qd8';
   var GM_SITE = 'https://n4nd0-hub.github.io/Pok-dex-GM/';
   var CACHE_DB = 'hh-pokedex-gm-bridge-v5';
-  var cache = {species:[], forms:[], savedAt:0};
+  var cache = {species:[], forms:[], customMegas:[], savedAt:0};
+  /* INDEPENDENT_CUSTOM_MEGA_V1 — Megas criadas sem duplicar a espécie oficial. */
   var catalog = [];
   var online = false;
   var busy = null;
@@ -70,6 +71,19 @@
       specialRules:d.specialRules ? [String(d.specialRules)] : [],
       revision:Number(record.revision || d.revision || 1)};
   }
+  function adaptIndependentMega(record) {
+    var d = record && (record.data || record);
+    var form = adaptForm(record);
+    if (!d || !form) return null;
+    form.formType='mega';
+    form.kind='mega';
+    form.independentMega=true;
+    form.parentPokeapiId=Number(d.parentPokeapiId || record.parent_pokeapi_id || 0) || null;
+    form.parentName=String(d.parentName || record.parent_name || '');
+    form.parentSlug=String(d.parentSlug || record.parent_slug || key(form.parentName));
+    form.parentSpriteUrl=art(d.parentSpriteUrl || record.parent_sprite_url || '');
+    return form;
+  }
   function adaptSpecies(record, formRecords) {
     var d = record && (record.data || record);
     if (!d || !d.name || !d.baseStats) return null;
@@ -89,10 +103,38 @@
       publishedAt:record.published_at || d.publishedAt || '',
       description:d.description || '',source:'Pokédex GM'};
   }
-  function build(species, forms) {
+  function build(species, forms, customMegaRows) {
     if (!Array.isArray(species) || !Array.isArray(forms)) throw Error('Resposta inválida do banco.');
-    return species.map(function(r){return adaptSpecies(r,forms);})
-      .filter(Boolean).sort(function(a,b){return a.name.localeCompare(b.name,'pt-BR');});
+    var result = species.map(function(r){return adaptSpecies(r,forms);}).filter(Boolean);
+    (Array.isArray(customMegaRows) ? customMegaRows : []).forEach(function(row){
+      var form=adaptIndependentMega(row);
+      if(!form || !form.parentPokeapiId) return;
+      var parent=result.find(function(s){
+        return Number(s.dex)===Number(form.parentPokeapiId)
+          || key(s.slug)===key(form.parentSlug)
+          || key(s.name)===key(form.parentName);
+      });
+      if(parent){
+        if(!parent.forms.some(function(f){return String(f.id)===String(form.id);})) parent.forms.push(form);
+        return;
+      }
+      result.push({
+        id:'gm-pokeapi-'+form.parentPokeapiId,
+        gmId:'pokeapi-'+form.parentPokeapiId,
+        slug:form.parentSlug || key(form.parentName),
+        name:form.parentName || ('Pokémon #'+form.parentPokeapiId),
+        dex:form.parentPokeapiId,
+        category:'Espécie oficial · base via PokéAPI',
+        classification:'official',
+        types:[],
+        baseStats:{hp:0,atk:0,def:0,spa:0,spd:0,spe:0},
+        ability:{name:'',description:''},abilities:[],
+        image:{dataUrl:form.parentSpriteUrl},moves:[],evolution:{},specialRules:[],
+        forms:[form],revision:form.revision,publishedAt:'',description:'',
+        source:'Pokédex GM',megaOnly:true
+      });
+    });
+    return result.sort(function(a,b){return a.name.localeCompare(b.name,'pt-BR');});
   }
   function readCache() {
     return new Promise(function(resolve) {
@@ -160,12 +202,16 @@
     status('Sincronizando espécies e Megas publicadas...');
     busy = (async function(){
       try {
-        var data = await Promise.all([allRows('pokedex_public_species'),allRows('pokedex_public_forms')]);
-        var entries = build(data[0],data[1]);
+        var data = await Promise.all([
+          allRows('pokedex_public_species'),
+          allRows('pokedex_public_forms'),
+          allRows('pokedex_public_custom_megas')
+        ]);
+        var entries = build(data[0],data[1],data[2]);
         catalog = entries;
         online = true;
         lastError = '';
-        cache = {species:data[0],forms:data[1],savedAt:Date.now()};
+        cache = {species:data[0],forms:data[1],customMegas:data[2],savedAt:Date.now()};
         writeCache(cache);
         status(catalog.length+' espécie(s) publicadas • catálogo online');
         render();
@@ -186,6 +232,7 @@
     var k=key(q);
     if(!k)return null;
     return catalog.find(function(s){
+      if(s.megaOnly) return false;
       return [s.id,s.gmId,s.name,s.slug,s.dex==null?'':String(s.dex)]
         .some(function(a){return key(a)===k;});
     }) || null;
@@ -245,21 +292,33 @@
     if (typeof loadMegaOptions==='function') {
       originalLoadMegas=loadMegaOptions;
       loadMegaOptions=function(){
-        if (current && current.apiData && current.apiData.source==='IntegratedCustomSpecies'
-            && current.gimmicks && current.gimmicks.mega
-            && current.gimmicks.mega.customForms.some(function(f){return f.gmCatalogFormId;})) {
+        var hasGmMega = !!(current && current.gimmicks && current.gimmicks.mega
+          && current.gimmicks.mega.customForms.some(function(f){return f.gmCatalogFormId;}));
+        if (hasGmMega && current.apiData && current.apiData.source==='IntegratedCustomSpecies') {
           var n=document.getElementById('megaGimmickStatus');
           var l=document.getElementById('megaOptionsList');
           if(n)n.textContent='Mega personalizada publicada pela Pokédex GM — selecione nas opções abaixo.';
           if(l)l.innerHTML='';
           return Promise.resolve();
         }
-        return originalLoadMegas.apply(this,arguments);
+        var result = originalLoadMegas.apply(this,arguments);
+        if(hasGmMega && result && typeof result.then==='function'){
+          return result.then(function(value){
+            if(typeof renderCustomMegaOptions==='function') renderCustomMegaOptions();
+            return value;
+          });
+        }
+        if(hasGmMega && typeof renderCustomMegaOptions==='function') renderCustomMegaOptions();
+        return result;
       };
     }
   }
   function applySpecies(species, mode, formId) {
     if(!species || typeof applyIntegratedCustomSpecies!=='function')return;
+    if(species.megaOnly){
+      addMegas(species,false);
+      return;
+    }
     var selected=species, form=species.forms.find(function(f){return f.id===formId;});
     if(form && form.formType!=='mega') {
       selected=Object.assign({},species,{
@@ -314,13 +373,17 @@
       var bst=Object.values(s.baseStats).reduce(function(a,b){return a+Number(b||0);},0);
       var megaCount=s.forms.filter(function(f){return f.formType==='mega';}).length;
       var image=art(s.image.dataUrl);
+      var topMeta=s.megaOnly?'oficial · Mega publicada':esc(s.classification)+' · BST '+bst;
+      var subMeta=s.megaOnly
+        ? 'Base oficial via PokéAPI'+(s.dex?' · #'+esc(s.dex):'')+(megaCount?' · '+megaCount+' Mega(s)':'')
+        : esc(s.types.join(' / '))+(s.dex?' · #'+esc(s.dex):'')+' · Rev. '+s.revision+(megaCount?' · '+megaCount+' Mega(s)':'');
       return '<article class="hh-gm-entry">'+(image?'<img loading="lazy" src="'+esc(image)+'" alt="">':'<div class="hh-gm-placeholder">◓</div>')
-        +'<div class="hh-gm-details"><div class="hh-gm-entry-top"><strong>'+esc(s.name)+'</strong><span>'+esc(s.classification)+' · BST '+bst+'</span></div>'
-        +'<div class="hh-gm-sub">'+esc(s.types.join(' / '))+(s.dex?' · #'+esc(s.dex):'')+' · Rev. '+s.revision
-        +(megaCount?' · '+megaCount+' Mega(s)':'')+'</div>'
-        +(s.ability.name?'<div class="hh-gm-sub">Ability: '+esc(s.ability.name)+'</div>':'')
-        +'<div class="hh-gm-buttons"><button type="button" data-gm-create="'+esc(s.gmId)+'">＋ Nova ficha</button>'
-        +'<button type="button" data-gm-apply="'+esc(s.gmId)+'">Aplicar à atual</button>'
+        +'<div class="hh-gm-details"><div class="hh-gm-entry-top"><strong>'+esc(s.name)+'</strong><span>'+topMeta+'</span></div>'
+        +'<div class="hh-gm-sub">'+subMeta+'</div>'
+        +(!s.megaOnly&&s.ability.name?'<div class="hh-gm-sub">Ability: '+esc(s.ability.name)+'</div>':'')
+        +'<div class="hh-gm-buttons">'
+        +(s.megaOnly?'':('<button type="button" data-gm-create="'+esc(s.gmId)+'">＋ Nova ficha</button>'
+        +'<button type="button" data-gm-apply="'+esc(s.gmId)+'">Aplicar à atual</button>'))
         +(megaCount&&currentMatch(s)?'<button type="button" data-gm-mega="'+esc(s.gmId)+'">Registrar Mega</button>':'')
         +'</div>'
         +(s.forms.length?'<div class="hh-gm-forms">'+s.forms.map(function(f){
@@ -436,7 +499,7 @@
     installHooks();mount();
     var old=await readCache();
     if(old && Array.isArray(old.species) && Array.isArray(old.forms) && !online){
-      try{cache=old;catalog=build(old.species,old.forms);status(catalog.length+' em cache offline • verificando atualizações...');render();}
+      try{cache=old;catalog=build(old.species,old.forms,old.customMegas||[]);status(catalog.length+' em cache offline • verificando atualizações...');render();}
       catch(err){console.warn('Cache GM inválido:',err);}
     }
     refresh(true);
@@ -444,8 +507,9 @@
   window.HH_GM_CATALOG_BRIDGE={
     open:open,refresh:refresh,getCatalog:function(){return catalog.slice();},
     find:findRemote,registerMegas:addMegas,getStatus:function(){
-      return {online:online,count:catalog.length,savedAt:cache.savedAt,lastError:lastError};
-    },_adaptSpecies:adaptSpecies,_adaptForm:adaptForm,_build:build
+      return {online:online,count:catalog.length,savedAt:cache.savedAt,lastError:lastError,
+        independentMegas:Array.isArray(cache.customMegas)?cache.customMegas.length:0};
+    },_adaptSpecies:adaptSpecies,_adaptForm:adaptForm,_adaptIndependentMega:adaptIndependentMega,_build:build
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
   else start();
