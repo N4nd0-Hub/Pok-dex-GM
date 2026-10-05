@@ -214,5 +214,5 @@ window.POKEDEX_MEGA_SETUP = function (api) {
       }`;
     document.head.append(style);
   }
-  addButtons();
+  // A Central de Criação agora concentra os atalhos de Mega; este módulo permanece apenas por compatibilidade.
 };
