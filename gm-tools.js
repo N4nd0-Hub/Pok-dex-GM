@@ -9,7 +9,7 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
 
   const titleCase=s=>String(s||'').split('-').map(w=>w? w[0].toUpperCase()+w.slice(1):'').join(' ');
   const wait=ms=>new Promise(r=>setTimeout(r,ms));
-  let extrasKey='', extrasLoading=null, megaEditor=null, reworkResult=null, libraryTab='ability';
+  let extrasKey='', extrasLoading=null, megaEditor=null, reworkResult=null, libraryTab='ability', pickerTarget='editor';
 
   app.customMegas=app.customMegas||[];
   app.publicCustomMegas=app.publicCustomMegas||[];
@@ -394,7 +394,8 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
     }catch(e){toast(e.message||e,'error')}
   }
   async function copyText(text){try{await navigator.clipboard.writeText(text);toast('Copiado.','success')}catch{toast('Não foi possível copiar automaticamente.','warning')}}
-  function picker(kind){
+  function picker(kind,target='editor'){
+    pickerTarget=target;
     const list=kind==='ability'?app.abilityLibrary:app.moveLibrary;
     const body=`<div class="modal-body"><div class="info-strip">Escolha uma entrada da biblioteca para adicionar ao Pokémon que estava sendo editado.</div><div class="library-picker">${list.map(x=>`<button data-action="${kind==='ability'?'toolUseAbility':'toolUseMove'}" data-id="${x.id}"><b>${esc(x.name)}</b><small>${kind==='ability'?esc(x.description):esc(x.type+' · '+x.category+' · Power '+(x.power??'—'))}</small></button>`).join('')||'<p class="gm-empty-note">Biblioteca vazia.</p>'}</div></div>`;
     modalShell('Adicionar da Biblioteca',kind==='ability'?'Ability reutilizável':'Move reutilizável',body,'<button class="btn btn-outline" data-action="toolReturnEditor">Voltar ao Pokémon</button>',true);
@@ -427,7 +428,7 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
     else if(a==='toolMegaUnpublish')await unpublishMega(id,false);
     else if(a==='toolMegaArchive')await unpublishMega(id,true);
     else if(a==='toolMegaDelete')await deleteMega(id);
-    else if(a==='toolMegaPickAbility')picker('ability');
+    else if(a==='toolMegaPickAbility')picker('ability','mega');
     else if(a==='toolLibrary')openLibrary();
     else if(a==='toolLibraryTab')openLibrary(el.dataset.tab);
     else if(a==='toolAbilityNew')abilityForm();
@@ -441,18 +442,18 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
     else if(a==='toolLibraryBack')openLibrary();
     else if(a==='toolLibraryCopyAbility'){const x=app.abilityLibrary.find(v=>v.id===id);if(x)await copyText(x.name+' — '+x.description)}
     else if(a==='toolLibraryCopyMove'){const x=app.moveLibrary.find(v=>v.id===id);if(x)await copyText(x.name+' — '+x.type+' — '+x.category+' — Power '+(x.power??'—')+' — Accuracy '+(x.accuracy??'—')+'% — '+x.description)}
-    else if(a==='toolPickAbility')picker('ability');
-    else if(a==='toolPickMove')picker('move');
-    else if(a==='toolUseAbility'){const x=app.abilityLibrary.find(v=>v.id===id);if(x&&app.editor){app.editor.model.abilities.push({name:x.name,text:x.description});editorDirty();renderEditor();toast('Ability adicionada ao Pokémon.','success')}}
+    else if(a==='toolPickAbility')picker('ability','editor');
+    else if(a==='toolPickMove')picker('move','editor');
+    else if(a==='toolUseAbility'){const x=app.abilityLibrary.find(v=>v.id===id);if(!x)return;if(pickerTarget==='mega'&&megaEditor){megaEditor.abilities=[{name:x.name,text:x.description}];openMegaEditor();toast('Ability adicionada à Mega.','success')}else if(app.editor){app.editor.model.abilities.push({name:x.name,text:x.description});editorDirty();renderEditor();toast('Ability adicionada ao Pokémon.','success')}}
     else if(a==='toolUseMove'){const x=app.moveLibrary.find(v=>v.id===id);if(x&&app.editor){app.editor.model.moves.push({name:x.name,type:x.type,category:x.category,power:x.power??0,accuracy:x.accuracy,accuracyCanonical:x.canonicalAccuracy,learn:'',text:x.description});editorDirty();renderEditor();toast('Move adicionado ao Pokémon.','success')}}
-    else if(a==='toolReturnEditor'){if(app.editor)renderEditor();else closeModal(true)}
+    else if(a==='toolReturnEditor'){if(pickerTarget==='mega'&&megaEditor)openMegaEditor();else if(app.editor)renderEditor();else closeModal(true)}
   }
 
   const own=new Set(['toolCreateFakemon','toolReworkWizard','toolReworkSearch','toolReworkUse','toolMegaWizard','toolMegaSearch','toolMegaContinue','toolMegaSave','toolMegaPublish','toolMegaDetail','toolMegaEdit','toolMegaPublishExisting','toolMegaUnpublish','toolMegaArchive','toolMegaDelete','toolMegaPickAbility','toolLibrary','toolLibraryTab','toolAbilityNew','toolAbilityEdit','toolAbilitySave','toolAbilityDelete','toolMoveNew','toolMoveEdit','toolMoveSave','toolMoveDelete','toolLibraryBack','toolLibraryCopyAbility','toolLibraryCopyMove','toolPickAbility','toolPickMove','toolUseAbility','toolUseMove','toolReturnEditor']);
   document.addEventListener('click',ev=>{const el=ev.target.closest('[data-action]');if(!el||!own.has(el.dataset.action))return;ev.preventDefault();ev.stopImmediatePropagation();Promise.resolve(action(el)).catch(e=>toast(e.message||e,'error'))},true);
   document.addEventListener('input',ev=>{
     const el=ev.target;if(!megaEditor)return;
-    if(el.dataset.megaField!=null){megaEditor[el.dataset.megaField]=el.value;if(el.dataset.megaField==='name'&&!megaEditor.slugEdited)megaEditor.slug='mega-'+slug(el.value).replace(/^mega-/,'');}
+    if(el.dataset.megaField!=null){megaEditor[el.dataset.megaField]=el.value;if(el.dataset.megaField==='slug')megaEditor.slugEdited=true;if(el.dataset.megaField==='name'&&!megaEditor.slugEdited)megaEditor.slug='mega-'+slug(el.value).replace(/^mega-/,'');}
     else if(el.dataset.megaStat){megaEditor.baseStats[el.dataset.megaStat]=Math.trunc(Number(el.value)||0);const b=document.getElementById('customMegaBST');if(b)b.textContent=statsTotal(megaEditor.baseStats)}
     else if(el.dataset.megaAbility){megaEditor.abilities=megaEditor.abilities?.length?megaEditor.abilities:[{name:'',text:''}];megaEditor.abilities[0][el.dataset.megaAbility]=el.value}
   });
