@@ -11,6 +11,88 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
   const wait=ms=>new Promise(r=>setTimeout(r,ms));
   let extrasKey='', extrasLoading=null, megaEditor=null, reworkResult=null, libraryTab='ability', pickerTarget='editor';
   const moveLookups=new WeakMap();
+  const system=window.POKEDEX_SYSTEM_LIBRARY;
+  const normalize=system?.normalize||slug;
+  const abilityLookups=new WeakMap();
+  let pickerKind=null, librarySearch='', libraryGroup='all', libraryLimit=40;
+
+  function libraryEntries(kind){
+    if(kind==='rules')return system?.data.rules||[];
+    const rows=new Map();
+    for(const row of system?.data[kind==='ability'?'abilities':'moves']||[]){
+      rows.set(normalize(row.name),{...row,id:'system-'+kind+'-'+normalize(row.name),origin:'sheet',
+        group:row.section||((row.tags||[]).includes('Rework')?'Moves alterados':'Moves próprios'),
+        ...(kind==='move'?{accuracy:row.alwaysHits||!(Number(row.accuracy)>0)?null:Math.min(90,Number(row.accuracy))}:{}),
+        canonicalAccuracy:row.accuracyCanonical??row.canonicalAccuracy??(Number(row.accuracy)>0?Number(row.accuracy):null)});
+    }
+    for(const row of kind==='ability'?app.abilityLibrary:app.moveLibrary){
+      rows.set(normalize(row.name),{...row,origin:'gm',group:'Minhas criações'});
+    }
+    return [...rows.values()].sort((a,b)=>a.name.localeCompare(b.name,'en'));
+  }
+
+  function findAbility(name){return libraryEntries('ability').find(row=>normalize(row.name)===normalize(name));}
+  function syncHTML(){
+    const states={loading:'Carregando o banco…',syncing:'Atualizando a partir da ficha…',synced:'Banco sincronizado com a ficha.',
+      bundled:'Cópia incluída no site disponível.',cached:'Último banco salvo disponível.',offline:'Sem conexão com a ficha. Usando o banco salvo.',unavailable:'Banco indisponível. Tente atualizar.'};
+    return `<div class="system-library-sync"><div><strong>Ficha Pokémon · Heaven & Hell</strong><small role="status">${esc(states[system?.status]||'Banco do sistema')} · ${system?.data.abilities.length||0} abilities · ${system?.data.moves.length||0} moves próprios/alterados · ${system?.data.rules.length||0} regras</small></div><button class="btn btn-outline btn-sm" data-action="toolSystemSync" ${system?.status==='syncing'?'disabled':''}>↻ Atualizar da ficha</button></div>`;
+  }
+
+  function safeRuleHTML(value){
+    const template=document.createElement('template');template.innerHTML=String(value||'');
+    const allowed=new Set(['P','H1','H2','H3','H4','UL','OL','LI','STRONG','B','EM','I','BR','HR','BLOCKQUOTE','CODE','PRE','TABLE','THEAD','TBODY','TR','TD','TH']);
+    const clean=node=>{
+      if(node.nodeType===3)return document.createTextNode(node.textContent);
+      const out=document.createDocumentFragment();
+      if(node.nodeType!==1||['SCRIPT','STYLE','IFRAME','OBJECT','SVG','MATH'].includes(node.tagName))return out;
+      const target=allowed.has(node.tagName)?document.createElement(node.tagName.toLowerCase()):out;
+      for(const child of node.childNodes)target.append(clean(child));
+      return target;
+    };
+    const result=document.createElement('div');
+    for(const node of template.content.childNodes)result.append(clean(node));
+    return result.innerHTML;
+  }
+
+  function ruleText(rule){
+    const div=document.createElement('div');
+    div.innerHTML=safeRuleHTML(rule.content).replace(/<br\s*\/?\s*>/gi,'\n').replace(/<\/(p|li|h[1-6]|blockquote|tr)>/gi,'\n</$1>');
+    return rule.title+'\n'+div.textContent.trim().replace(/\n{3,}/g,'\n\n');
+  }
+
+  function abilityBinding(input){
+    let list,index;
+    if(input.dataset.megaAbility){list=megaEditor?.abilities;index=0;}
+    else if(input.dataset.formAbilityIndex!=null){list=app.editor?.forms[Number(input.dataset.formIndex)]?.abilities;index=Number(input.dataset.formAbilityIndex);}
+    else{list=app.editor?.model.abilities;index=Number(input.dataset.abilityIndex);}
+    return list?.[index];
+  }
+
+  function cancelAbilityLookup(ability){
+    const pending=abilityLookups.get(ability);if(pending?.timer)clearTimeout(pending.timer);abilityLookups.delete(ability);
+  }
+
+  function queueAbilityLookup(input,immediate=false){
+    const ability=abilityBinding(input);if(!ability)return;
+    cancelAbilityLookup(ability);
+    const name=input.value.trim(),row=input.closest('.field-grid'),status=input.parentElement.querySelector('[data-ability-status]');
+    if(!name){if(status)status.textContent='Digite o nome para preencher o efeito da ficha.';return;}
+    const editor=app.editor,mega=megaEditor,pending={timer:null};abilityLookups.set(ability,pending);
+    const current=()=>input.isConnected&&abilityLookups.get(ability)===pending&&abilityBinding(input)===ability
+      &&app.editor===editor&&megaEditor===mega&&normalize(input.value)===normalize(name);
+    const run=async()=>{
+      await system?.ready;if(!current())return;
+      const match=findAbility(name);
+      if(!match){if(status)status.textContent='Sem entrada no banco. Você pode manter uma Ability própria.';abilityLookups.delete(ability);return;}
+      ability.name=match.name;ability.text=match.description||'';input.value=match.name;
+      const text=row?.querySelector('textarea[data-subfield="text"],textarea[data-mega-ability="text"]');
+      if(text)text.value=ability.text;
+      if(!input.dataset.megaAbility)editorDirty();
+      if(status)status.textContent='✓ Efeito preenchido · '+(match.origin==='gm'?'Biblioteca GM':'Ficha Heaven & Hell');
+      abilityLookups.delete(ability);
+    };
+    if(immediate)run();else pending.timer=setTimeout(run,550);
+  }
 
   function moveLookupStatus(move,message,failed=false){
     const index=app.editor?.model.moves.indexOf(move)??-1;
@@ -130,13 +212,13 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
     return `<div class="gm-workbench-head">
       <div><span class="eyebrow">CENTRAL DO GM</span><h1>Criação & Rework</h1>
       <p>Cada tarefa tem seu próprio fluxo. Nada de usar o mesmo botão para Fakemon, Rework, Mega e biblioteca.</p></div>
-      <div class="gm-workbench-summary"><span><b>${app.abilityLibrary.length}</b> Abilities</span><span><b>${app.moveLibrary.length}</b> Moves</span><span><b>${megas}</b> Megas próprias</span></div>
+      <div class="gm-workbench-summary"><span><b>${libraryEntries('ability').length}</b> Abilities</span><span><b>${libraryEntries('move').length}</b> Moves do sistema</span><span><b>${libraryEntries('rules').length}</b> Regras</span><span><b>${megas}</b> Megas próprias</span></div>
     </div>
     <div class="gm-tool-grid">
       <section class="gm-tool-card fakemon"><span class="gm-tool-icon">✦</span><div><span class="eyebrow">ESPÉCIE NOVA</span><h2>Adicionar Pokémon</h2><p>Crie um Fakemon do zero. Abre o editor já classificado como Fakemon, sem misturar com Pokémon oficiais.</p></div><button class="btn btn-primary" data-action="toolCreateFakemon">＋ Criar Fakemon</button></section>
       <section class="gm-tool-card rework"><span class="gm-tool-icon">↻</span><div><span class="eyebrow">POKÉAPI → H&H</span><h2>Alterar Pokémon</h2><p>Busque um Pokémon oficial na PokéAPI, importe Tipagem, BST e Abilities e abra diretamente como Rework.</p></div><button class="btn btn-primary" data-action="toolReworkWizard">⌕ Buscar Pokémon oficial</button></section>
       <section class="gm-tool-card mega"><span class="gm-tool-icon">⬡</span><div><span class="eyebrow">MEGA INDEPENDENTE</span><h2>Criar Fake Mega Evolution</h2><p>Cria somente a Mega. O Pokémon-base fica na PokéAPI e não é duplicado nem transformado em Fakemon no seu banco.</p></div><button class="btn btn-primary" data-action="toolMegaWizard">✦ Criar Mega Evolution</button></section>
-      <section class="gm-tool-card library"><span class="gm-tool-icon">⚙</span><div><span class="eyebrow">BIBLIOTECA DO SISTEMA</span><h2>Criador de Ability & Moves</h2><p>Cadastre mecânicas reutilizáveis. Depois elas podem ser puxadas direto para o editor de qualquer Pokémon.</p></div><button class="btn btn-primary" data-action="toolLibrary">Abrir Biblioteca</button></section>
+      <section class="gm-tool-card library"><span class="gm-tool-icon">⚙</span><div><span class="eyebrow">BANCO DA FICHA</span><h2>Abilities, Moves & Regras</h2><p>Consulte os efeitos alterados de Heaven & Hell, busque movimentos e adicione tudo direto ao Pokémon.</p></div><button class="btn btn-primary" data-action="toolLibrary">Abrir Biblioteca</button></section>
     </div>
     <section class="gm-tool-recent"><div class="section-head"><div><span class="eyebrow muted-text">ATALHOS</span><h2>Megas independentes recentes</h2></div></div>
       <div class="gm-recent-grid">${app.customMegas.filter(x=>x.status!=='archived').slice(0,6).map(m=>`<button class="gm-recent-mega" data-action="toolMegaEdit" data-id="${esc(m.id)}"><img src="${esc(m.artUrl||m.parentSpriteUrl||'')}" alt=""><span><b>${esc(m.name)}</b><small>${esc(m.parentName)} · ${esc(m.status)}</small></span></button>`).join('')||'<p class="gm-empty-note">Nenhuma Mega independente criada ainda.</p>'}</div>
@@ -218,7 +300,9 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
     const genus=species?.genera?.find(x=>x.language?.name==='en')?.genus;
     return genus||'Official Pokémon';
   }
-  function pokeAbilities(p){return (p.abilities||[]).slice().sort((a,b)=>a.slot-b.slot).map(x=>({name:titleCase(x.ability.name),text:''}))}
+  function pokeAbilities(p){return (p.abilities||[]).slice().sort((a,b)=>a.slot-b.slot).map(x=>{
+    const name=titleCase(x.ability.name),known=findAbility(name);return {name:known?.name||name,text:known?.description||''};
+  })}
 
   function openReworkWizard(){
     if(!isEditable())return toast('Faça login como GM para criar Reworks.','warning');
@@ -296,6 +380,7 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
       </div>`;
     modalShell(megaEditor.name||'Nova Mega','Mega independente · Pokémon-base via PokéAPI',body,`<button class="btn btn-outline" data-action="toolMegaSave">Salvar rascunho</button><button class="btn btn-primary" data-action="toolMegaPublish">✦ Salvar & Publicar</button>`);
     document.getElementById('modal').dataset.kind='custom-mega-editor';
+    injectAbilityInputs(document.getElementById('modal'));
   }
   function megaPayload(){
     const m=megaEditor;if(!m)throw Error('Mega não carregada.');
@@ -383,16 +468,40 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
   }
 
   function libraryListHTML(){
-    if(libraryTab==='ability'){
-      return `<div class="library-toolbar"><button class="btn btn-primary" data-action="toolAbilityNew">＋ Nova Ability</button><span>${app.abilityLibrary.length} cadastradas</span></div><div class="library-list">${app.abilityLibrary.map(a=>`<article><div><b>${esc(a.name)}</b><p>${esc(a.description||'Sem descrição.')}</p></div><div><button class="btn btn-outline btn-sm" data-action="toolLibraryCopyAbility" data-id="${a.id}">Copiar</button><button class="btn btn-outline btn-sm" data-action="toolAbilityEdit" data-id="${a.id}">Editar</button><button class="btn btn-danger btn-sm" data-action="toolAbilityDelete" data-id="${a.id}">Excluir</button></div></article>`).join('')||'<p class="gm-empty-note">Nenhuma Ability criada.</p>'}</div>`;
-    }
-    return `<div class="library-toolbar"><button class="btn btn-primary" data-action="toolMoveNew">＋ Novo Move</button><span>${app.moveLibrary.length} cadastrados</span></div><div class="library-list">${app.moveLibrary.map(m=>`<article><div><b>${esc(m.name)}</b><small>${esc(m.type)} · ${esc(m.category)} · Power ${m.power??'—'} · Accuracy ${m.accuracy??'—'}%</small><p>${esc(m.description||'Sem descrição.')}</p></div><div><button class="btn btn-outline btn-sm" data-action="toolLibraryCopyMove" data-id="${m.id}">Copiar</button><button class="btn btn-outline btn-sm" data-action="toolMoveEdit" data-id="${m.id}">Editar</button><button class="btn btn-danger btn-sm" data-action="toolMoveDelete" data-id="${m.id}">Excluir</button></div></article>`).join('')||'<p class="gm-empty-note">Nenhum Move criado.</p>'}</div>`;
+    const kind=pickerKind||libraryTab,query=normalize(librarySearch);
+    const all=libraryEntries(kind);
+    const filtered=all.filter(x=>(libraryGroup==='all'||x.group===libraryGroup)&&(!query||normalize(
+      [x.name,x.title,x.description,x.summary,x.searchText,x.group,x.type,x.category].filter(Boolean).join(' ')
+    ).includes(query)));
+    if(query){const rank=x=>normalize(x.name||x.title)===query?0:normalize(x.name||x.title).startsWith(query)?1:2;filtered.sort((a,b)=>rank(a)-rank(b));}
+    const cards=filtered.slice(0,libraryLimit).map(x=>{
+      const id=esc(x.id),isRule=kind==='rules',name=x.name||x.title;
+      const meta=isRule?x.group:(x.origin==='sheet'?'Ficha Heaven & Hell':'Biblioteca GM')+' · '+x.group;
+      const data=kind==='move'?`<small class="system-library-meta">${esc(x.type)} · ${esc(x.category)} · Power ${x.power??'—'} · Precisão ${x.alwaysHits?'Nunca erra':Number(x.accuracy)>0?Math.min(90,Number(x.accuracy))+'%':'—'}</small>`:'';
+      const use=pickerKind?`<button class="btn btn-primary btn-sm system-picker-choice" data-action="${isRule?'toolUseRule':kind==='ability'?'toolUseAbility':'toolUseMove'}" data-id="${id}">＋ ${isRule?'Adicionar às regras especiais':'Adicionar ao Pokémon'}</button>`:'';
+      const actions=isRule?`<button class="btn btn-outline btn-sm" data-action="toolRuleCopy" data-id="${id}">Copiar texto</button>`:
+        `<button class="btn btn-outline btn-sm" data-action="${kind==='ability'?'toolLibraryCopyAbility':'toolLibraryCopyMove'}" data-id="${id}">Copiar</button>`+
+        (!pickerKind?`<button class="btn btn-outline btn-sm" data-action="${kind==='ability'?'toolAbilityEdit':'toolMoveEdit'}" data-id="${id}">${x.origin==='sheet'?'Criar minha versão':'Editar'}</button>`+(x.origin==='gm'?`<button class="btn btn-danger btn-sm" data-action="${kind==='ability'?'toolAbilityDelete':'toolMoveDelete'}" data-id="${id}">Excluir</button>`:''):'');
+      return `<details class="system-library-entry"><summary><span><b>${esc(name)}</b><small class="system-library-meta">${esc(meta)}</small></span></summary>${data}<p class="system-library-preview">${esc(isRule?x.summary:x.description||'Sem descrição.')}</p>${isRule?`<div class="system-rule-content">${safeRuleHTML(x.content)}</div>`:`<p>${esc(x.description||'Sem descrição.')}</p>${kind==='move'&&x.learnRule?`<p><b>Aprendizado:</b> ${esc(x.learnRule)}</p>`:''}`}<div class="system-library-actions">${actions}</div>${use}</details>`;
+    }).join('');
+    const empty=query||libraryGroup!=='all'?'Nenhum resultado para esta busca.':'Nenhuma entrada disponível.';
+    return `<div class="system-library-count" role="status">${filtered.length} resultado${filtered.length===1?'':'s'}${filtered.length>libraryLimit?' · exibindo '+libraryLimit:''}</div><div class="library-list">${cards||`<p class="gm-empty-note">${empty}</p>`}</div>${filtered.length>libraryLimit?'<button class="btn btn-outline system-library-more" data-action="toolLibraryMore">Mostrar mais</button>':''}${kind==='move'&&query?'<div class="info-strip"><b>Move oficial?</b> A busca pelo nome no editor consulta também a PokéAPI. Os efeitos próprios de Heaven & Hell têm preferência.</div>':''}`;
   }
-  function openLibrary(tab=libraryTab){
+
+  function libraryFiltersHTML(kind){
+    const groups=[...new Set(libraryEntries(kind).map(x=>x.group).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+    return `<div class="system-library-filters"><div class="field"><label for="systemLibrarySearch">Buscar ${kind==='rules'?'regra':'nome ou efeito'}</label><input id="systemLibrarySearch" type="search" autocomplete="off" value="${esc(librarySearch)}" placeholder="${kind==='ability'?'Ex.: Intimidate, Blaze Pulse, imunidade…':kind==='move'?'Ex.: Swords Dance, Fire, cura…':'Ex.: dano, captura, estágios…'}"></div><div class="field"><label for="systemLibraryGroup">Categoria</label><select id="systemLibraryGroup"><option value="all">Todas as categorias</option>${groups.map(g=>`<option value="${esc(g)}" ${libraryGroup===g?'selected':''}>${esc(g)}</option>`).join('')}</select></div></div>`;
+  }
+
+  async function openLibrary(tab=libraryTab){
     if(!isEditable())return toast('Biblioteca disponível apenas para o GM.','warning');
+    await system?.ready;
+    if(libraryTab!==tab){librarySearch='';libraryGroup='all';libraryLimit=40;}
     libraryTab=tab;
-    const body=`<div class="modal-tabs"><button class="modal-tab ${tab==='ability'?'active':''}" data-action="toolLibraryTab" data-tab="ability">✧ Abilities</button><button class="modal-tab ${tab==='move'?'active':''}" data-action="toolLibraryTab" data-tab="move">⚔ Moves</button></div><div class="modal-body"><div class="info-strip">Crie uma vez e reutilize em qualquer Pokémon. Os nomes permanecem em inglês; os efeitos ficam em português.</div>${libraryListHTML()}</div>`;
-    modalShell('Criador de Ability & Moves','Biblioteca privada do GM',body,'<button class="btn btn-outline" data-action="closeModal">Fechar</button>');
+    pickerKind=null;
+    const create=tab==='rules'?'':`<button class="btn btn-outline btn-sm" data-action="${tab==='ability'?'toolAbilityNew':'toolMoveNew'}">＋ ${tab==='ability'?'Nova Ability':'Novo Move'}</button>`;
+    const body=`<div class="modal-tabs">${[['ability','✧ Abilities'],['move','⚔ Moves'],['rules','▣ Regras']].map(([key,label])=>`<button class="modal-tab ${tab===key?'active':''}" data-action="toolLibraryTab" data-tab="${key}">${label}</button>`).join('')}</div><div class="modal-body">${syncHTML()}<div class="library-toolbar"><span>Consulte o banco da ficha ou cadastre sua própria versão.</span>${create}</div>${libraryFiltersHTML(tab)}<div id="systemLibraryResults">${libraryListHTML()}</div></div>`;
+    modalShell('Biblioteca Heaven & Hell','Abilities alteradas, Moves e regras da ficha',body,'<button class="btn btn-outline" data-action="closeModal">Fechar</button>');
     document.getElementById('modal').dataset.kind='library';
   }
   function abilityForm(a={id:'',name:'',description:'',notes:''}){
@@ -442,13 +551,29 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
     }catch(e){toast(e.message||e,'error')}
   }
   async function copyText(text){try{await navigator.clipboard.writeText(text);toast('Copiado.','success')}catch{toast('Não foi possível copiar automaticamente.','warning')}}
-  function picker(kind,target='editor'){
+  async function picker(kind,target='editor'){
+    await system?.ready;
     pickerTarget=target;
-    const list=kind==='ability'?app.abilityLibrary:app.moveLibrary;
-    const body=`<div class="modal-body"><div class="info-strip">Escolha uma entrada da biblioteca para adicionar ao Pokémon que estava sendo editado.</div><div class="library-picker">${list.map(x=>`<button data-action="${kind==='ability'?'toolUseAbility':'toolUseMove'}" data-id="${x.id}"><b>${esc(x.name)}</b><small>${kind==='ability'?esc(x.description):esc(x.type+' · '+x.category+' · Power '+(x.power??'—'))}</small></button>`).join('')||'<p class="gm-empty-note">Biblioteca vazia.</p>'}</div></div>`;
-    modalShell('Adicionar da Biblioteca',kind==='ability'?'Ability reutilizável':'Move reutilizável',body,'<button class="btn btn-outline" data-action="toolReturnEditor">Voltar ao Pokémon</button>',true);
+    if(pickerKind!==kind){librarySearch='';libraryGroup='all';libraryLimit=40;}
+    pickerKind=kind;
+    const body=`<div class="modal-body">${syncHTML()}<div class="info-strip">${kind==='rules'?'Consulte as regras da ficha e adicione o texto desejado às regras especiais do Pokémon.':'Escolha uma entrada para preencher o Pokémon que está sendo editado.'}</div>${libraryFiltersHTML(kind)}<div id="systemLibraryResults">${libraryListHTML()}</div></div>`;
+    modalShell(kind==='rules'?'Regras da ficha':'Adicionar da Biblioteca',kind==='ability'?'Abilities alteradas de Heaven & Hell':kind==='move'?'Moves próprios e alterados da ficha':'Manual do sistema',body,'<button class="btn btn-outline" data-action="toolReturnEditor">Voltar ao Pokémon</button>');
     document.getElementById('modal').dataset.kind='library-picker';
   }
+
+  function injectAbilityInputs(body){
+    if(!body)return;
+    let names=body.querySelector('#gmAbilityNames');
+    if(!names){names=document.createElement('datalist');names.id='gmAbilityNames';body.append(names);}
+    names.innerHTML=libraryEntries('ability').map(a=>`<option value="${esc(a.name)}"></option>`).join('');
+    body.querySelectorAll('input[data-ability-index][data-subfield="name"],input[data-form-ability-index][data-subfield="name"],input[data-mega-ability="name"]').forEach(input=>{
+      if(input.dataset.abilityLookupReady)return;
+      input.dataset.abilityLookupReady='1';input.setAttribute('list','gmAbilityNames');input.setAttribute('autocomplete','off');
+      input.placeholder='Ex.: Intimidate ou Blaze Pulse';
+      input.insertAdjacentHTML('afterend','<button type="button" class="btn btn-outline btn-sm" style="align-self:flex-start" data-action="toolLookupAbility">⌕ Buscar Ability</button><small class="system-lookup-status" role="status" data-ability-status>Digite o nome para preencher o efeito da ficha.</small>');
+    });
+  }
+
   function injectEditor(){
     const body=document.getElementById('editorBody');if(!body||!app.editor)return;
     if(app.editor.tab==='abilities'&&!body.querySelector('[data-action="toolPickAbility"]')){
@@ -457,6 +582,16 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
     if(app.editor.tab==='moves'&&!body.querySelector('[data-action="toolPickMove"]')){
       const first=body.querySelector('.repeat-list');if(first)first.insertAdjacentHTML('beforebegin','<button class="btn btn-outline btn-sm mb" data-action="toolPickMove">＋ Adicionar da Biblioteca</button>');
     }
+    if(app.editor.tab==='rules'&&!body.querySelector('[data-action="toolPickRules"]')){
+      body.insertAdjacentHTML('afterbegin','<div class="system-editor-tools"><button class="btn btn-outline btn-sm" data-action="toolPickRules">▣ Consultar regras da ficha</button></div>');
+    }
+    if(app.editor.tab==='forms'){
+      body.querySelectorAll('[data-action="addFormAbility"]').forEach(button=>{
+        if(button.parentElement.querySelector('[data-action="toolFormPickAbility"]'))return;
+        button.insertAdjacentHTML('afterend',` <button class="btn btn-outline btn-sm mt" data-action="toolFormPickAbility" data-index="${button.dataset.index}">＋ Ability da Biblioteca</button>`);
+      });
+    }
+    injectAbilityInputs(body);
     if(app.editor.tab==='moves'){
       if(!document.getElementById('gmMoveNames')){
         body.insertAdjacentHTML('beforeend','<datalist id="gmMoveNames"></datalist>');
@@ -494,31 +629,48 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
     else if(a==='toolMegaArchive')await unpublishMega(id,true);
     else if(a==='toolMegaDelete')await deleteMega(id);
     else if(a==='toolMegaPickAbility')picker('ability','mega');
-    else if(a==='toolLibrary')openLibrary();
-    else if(a==='toolLibraryTab')openLibrary(el.dataset.tab);
+    else if(a==='toolLibrary')await openLibrary();
+    else if(a==='toolLibraryTab')await openLibrary(el.dataset.tab);
+    else if(a==='toolLibraryMore'){libraryLimit+=40;document.getElementById('systemLibraryResults').innerHTML=libraryListHTML();}
+    else if(a==='toolSystemSync'){
+      try{await system?.refresh();toast('Banco atualizado a partir da ficha.','success');}catch{toast('Não foi possível atualizar. O banco já salvo continua disponível.','warning');}
+      const kind=document.getElementById('modal')?.dataset.kind;
+      if(kind==='library')await openLibrary();else if(kind==='library-picker')await picker(pickerKind,pickerTarget);
+    }
     else if(a==='toolAbilityNew')abilityForm();
-    else if(a==='toolAbilityEdit')abilityForm(app.abilityLibrary.find(x=>x.id===id));
+    else if(a==='toolAbilityEdit'){const x=libraryEntries('ability').find(x=>x.id===id);if(x)abilityForm({...x,id:x.origin==='sheet'?'':x.id,notes:x.notes||''});}
     else if(a==='toolAbilitySave')await saveAbility(id);
     else if(a==='toolAbilityDelete')await deleteLibrary('ability',id);
     else if(a==='toolMoveNew')moveForm();
-    else if(a==='toolMoveEdit')moveForm(app.moveLibrary.find(x=>x.id===id));
+    else if(a==='toolMoveEdit'){const x=libraryEntries('move').find(x=>x.id===id);if(x)moveForm({...x,id:x.origin==='sheet'?'':x.id,notes:x.notes||''});}
     else if(a==='toolMoveSave')await saveMove(id);
     else if(a==='toolMoveDelete')await deleteLibrary('move',id);
-    else if(a==='toolLibraryBack')openLibrary();
-    else if(a==='toolLibraryCopyAbility'){const x=app.abilityLibrary.find(v=>v.id===id);if(x)await copyText(x.name+' — '+x.description)}
-    else if(a==='toolLibraryCopyMove'){const x=app.moveLibrary.find(v=>v.id===id);if(x)await copyText(x.name+' — '+x.type+' — '+x.category+' — Power '+(x.power??'—')+' — Accuracy '+(x.accuracy??'—')+'% — '+x.description)}
+    else if(a==='toolLibraryBack')await openLibrary();
+    else if(a==='toolLibraryCopyAbility'){const x=libraryEntries('ability').find(v=>v.id===id);if(x)await copyText(x.name+' — '+x.description)}
+    else if(a==='toolLibraryCopyMove'){const x=libraryEntries('move').find(v=>v.id===id);if(x)await copyText(x.name+' — '+x.type+' — '+x.category+' — Power '+(x.power??'—')+' — Accuracy '+(x.accuracy??'—')+'% — '+x.description)}
+    else if(a==='toolRuleCopy'){const x=libraryEntries('rules').find(v=>v.id===id);if(x)await copyText(ruleText(x));}
     else if(a==='toolPickAbility')picker('ability','editor');
     else if(a==='toolPickMove')picker('move','editor');
+    else if(a==='toolPickRules')picker('rules','editor');
+    else if(a==='toolFormPickAbility')picker('ability','form:'+el.dataset.index);
+    else if(a==='toolLookupAbility'){const input=el.parentElement.querySelector('input');if(input)queueAbilityLookup(input,true);}
     else if(a==='toolLookupMove')queueMoveLookup(el.dataset.index,true);
-    else if(a==='toolUseAbility'){const x=app.abilityLibrary.find(v=>v.id===id);if(!x)return;if(pickerTarget==='mega'&&megaEditor){megaEditor.abilities=[{name:x.name,text:x.description}];openMegaEditor();toast('Ability adicionada à Mega.','success')}else if(app.editor){app.editor.model.abilities.push({name:x.name,text:x.description});editorDirty();renderEditor();toast('Ability adicionada ao Pokémon.','success')}}
-    else if(a==='toolUseMove'){const x=app.moveLibrary.find(v=>v.id===id);if(x&&app.editor){app.editor.model.moves.push({name:x.name,type:x.type,category:x.category,power:x.power??0,accuracy:x.accuracy,accuracyCanonical:x.canonicalAccuracy,learn:'',text:x.description});editorDirty();renderEditor();toast('Move adicionado ao Pokémon.','success')}}
+    else if(a==='toolUseAbility'){const x=libraryEntries('ability').find(v=>v.id===id);if(!x)return;if(pickerTarget==='mega'&&megaEditor){megaEditor.abilities=[{name:x.name,text:x.description}];openMegaEditor();toast('Ability adicionada à Mega.','success')}else if(app.editor){const list=pickerTarget.startsWith('form:')?app.editor.forms[Number(pickerTarget.split(':')[1])]?.abilities:app.editor.model.abilities;if(!list)return;const blank=list.find(a=>!a.name.trim()&&!a.text.trim());if(blank)Object.assign(blank,{name:x.name,text:x.description});else list.push({name:x.name,text:x.description});editorDirty();renderEditor();toast('Ability adicionada ao Pokémon.','success')}}
+    else if(a==='toolUseMove'){const x=libraryEntries('move').find(v=>v.id===id),editor=app.editor;if(x&&editor){const data=await window.POKEDEX_MOVE_LOOKUP.lookup(x.name,app.moveLibrary);if(app.editor!==editor)return;editor.model.moves.push({...data,learn:''});editorDirty();renderEditor();toast('Move adicionado ao Pokémon.','success')}}
+    else if(a==='toolUseRule'){const x=libraryEntries('rules').find(v=>v.id===id);if(x&&app.editor){const text=ruleText(x);if(!(app.editor.model.specialRules||'').includes(text)){app.editor.model.specialRules=[app.editor.model.specialRules,text].filter(Boolean).join('\n\n');editorDirty();}app.editor.tab='rules';renderEditor();toast('Regra adicionada ao Pokémon.','success');}}
     else if(a==='toolReturnEditor'){if(pickerTarget==='mega'&&megaEditor)openMegaEditor();else if(app.editor)renderEditor();else closeModal(true)}
   }
 
-  const own=new Set(['toolCreateFakemon','toolReworkWizard','toolReworkSearch','toolReworkUse','toolMegaWizard','toolMegaSearch','toolMegaContinue','toolMegaSave','toolMegaPublish','toolMegaDetail','toolMegaEdit','toolMegaPublishExisting','toolMegaUnpublish','toolMegaArchive','toolMegaDelete','toolMegaPickAbility','toolLibrary','toolLibraryTab','toolAbilityNew','toolAbilityEdit','toolAbilitySave','toolAbilityDelete','toolMoveNew','toolMoveEdit','toolMoveSave','toolMoveDelete','toolLibraryBack','toolLibraryCopyAbility','toolLibraryCopyMove','toolPickAbility','toolPickMove','toolLookupMove','toolUseAbility','toolUseMove','toolReturnEditor']);
+  const own=new Set(['toolCreateFakemon','toolReworkWizard','toolReworkSearch','toolReworkUse','toolMegaWizard','toolMegaSearch','toolMegaContinue','toolMegaSave','toolMegaPublish','toolMegaDetail','toolMegaEdit','toolMegaPublishExisting','toolMegaUnpublish','toolMegaArchive','toolMegaDelete','toolMegaPickAbility','toolLibrary','toolLibraryTab','toolAbilityNew','toolAbilityEdit','toolAbilitySave','toolAbilityDelete','toolMoveNew','toolMoveEdit','toolMoveSave','toolMoveDelete','toolLibraryBack','toolLibraryCopyAbility','toolLibraryCopyMove','toolPickAbility','toolPickMove','toolLookupMove','toolUseAbility','toolUseMove','toolReturnEditor','toolSystemSync','toolLibraryMore','toolRuleCopy','toolPickRules','toolFormPickAbility','toolLookupAbility','toolUseRule']);
   document.addEventListener('click',ev=>{const el=ev.target.closest('[data-action]');if(!el||!own.has(el.dataset.action))return;ev.preventDefault();ev.stopImmediatePropagation();Promise.resolve(action(el)).catch(e=>toast(e.message||e,'error'))},true);
   document.addEventListener('input',ev=>{
     const el=ev.target;
+    if(el.id==='systemLibrarySearch'){librarySearch=el.value;libraryLimit=40;document.getElementById('systemLibraryResults').innerHTML=libraryListHTML();return;}
+    if(el.matches('[data-ability-index],[data-form-ability-index],[data-mega-ability]')){
+      const field=el.dataset.subfield||el.dataset.megaAbility;
+      if(field==='name')queueAbilityLookup(el);
+      else{const ability=abilityBinding(el);if(ability)cancelAbilityLookup(ability);}
+    }
     if(el.dataset.moveIndex!=null&&el.closest('#editorBody')){
       const move=app.editor?.model.moves[Number(el.dataset.moveIndex)];
       if(el.dataset.subfield==='name')queueMoveLookup(el.dataset.moveIndex);
@@ -532,7 +684,9 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
     else if(el.dataset.megaAbility){megaEditor.abilities=megaEditor.abilities?.length?megaEditor.abilities:[{name:'',text:''}];megaEditor.abilities[0][el.dataset.megaAbility]=el.value}
   });
   document.addEventListener('change',ev=>{
-    const el=ev.target;if(el.id==='customMegaArtFile'&&megaEditor){
+    const el=ev.target;
+    if(el.id==='systemLibraryGroup'){libraryGroup=el.value;libraryLimit=40;document.getElementById('systemLibraryResults').innerHTML=libraryListHTML();return;}
+    if(el.id==='customMegaArtFile'&&megaEditor){
       const f=el.files?.[0];if(!f)return;megaEditor.newFile=f;
       const img=document.getElementById('customMegaPreview');if(img?.tagName==='IMG')img.src=URL.createObjectURL(f);
     }
@@ -542,6 +696,9 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
     if(ev.target.matches('[data-move-index][data-subfield="name"]')){
       ev.preventDefault();queueMoveLookup(ev.target.dataset.moveIndex,true);
     }
+    if(ev.target.matches('input[data-ability-index][data-subfield="name"],input[data-form-ability-index][data-subfield="name"],input[data-mega-ability="name"]')){
+      ev.preventDefault();queueAbilityLookup(ev.target,true);
+    }
     if(ev.target.id==='reworkPokeSearch'){ev.preventDefault();searchRework()}
     if(ev.target.id==='customMegaBaseSearch'){ev.preventDefault();searchMegaBase()}
   });
@@ -549,5 +706,14 @@ window.POKEDEX_GM_TOOLS_SETUP = function(api){
   window.POKEDEX_GM_TOOLS_AFTER_RENDER=afterRender;
   window.POKEDEX_GM_TOOLS_EDITOR=injectEditor;
   window.POKEDEX_GM_TOOLS_LOAD=loadExtras;
+  window.addEventListener('pokedex-system-update',()=>{
+    const strip=document.querySelector('.system-library-sync');if(strip)strip.outerHTML=syncHTML();
+    if(app.nav==='tools')afterRender();
+    const body=document.getElementById('editorBody');if(body)injectAbilityInputs(body);
+    const results=document.getElementById('systemLibraryResults');if(results)results.innerHTML=libraryListHTML();
+    const names=document.getElementById('gmMoveNames');
+    if(names)window.POKEDEX_MOVE_LOOKUP?.names(app.moveLibrary).then(values=>{if(names.isConnected)names.innerHTML=values.map(name=>`<option value="${esc(name)}"></option>`).join('');});
+  });
+  system?.ready.then(()=>{if(app.nav==='tools')afterRender();});
   ensureExtras();
 };

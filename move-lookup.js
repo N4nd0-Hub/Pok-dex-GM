@@ -727,12 +727,15 @@ function moveDescriptionFromApi(data){
   }
 
   async function lookup(query,library=[]){
+    const system=window.POKEDEX_SYSTEM_LIBRARY;
+    await system?.ready;
     const key=normalizeApiSlug(query);
     if(!key)throw Error('Digite o nome do movimento.');
     const local=library.find(move=>normalizeApiSlug(move.name)===key);
     if(local)return systemMove(local,'Biblioteca GM');
-    const custom=CUSTOM_MOVE_BANK.find(move=>normalizeApiSlug(move.name)===key);
-    if(custom)return systemMove(custom,'Banco do Sistema');
+    const shared=system?.data.moves?.length?system.data.moves:CUSTOM_MOVE_BANK;
+    const custom=shared.find(move=>normalizeApiSlug(move.name)===key);
+    if(custom)return systemMove(custom,'Ficha Heaven & Hell');
     if(!detailsCache.has(key)){
       const pending=fetchJson('https://pokeapi.co/api/v2/move/'+encodeURIComponent(key)+'/')
         .then(data=>({
@@ -756,9 +759,12 @@ function moveDescriptionFromApi(data){
         .then(data=>(data.results||[]).map(move=>prettyName(move.name)))
         .catch(()=>{officialNamesPromise=null;return []});
     }
-    return officialNamesPromise.then(official=>[...new Set([
-      ...library.map(move=>move.name),...CUSTOM_MOVE_BANK.map(move=>move.name),...official
-    ])].filter(Boolean).sort((a,b)=>a.localeCompare(b)));
+    return Promise.all([officialNamesPromise,window.POKEDEX_SYSTEM_LIBRARY?.ready]).then(([official])=>{
+      const shared=window.POKEDEX_SYSTEM_LIBRARY?.data.moves;
+      return [...new Set([
+        ...library.map(move=>move.name),...(shared?.length?shared:CUSTOM_MOVE_BANK).map(move=>move.name),...official
+      ])].filter(Boolean).sort((a,b)=>a.localeCompare(b));
+    });
   }
 
   window.POKEDEX_MOVE_LOOKUP={lookup,names,normalize:normalizeApiSlug};
