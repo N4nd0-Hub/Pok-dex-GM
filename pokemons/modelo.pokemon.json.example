@@ -1,0 +1,18 @@
+{
+  "schema": "pokedex-pokemon-v1",
+  "key": "nome-do-pokemon",
+  "name": "Nome do Pokémon",
+  "classification": "fakemon",
+  "status": "published",
+  "category": "Categoria do Pokémon",
+  "description": "Descrição em português.",
+  "type1": "Grass",
+  "type2": "Dragon",
+  "baseStats": {"hp": 70, "atk": 85, "def": 65, "spa": 105, "spd": 85, "spe": 120},
+  "abilities": ["Adaptability"],
+  "moves": ["Swords Dance", {"name": "Cinder Lock", "learn": "Lv. 20"}],
+  "evolution": {"previous": "", "next": "", "level": "", "requirements": ""},
+  "specialRules": "",
+  "art": "",
+  "forms": []
+}

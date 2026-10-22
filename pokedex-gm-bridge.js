@@ -17,6 +17,22 @@
   var originalMegaModal = null;
   var originalLoadMegas = null;
   var lastError = '';
+  var repositoryLibrary = null;
+
+  async function repositoryRows(force) {
+    if(!window.POKEDEX_REPOSITORY){
+      if(!repositoryLibrary)repositoryLibrary=new Promise(function(resolve,reject){
+        var script=document.createElement('script');
+        script.src=GM_SITE+'repository-catalog.js?files=1';
+        script.onload=function(){window.POKEDEX_REPOSITORY?resolve():reject(Error('Catálogo dos arquivos indisponível.'));};
+        script.onerror=function(){script.remove();repositoryLibrary=null;reject(Error('Não foi possível consultar as criações do Git.'));};
+        document.head.appendChild(script);
+      });
+      await repositoryLibrary;
+    }
+    var data=await window.POKEDEX_REPOSITORY.fetchCatalog({baseUrl:GM_SITE,force:!!force});
+    return window.POKEDEX_REPOSITORY.publicRows(data);
+  }
 
   function key(s) {
     return String(s == null ? '' : s).normalize('NFD').replace(/[\u0300-\u036f]/g,'')
@@ -205,13 +221,17 @@
         var data = await Promise.all([
           allRows('pokedex_public_species'),
           allRows('pokedex_public_forms'),
-          allRows('pokedex_public_custom_megas')
+          allRows('pokedex_public_custom_megas'),
+          repositoryRows(force).catch(function(){return {species:[],forms:[]};})
         ]);
-        var entries = build(data[0],data[1],data[2]);
+        var combined=window.POKEDEX_REPOSITORY
+          ? window.POKEDEX_REPOSITORY.mergePublicRows({species:data[0],forms:data[1]},data[3])
+          : {species:data[0],forms:data[1]};
+        var entries = build(combined.species,combined.forms,data[2]);
         catalog = entries;
         online = true;
         lastError = '';
-        cache = {species:data[0],forms:data[1],customMegas:data[2],savedAt:Date.now()};
+        cache = {species:combined.species,forms:combined.forms,customMegas:data[2],savedAt:Date.now()};
         writeCache(cache);
         status(catalog.length+' espécie(s) publicadas • catálogo online');
         render();
@@ -223,6 +243,11 @@
         }
         return catalog;
       } catch(err) {
+        try{
+          var files=await repositoryRows(force);
+          var recovered=window.POKEDEX_REPOSITORY.mergePublicRows({species:cache.species||[],forms:cache.forms||[]},files);
+          catalog=build(recovered.species,recovered.forms,cache.customMegas||[]);
+        }catch(repositoryError){/* O cache anterior continua disponível. */}
         lastError = err.message || 'Falha de conexão';
         online = false;
         status(catalog.length
