@@ -1,6 +1,960 @@
 {
   "format": "pokedex-repository-v1",
-  "species": [],
+  "species": [
+    {
+      "id": "e288e550-d06b-5808-8c69-ea3c272086b3",
+      "slug": "plakappa",
+      "dex": 8,
+      "name": "Plakappa",
+      "classification": "fakemon",
+      "category": "Pokémon Kappa Lutador",
+      "description": "Plakappa transforma as brincadeiras de rio em um estilo de luta ágil e imprevisível. Combina sequências de golpes com disparos de água, usando o movimento da correnteza para mudar de posição e manter seus ataques físicos e especiais no mesmo ritmo.",
+      "type1": "Water",
+      "type2": "Fighting",
+      "baseStats": {
+        "hp": 65,
+        "atk": 75,
+        "def": 55,
+        "spa": 75,
+        "spd": 55,
+        "spe": 80
+      },
+      "abilities": [
+        {
+          "name": "Kappa Style",
+          "text": "Os Moves Multi-Hit do usuário sempre realizam o número máximo de acertos previsto para o golpe. Ao nocautear um alvo, o usuário recebe +1 estágio de Precisão."
+        }
+      ],
+      "moves": [
+        {
+          "name": "Scratch",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Arranha o alvo com suas garras."
+        },
+        {
+          "name": "Growl",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Reduz o Attack do alvo em 1 estágio."
+        },
+        {
+          "name": "Water Gun",
+          "type": "Water",
+          "category": "Special",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 3 / herdado",
+          "text": "Dispara um jato de água contra o alvo."
+        },
+        {
+          "name": "Quick Attack",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 6 / herdado",
+          "text": "Avança rapidamente contra o alvo. Prioridade +1."
+        },
+        {
+          "name": "Aqua Jet",
+          "type": "Water",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 9 / herdado",
+          "text": "Envolve o corpo em água e investe contra o alvo. Prioridade +1."
+        },
+        {
+          "name": "Fury Swipes",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 18,
+          "accuracy": 80,
+          "accuracyCanonical": 80,
+          "learn": "Lv. 12 / herdado",
+          "text": "Move Multi-Hit de 2 a 5 acertos. No Heaven & Hell, usa 3 acertos fixos, ou 5 em Crítico Natural. Abilities que garantem o máximo de acertos substituem essa quantidade. O Power indicado é por acerto."
+        },
+        {
+          "name": "Focus Energy",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 15 / herdado",
+          "text": "Concentra-se para ampliar sua margem de crítico, seguindo as regras de Crítico Artificial do Heaven & Hell."
+        },
+        {
+          "name": "Water Pulse",
+          "type": "Water",
+          "category": "Special",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 17 / herdado",
+          "text": "Atinge o alvo com uma pulsação de água. Tem 20% de chance de causar Confusion."
+        },
+        {
+          "name": "Arm Thrust",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 15,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Ao evoluir / Lv. 18",
+          "text": "Move Multi-Hit de 2 a 5 acertos com golpes de palma. Com Kappa Style, realiza 5 acertos. O Power indicado é por acerto."
+        },
+        {
+          "name": "Double Hit",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 35,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 21",
+          "text": "Move Multi-Hit com 2 acertos fixos. O Power indicado é por acerto."
+        },
+        {
+          "name": "Bubble Beam",
+          "type": "Water",
+          "category": "Special",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 25",
+          "text": "Dispara uma rajada de bolhas. Tem 10% de chance de reduzir a Speed do alvo em 1 estágio."
+        },
+        {
+          "name": "Water Shuriken",
+          "type": "Water",
+          "category": "Special",
+          "power": 15,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 29",
+          "text": "Move Special Multi-Hit de 2 a 5 acertos. Com Kappa Style, realiza 5 acertos. Prioridade +1. O Power indicado é por acerto."
+        },
+        {
+          "name": "Drain Punch",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 33",
+          "text": "Um soco que drena a vitalidade do alvo. Cura 25% do dano final causado, após resistências e defesas. É Contato e Punch, portanto recebe sinergia de Iron Fist. Em crítico, apenas o dano base é maximizado; a cura continua sendo 25% do dano final causado.\n\nTags: Rework • Contato • Punch • Cura."
+        },
+        {
+          "name": "Scald",
+          "type": "Water",
+          "category": "Special",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 35",
+          "text": "Atinge o alvo com água escaldante. Tem 30% de chance de causar Burn."
+        },
+        {
+          "name": "Aqua Tail",
+          "type": "Water",
+          "category": "Physical",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 37",
+          "text": "Golpeia o alvo com a cauda envolvida por uma corrente de água."
+        },
+        {
+          "name": "Aura Sphere",
+          "type": "Fighting",
+          "category": "Special",
+          "power": 80,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 41",
+          "text": "Dispara uma esfera de aura. Não realiza teste de acerto e ignora Evasiva; ainda respeita proteções e situações de invulnerabilidade aplicáveis."
+        },
+        {
+          "name": "Hydro Pump",
+          "type": "Water",
+          "category": "Special",
+          "power": 110,
+          "accuracy": 80,
+          "accuracyCanonical": 80,
+          "learn": "Lv. 45",
+          "text": "Dispara um jato de água de altíssima pressão contra o alvo."
+        },
+        {
+          "name": "Close Combat",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 120,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 49",
+          "text": "Ataca intensamente em curta distância. Após o golpe, a Defense e a Sp.Def do usuário caem em 1 estágio."
+        },
+        {
+          "name": "Protect",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Protege o usuário dos golpes recebidos neste turno. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Ice Beam",
+          "type": "Ice",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Dispara um raio de gelo. Tem 10% de chance de causar Freeze."
+        },
+        {
+          "name": "Icy Wind",
+          "type": "Ice",
+          "category": "Special",
+          "power": 55,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "TM / treinamento",
+          "text": "Atinge os oponentes com uma rajada gelada e reduz a Speed dos alvos atingidos em 1 estágio."
+        },
+        {
+          "name": "Surf",
+          "type": "Water",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Cria uma grande onda que atinge os demais Pokémon próximos, incluindo aliados na área."
+        },
+        {
+          "name": "Rain Dance",
+          "type": "Water",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Invoca Rain por 5 turnos. No Heaven & Hell, golpes Water recebem +1d6 e golpes Fire sofrem -1d6 enquanto a chuva durar."
+        },
+        {
+          "name": "Substitute",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Consome 1/4 do HP máximo do usuário para criar um substituto que recebe ataques e bloqueia efeitos de status conforme as regras do Move, até ser destruído."
+        },
+        {
+          "name": "Brick Break",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Golpeia o alvo e destrói Light Screen e Reflect do lado atingido."
+        },
+        {
+          "name": "Ice Punch",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Atinge o alvo com um soco gelado. Tem 10% de chance de causar Freeze."
+        },
+        {
+          "name": "Taunt",
+          "type": "Dark",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Provoca o alvo por 3 turnos, impedindo-o de usar Moves Status."
+        },
+        {
+          "name": "Work Up",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Eleva o Attack e a Sp.Atk do usuário em 1 estágio."
+        }
+      ],
+      "evolution": {
+        "previous": "Platycco",
+        "next": "Plaskatto",
+        "level": "18",
+        "requirements": "Nível 18",
+        "chainId": "c5f794ff-1b69-5f33-abf4-d3eb1fc75a01",
+        "stage": 1,
+        "previousId": "b26a9f4f-2409-5948-abaa-1e4bc4d7575d",
+        "nextIds": [
+          "cd534b44-cf76-599b-8dad-b9b6e71b3640"
+        ]
+      },
+      "specialRules": "Atacante misto: Attack e Sp.Atk possuem o mesmo valor base. Evolui de Platycco no nível 18 e para Plaskatto no nível 36. Kappa Style substitui a média padrão de 3 acertos dos Moves de 2–5 hits por 5 acertos. A Ability garante a quantidade de hits, mantendo o teste de Precisão do Move e o teto normal de 90% do sistema. Usa-se 1 teste de Accuracy para o Move inteiro; Attack/Sp.Atk entra no primeiro hit, e STAB e efeitos definidos por hit seguem as regras de Multi-Hit da ficha. Os níveis dos Moves indicam opções de aprendizado.",
+      "notes": "",
+      "coverArtId": null,
+      "coverUrl": "pokemons/artes/plakappa.png",
+      "status": "published",
+      "revision": 1,
+      "publishedRevision": 1,
+      "createdAt": "2026-10-22T16:00:00Z",
+      "updatedAt": "2026-10-22T16:00:00Z",
+      "publishedAt": "2026-10-22T16:00:00Z",
+      "repository": {
+        "key": "plakappa",
+        "file": "pokemons/plakappa.pokemon.json",
+        "revision": 1,
+        "sourceOnly": true
+      }
+    },
+    {
+      "id": "cd534b44-cf76-599b-8dad-b9b6e71b3640",
+      "slug": "plaskatto",
+      "dex": 9,
+      "name": "Plaskatto",
+      "classification": "fakemon",
+      "category": "Pokémon Mestre das Correntes",
+      "description": "Mestre do Kappa Style, Plaskatto alterna sequências marciais e rajadas de água sem perder o ritmo. Suas placas turquesa ajudam a conduzir a água durante os movimentos, enquanto a disciplina adquirida nos treinos permite combinar força física e energia especial com a mesma eficiência.",
+      "type1": "Water",
+      "type2": "Fighting",
+      "baseStats": {
+        "hp": 80,
+        "atk": 110,
+        "def": 70,
+        "spa": 110,
+        "spd": 70,
+        "spe": 90
+      },
+      "abilities": [
+        {
+          "name": "Kappa Style",
+          "text": "Os Moves Multi-Hit do usuário sempre realizam o número máximo de acertos previsto para o golpe. Ao nocautear um alvo, o usuário recebe +1 estágio de Precisão."
+        }
+      ],
+      "moves": [
+        {
+          "name": "Scratch",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Arranha o alvo com suas garras."
+        },
+        {
+          "name": "Growl",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Reduz o Attack do alvo em 1 estágio."
+        },
+        {
+          "name": "Water Gun",
+          "type": "Water",
+          "category": "Special",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 3 / herdado",
+          "text": "Dispara um jato de água contra o alvo."
+        },
+        {
+          "name": "Quick Attack",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 6 / herdado",
+          "text": "Avança rapidamente contra o alvo. Prioridade +1."
+        },
+        {
+          "name": "Aqua Jet",
+          "type": "Water",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 9 / herdado",
+          "text": "Envolve o corpo em água e investe contra o alvo. Prioridade +1."
+        },
+        {
+          "name": "Fury Swipes",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 18,
+          "accuracy": 80,
+          "accuracyCanonical": 80,
+          "learn": "Lv. 12 / herdado",
+          "text": "Move Multi-Hit de 2 a 5 acertos. No Heaven & Hell, usa 3 acertos fixos, ou 5 em Crítico Natural. Abilities que garantem o máximo de acertos substituem essa quantidade. O Power indicado é por acerto."
+        },
+        {
+          "name": "Focus Energy",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 15 / herdado",
+          "text": "Concentra-se para ampliar sua margem de crítico, seguindo as regras de Crítico Artificial do Heaven & Hell."
+        },
+        {
+          "name": "Water Pulse",
+          "type": "Water",
+          "category": "Special",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 17 / herdado",
+          "text": "Atinge o alvo com uma pulsação de água. Tem 20% de chance de causar Confusion."
+        },
+        {
+          "name": "Arm Thrust",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 15,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 18 / herdado",
+          "text": "Move Multi-Hit de 2 a 5 acertos com golpes de palma. Com Kappa Style, realiza 5 acertos. O Power indicado é por acerto."
+        },
+        {
+          "name": "Double Hit",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 35,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 21",
+          "text": "Move Multi-Hit com 2 acertos fixos. O Power indicado é por acerto."
+        },
+        {
+          "name": "Bubble Beam",
+          "type": "Water",
+          "category": "Special",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 25",
+          "text": "Dispara uma rajada de bolhas. Tem 10% de chance de reduzir a Speed do alvo em 1 estágio."
+        },
+        {
+          "name": "Water Shuriken",
+          "type": "Water",
+          "category": "Special",
+          "power": 15,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 29",
+          "text": "Move Special Multi-Hit de 2 a 5 acertos. Com Kappa Style, realiza 5 acertos. Prioridade +1. O Power indicado é por acerto."
+        },
+        {
+          "name": "Drain Punch",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 33",
+          "text": "Um soco que drena a vitalidade do alvo. Cura 25% do dano final causado, após resistências e defesas. É Contato e Punch, portanto recebe sinergia de Iron Fist. Em crítico, apenas o dano base é maximizado; a cura continua sendo 25% do dano final causado.\n\nTags: Rework • Contato • Punch • Cura."
+        },
+        {
+          "name": "Scald",
+          "type": "Water",
+          "category": "Special",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 35",
+          "text": "Atinge o alvo com água escaldante. Tem 30% de chance de causar Burn."
+        },
+        {
+          "name": "Triple Dive",
+          "type": "Water",
+          "category": "Physical",
+          "power": 30,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "Ao evoluir / Lv. 36",
+          "text": "Move Multi-Hit de 3 acertos fixos, atacando o alvo com jatos de água. O Power indicado é por acerto. Kappa Style mantém os 3 acertos próprios deste golpe."
+        },
+        {
+          "name": "Aura Sphere",
+          "type": "Fighting",
+          "category": "Special",
+          "power": 80,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 40",
+          "text": "Dispara uma esfera de aura. Não realiza teste de acerto e ignora Evasiva; ainda respeita proteções e situações de invulnerabilidade aplicáveis."
+        },
+        {
+          "name": "Liquidation",
+          "type": "Water",
+          "category": "Physical",
+          "power": 85,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 44",
+          "text": "Golpeia o alvo com uma forte pressão de água. Tem 20% de chance de reduzir a Defense do alvo em 1 estágio."
+        },
+        {
+          "name": "Focus Blast",
+          "type": "Fighting",
+          "category": "Special",
+          "power": 120,
+          "accuracy": 70,
+          "accuracyCanonical": 70,
+          "learn": "Lv. 48",
+          "text": "Dispara uma concentração de energia de combate. Tem 10% de chance de reduzir a Sp.Def do alvo em 1 estágio."
+        },
+        {
+          "name": "Close Combat",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 120,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 52",
+          "text": "Ataca intensamente em curta distância. Após o golpe, a Defense e a Sp.Def do usuário caem em 1 estágio."
+        },
+        {
+          "name": "Hydro Pump",
+          "type": "Water",
+          "category": "Special",
+          "power": 110,
+          "accuracy": 80,
+          "accuracyCanonical": 80,
+          "learn": "Lv. 56",
+          "text": "Dispara um jato de água de altíssima pressão contra o alvo."
+        },
+        {
+          "name": "Protect",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Protege o usuário dos golpes recebidos neste turno. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Ice Beam",
+          "type": "Ice",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Dispara um raio de gelo. Tem 10% de chance de causar Freeze."
+        },
+        {
+          "name": "Icy Wind",
+          "type": "Ice",
+          "category": "Special",
+          "power": 55,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "TM / treinamento",
+          "text": "Atinge os oponentes com uma rajada gelada e reduz a Speed dos alvos atingidos em 1 estágio."
+        },
+        {
+          "name": "Surf",
+          "type": "Water",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Cria uma grande onda que atinge os demais Pokémon próximos, incluindo aliados na área."
+        },
+        {
+          "name": "Rain Dance",
+          "type": "Water",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Invoca Rain por 5 turnos. No Heaven & Hell, golpes Water recebem +1d6 e golpes Fire sofrem -1d6 enquanto a chuva durar."
+        },
+        {
+          "name": "Substitute",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Consome 1/4 do HP máximo do usuário para criar um substituto que recebe ataques e bloqueia efeitos de status conforme as regras do Move, até ser destruído."
+        },
+        {
+          "name": "Brick Break",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Golpeia o alvo e destrói Light Screen e Reflect do lado atingido."
+        },
+        {
+          "name": "Ice Punch",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Atinge o alvo com um soco gelado. Tem 10% de chance de causar Freeze."
+        },
+        {
+          "name": "Taunt",
+          "type": "Dark",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Provoca o alvo por 3 turnos, impedindo-o de usar Moves Status."
+        },
+        {
+          "name": "Work Up",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Eleva o Attack e a Sp.Atk do usuário em 1 estágio."
+        },
+        {
+          "name": "Hydro Cannon",
+          "type": "Water",
+          "category": "Special",
+          "power": 150,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Tutor / treinamento avançado",
+          "text": "Dispara uma torrente de água de potência extrema. O usuário precisa recarregar no turno seguinte."
+        },
+        {
+          "name": "Aqua Tail",
+          "type": "Water",
+          "category": "Physical",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lembrança / treinamento",
+          "text": "Golpeia o alvo com a cauda envolvida por uma corrente de água."
+        }
+      ],
+      "evolution": {
+        "previous": "Plakappa",
+        "next": "",
+        "level": "36",
+        "requirements": "Nível 36",
+        "chainId": "c5f794ff-1b69-5f33-abf4-d3eb1fc75a01",
+        "stage": 2,
+        "previousId": "e288e550-d06b-5808-8c69-ea3c272086b3",
+        "nextIds": []
+      },
+      "specialRules": "Estágio final da linha: evolui de Plakappa no nível 36 e mantém Water/Fighting. Atacante misto, com Attack e Sp.Atk base 110. Kappa Style substitui a média padrão de 3 acertos dos Moves de 2–5 hits por 5 acertos; golpes com quantidade fixa mantêm seu máximo próprio. A Ability garante a quantidade de hits, mantendo o teste de Precisão do Move e o teto normal de 90% do sistema. Usa-se 1 teste de Accuracy para o Move inteiro; Attack/Sp.Atk entra no primeiro hit, e STAB e efeitos definidos por hit seguem as regras de Multi-Hit da ficha. Os níveis dos Moves indicam opções de aprendizado.",
+      "notes": "",
+      "coverArtId": null,
+      "coverUrl": "pokemons/artes/plaskatto.png",
+      "status": "published",
+      "revision": 1,
+      "publishedRevision": 1,
+      "createdAt": "2026-10-22T16:00:00Z",
+      "updatedAt": "2026-10-22T16:00:00Z",
+      "publishedAt": "2026-10-22T16:00:00Z",
+      "repository": {
+        "key": "plaskatto",
+        "file": "pokemons/plaskatto.pokemon.json",
+        "revision": 1,
+        "sourceOnly": true
+      }
+    },
+    {
+      "id": "b26a9f4f-2409-5948-abaa-1e4bc4d7575d",
+      "slug": "platycco",
+      "dex": 7,
+      "name": "Platycco",
+      "classification": "fakemon",
+      "category": "Pokémon Ornitorrinco",
+      "description": "Curioso e brincalhão, Platycco treina nas margens dos rios, alternando pequenos jatos de água com golpes rápidos de suas patas. Ainda está aprendendo a coordenar a força do corpo e o controle da água, mas já demonstra talento para os dois estilos de ataque.",
+      "type1": "Water",
+      "type2": "",
+      "baseStats": {
+        "hp": 50,
+        "atk": 55,
+        "def": 45,
+        "spa": 55,
+        "spd": 45,
+        "spe": 55
+      },
+      "abilities": [
+        {
+          "name": "Torrent",
+          "text": "Quando estiver com 1/3 ou menos do HP máximo, os Moves Water do usuário causam +2d6 de dano e empurram o alvo 1 espaço ao acertarem, se o tamanho permitir. Os efeitos terminam se o HP subir acima desse limite."
+        }
+      ],
+      "moves": [
+        {
+          "name": "Scratch",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1",
+          "text": "Arranha o alvo com suas garras."
+        },
+        {
+          "name": "Growl",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1",
+          "text": "Reduz o Attack do alvo em 1 estágio."
+        },
+        {
+          "name": "Water Gun",
+          "type": "Water",
+          "category": "Special",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 3",
+          "text": "Dispara um jato de água contra o alvo."
+        },
+        {
+          "name": "Quick Attack",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 6",
+          "text": "Avança rapidamente contra o alvo. Prioridade +1."
+        },
+        {
+          "name": "Aqua Jet",
+          "type": "Water",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 9",
+          "text": "Envolve o corpo em água e investe contra o alvo. Prioridade +1."
+        },
+        {
+          "name": "Fury Swipes",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 18,
+          "accuracy": 80,
+          "accuracyCanonical": 80,
+          "learn": "Lv. 12",
+          "text": "Move Multi-Hit de 2 a 5 acertos. No Heaven & Hell, usa 3 acertos fixos, ou 5 em Crítico Natural. Abilities que garantem o máximo de acertos substituem essa quantidade. O Power indicado é por acerto."
+        },
+        {
+          "name": "Focus Energy",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 15",
+          "text": "Concentra-se para ampliar sua margem de crítico, seguindo as regras de Crítico Artificial do Heaven & Hell."
+        },
+        {
+          "name": "Water Pulse",
+          "type": "Water",
+          "category": "Special",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 17",
+          "text": "Atinge o alvo com uma pulsação de água. Tem 20% de chance de causar Confusion."
+        },
+        {
+          "name": "Double Hit",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 35,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 21",
+          "text": "Move Multi-Hit com 2 acertos fixos. O Power indicado é por acerto."
+        },
+        {
+          "name": "Bubble Beam",
+          "type": "Water",
+          "category": "Special",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 25",
+          "text": "Dispara uma rajada de bolhas. Tem 10% de chance de reduzir a Speed do alvo em 1 estágio."
+        },
+        {
+          "name": "Aqua Tail",
+          "type": "Water",
+          "category": "Physical",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 29",
+          "text": "Golpeia o alvo com a cauda envolvida por uma corrente de água."
+        },
+        {
+          "name": "Scald",
+          "type": "Water",
+          "category": "Special",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 33",
+          "text": "Atinge o alvo com água escaldante. Tem 30% de chance de causar Burn."
+        },
+        {
+          "name": "Hydro Pump",
+          "type": "Water",
+          "category": "Special",
+          "power": 110,
+          "accuracy": 80,
+          "accuracyCanonical": 80,
+          "learn": "Lv. 41",
+          "text": "Dispara um jato de água de altíssima pressão contra o alvo."
+        },
+        {
+          "name": "Protect",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Protege o usuário dos golpes recebidos neste turno. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Ice Beam",
+          "type": "Ice",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Dispara um raio de gelo. Tem 10% de chance de causar Freeze."
+        },
+        {
+          "name": "Icy Wind",
+          "type": "Ice",
+          "category": "Special",
+          "power": 55,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "TM / treinamento",
+          "text": "Atinge os oponentes com uma rajada gelada e reduz a Speed dos alvos atingidos em 1 estágio."
+        },
+        {
+          "name": "Surf",
+          "type": "Water",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Cria uma grande onda que atinge os demais Pokémon próximos, incluindo aliados na área."
+        },
+        {
+          "name": "Rain Dance",
+          "type": "Water",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Invoca Rain por 5 turnos. No Heaven & Hell, golpes Water recebem +1d6 e golpes Fire sofrem -1d6 enquanto a chuva durar."
+        },
+        {
+          "name": "Substitute",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Consome 1/4 do HP máximo do usuário para criar um substituto que recebe ataques e bloqueia efeitos de status conforme as regras do Move, até ser destruído."
+        }
+      ],
+      "evolution": {
+        "previous": "",
+        "next": "Plakappa",
+        "level": "",
+        "requirements": "",
+        "chainId": "c5f794ff-1b69-5f33-abf4-d3eb1fc75a01",
+        "stage": 0,
+        "previousId": null,
+        "nextIds": [
+          "e288e550-d06b-5808-8c69-ea3c272086b3"
+        ]
+      },
+      "specialRules": "Atacante misto: Attack e Sp.Atk possuem o mesmo valor base. Evolui para Plakappa no nível 18, adquirindo o tipo Fighting e a Ability Kappa Style. Os níveis dos Moves indicam opções de aprendizado, não um conjunto inteiro já aprendido por um indivíduo.",
+      "notes": "",
+      "coverArtId": null,
+      "coverUrl": "pokemons/artes/platycco.png",
+      "status": "published",
+      "revision": 1,
+      "publishedRevision": 1,
+      "createdAt": "2026-10-22T16:00:00Z",
+      "updatedAt": "2026-10-22T16:00:00Z",
+      "publishedAt": "2026-10-22T16:00:00Z",
+      "repository": {
+        "key": "platycco",
+        "file": "pokemons/platycco.pokemon.json",
+        "revision": 1,
+        "sourceOnly": true
+      }
+    }
+  ],
   "forms": [],
-  "hash": "7a3723edcffa8eac72e364c1303e8659b3d5df67970064d0a55886983a2bc85c"
+  "hash": "408facb035f48175b3ee2363981335ffaea1db4341478a4b6fec8e8876f4a04d"
 }
