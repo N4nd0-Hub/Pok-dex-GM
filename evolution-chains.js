@@ -11,7 +11,7 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     'Flying','Psychic','Bug','Rock','Ghost','Dragon','Dark','Steel','Fairy'];
   const STATS = [['hp','HP'],['atk','Attack'],['def','Defense'],['spa','Sp.Atk'],['spd','Sp.Def'],['spe','Speed']];
   const STAT_DEFAULT = {hp:50,atk:50,def:50,spa:50,spd:50,spe:50};
-  const ACTIONS = new Set(['chainWizard','chainFromDetail','chainFromEditor','chainAdd',
+  const ACTIONS = new Set(['chainScale','chainPool','chainPoolClear','chainWizard','chainFromDetail','chainFromEditor','chainAdd',
     'chainRemove','chainUp','chainDown','chainSave','chainEditStage','chainSplit','chainSplitSave']);
   const own = (obj,key) => Object.prototype.hasOwnProperty.call(obj,key);
   const clone = x => JSON.parse(JSON.stringify(x));
@@ -19,10 +19,29 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
   const safe = value => esc(String(value ?? ''));
   let wizard = null;
 
-  function newStage() {
-    return {id:crypto.randomUUID(),mode:'new',name:'',slug:'',slugEdited:false,
+  function newStage(prev=null) {
+    const base={id:crypto.randomUUID(),mode:'new',name:'',slug:'',slugEdited:false,
       dex:'',classification:'fakemon',category:'',description:'',type1:'Normal',type2:'',
-      baseStats:clone(STAT_DEFAULT),requirements:'',level:''};
+      baseStats:clone(STAT_DEFAULT),requirements:'',level:'',inherit:true};
+    if(!prev)return base;
+    // Herda tipagem, classe e uma distribuição de stats um pouco mais forte da etapa anterior.
+    const prevStats=prev.baseStats||STAT_DEFAULT;
+    const prevBst=STATS.reduce((sum,[k])=>sum+(Number(prevStats[k])||0),0)||300;
+    const target=Math.min(720,Math.round(prevBst*(prevBst<350?1.38:1.3)/5)*5);
+    const prevDex=Number(prev.dex)||0;
+    return {...base,classification:prev.classification||'fakemon',type1:prev.type1||'Normal',type2:prev.type2||'',
+      baseStats:scaleStats(prevStats,target),dex:prevDex?String(prevDex+1):'',
+      level:prev.level?String(Math.min(100,Number(prev.level)+16)):'16'};
+  }
+  function scaleStats(stats,target){
+    const bst=STATS.reduce((sum,[k])=>sum+(Number(stats?.[k])||0),0);
+    if(!bst)return clone(STAT_DEFAULT);
+    const out={};let total=0;
+    for(const [k] of STATS){out[k]=Math.max(1,Math.min(255,Math.round((Number(stats[k])||0)*target/bst)));total+=out[k];}
+    // corrige arredondamento no maior atributo
+    const top=STATS.map(([k])=>k).sort((a,b)=>out[b]-out[a])[0];
+    out[top]=Math.max(1,Math.min(255,out[top]+(target-total)));
+    return out;
   }
   function existingStage(s) {
     return {id:s.id,mode:'existing',name:s.name,slug:s.slug,expectedRevision:s.revision,
@@ -39,7 +58,7 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     const cid=s.evolution?.chainId;
     const connected=cid?chainMembers(cid):[];
     return {chainId:cid||crypto.randomUUID(),
-      rows:connected.length?connected.map(existingStage):[existingStage(s),newStage()],
+      rows:connected.length?connected.map(existingStage):(()=>{const first=existingStage(s);return [first,newStage(first)];})(),
       dirty:false,saving:false,publish:false};
   }
   function addButtons() {
@@ -89,9 +108,12 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     target.innerHTML=`<div class="chain-info">
         <strong>⤳ Uma linha evolutiva, vários Pokémon.</strong>
         Você pode combinar espécies existentes com Fakemon novos. Clique em <b>Salvar linha</b> para
-        cadastrar e vincular todos os estágios em uma operação. Depois, complete Moves, Abilities e artes individuais.
+        cadastrar e vincular todos os estágios em uma operação. Etapas novas herdam tipos, Abilities e Moves da anterior, e o BST alvo escala os stats na mesma proporção.
       </div>
       <div class="chain-preview" id="chainPreviewBar" aria-label="Prévia da linha evolutiva"></div>
+      ${window.POKEDEX_MOVE_PROFILES?`<div class="chain-pool"><div><b>✨ Move pool da linha ${wizard.pool?`· ${wizard.pool.moves.length} golpes (${safe(wizard.pool.profileLabel)})`:''}</b>
+        <small>${wizard.pool?'Será adicionado a todos os estágios novos ao salvar.':'Escolha um perfil (Atacante Especial, Tanque…) e os golpes vão para todos os estágios novos.'}</small></div>
+        <span>${wizard.pool?'<button class="btn btn-outline btn-sm" data-action="chainPoolClear">Remover</button> ':''}<button class="btn btn-primary btn-sm" data-action="chainPool">${wizard.pool?'Gerar de novo':'Gerar move pool'}</button></span></div>`:''}
       ${wizard.rows.map(drawStage).join('')}
       <div class="chain-toolbar"><button class="btn btn-outline" data-action="chainAdd" ${wizard.rows.length>=8?'disabled':''}>＋ Adicionar evolução</button>
         <span>${wizard.rows.length}/8 estágios</span></div>
@@ -131,7 +153,10 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
           <label class="chain-field"><span>Tipo 2</span><select data-chain-index="${i}" data-chain-field="type2">${typeOptions(r.type2,true)}</select></label>
           <div class="chain-stats-title">Base Stats <b data-chain-bst="${i}">BST ${bst}</b></div>
           <div class="chain-stats">${stats}</div>
-          <label class="chain-field chain-full"><span>Descrição rápida (opcional)</span><input maxlength="500" placeholder="Pokémon personalizado, detalhes da espécie…" data-chain-index="${i}" data-chain-field="description" value="${safe(r.description)}"></label>`}
+          <label class="chain-field chain-full"><span>Descrição rápida (opcional)</span><input maxlength="500" placeholder="Pokémon personalizado, detalhes da espécie…" data-chain-index="${i}" data-chain-field="description" value="${safe(r.description)}"></label>
+          ${i?`<div class="chain-inherit chain-full"><label><input type="checkbox" data-chain-index="${i}" data-chain-inherit ${r.inherit!==false?'checked':''}> Herdar Abilities e Moves de ${safe(stageTitle(wizard.rows[i-1],i-1))}</label>
+            <span class="chain-bst-tool">BST alvo <input type="number" min="60" max="900" step="5" data-chain-index="${i}" data-chain-field="bstTarget" value="${safe(r.bstTarget||bst)}">
+            <button type="button" class="btn btn-outline btn-sm" data-action="chainScale" data-index="${i}" title="Usa a mesma proporção de stats da etapa anterior">Escalar da etapa anterior</button></span></div>`:''}`}
       </div>
       ${i?`<div class="chain-method">
         <span class="chain-method-symbol">↓</span><div class="chain-method-fields">
@@ -157,6 +182,37 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     if(cid&&cid!==wizard.chainId)return toast('Este Pokémon pertence a outra linha. Abra a linha dele para continuar ou editar.','warning');
     wizard.rows[i]={...existingStage(s),requirements:row.requirements,level:row.level};
     wizard.dirty=true;drawWizard();
+  }
+  function scaleRow(i){
+    const r=wizard.rows[i],prev=wizard.rows[i-1];if(!r||!prev||r.mode==='existing')return;
+    const base=prev.mode==='existing'?(byId(app.items,prev.id)?.baseStats||prev.baseStats):prev.baseStats;
+    const target=Math.max(60,Math.min(900,Number(r.bstTarget)||STATS.reduce((s,[k])=>s+(Number(r.baseStats[k])||0),0)));
+    r.baseStats=scaleStats(base,target);r.bstTarget=target;wizard.dirty=true;drawWizard();
+  }
+  function openLinePool(){
+    const M=window.POKEDEX_MOVE_PROFILES;if(!M)return;
+    const last=[...wizard.rows].reverse().find(r=>r.mode==='new'||byId(app.items,r.id))||wizard.rows[0];
+    const src=last.mode==='existing'?(byId(app.items,last.id)||last):last;
+    const maxLevel=Math.max(50,Math.min(80,(Number(wizard.rows[wizard.rows.length-1].level)||36)+24));
+    M.open({types:[src.type1,src.type2].filter(Boolean),stats:src.baseStats,maxLevel,
+      title:'Move pool da linha evolutiva',subtitle:'Os golpes escolhidos entram em todos os estágios novos desta linha.',
+      applyLabel:'Usar na linha',
+      onApply:(entries,{profile})=>{wizard.pool={moves:entries,profileLabel:M.PROFILES[profile]?.label||profile};wizard.dirty=true;drawWizard();}});
+  }
+  // Abilities/Moves de cada estágio novo: herdados da etapa anterior + move pool da linha.
+  function inheritedData(entries){
+    const out=new Map();let prev=null;
+    entries.forEach((e,i)=>{
+      const row=wizard.rows[i];
+      if(e.existing){const s=byId(app.items,e.id);prev={abilities:clone(s?.abilities||[]),moves:clone(s?.moves||[])};return;}
+      let abilities=[],moves=[];
+      if(row?.inherit!==false&&prev){abilities=clone(prev.abilities);moves=clone(prev.moves).map(m=>({...m,learn:m.learn&&/herdado/i.test(m.learn)?m.learn:(m.learn||'herdado')}));}
+      if(wizard.pool)moves=window.POKEDEX_MOVE_PROFILES.mergeMoves(moves,clone(wizard.pool.moves),false);
+      abilities=abilities.filter(a=>a&&clean(a.name));
+      if(abilities.length||moves.length)out.set(e.id,{abilities,moves});
+      prev={abilities,moves};
+    });
+    return out;
   }
   function getPayload(){
     if(!wizard||wizard.rows.length<2||wizard.rows.length>8)throw Error('Informe de 2 a 8 estágios.');
@@ -205,6 +261,7 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     wizard.saving=true;
     const btn=document.getElementById('chainSaveButton');if(btn){btn.disabled=true;btn.textContent='Salvando estágios…';}
     let publishErrors=[];const publishedNames=[],publishedIds=[];
+    const inherit=inheritedData(entries);
     try {
       if(app.mode==='demo'){
         const ids=entries.map(e=>e.id), names=entries.map(e=>e.existing?byId(app.items,e.id).name:e.name);
@@ -214,10 +271,11 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
             previousId:i?ids[i-1]:null,nextIds:i<ids.length-1?[ids[i+1]]:[],
             previous:i?names[i-1]:'',next:i<ids.length-1?names[i+1]:'',
             requirements:e.requirements||'',level:e.level||''};
+          const extra=inherit.get(e.id)||{abilities:[],moves:[]};
           const model=old?{...clone(old),evolution,revision:(old.revision||1)+1,updatedAt:new Date().toISOString()}:
             {id:e.id,name:e.name,slug:e.slug,dex:e.dex,classification:e.classification,
              category:e.category,description:e.description,type1:e.type1,type2:e.type2,
-             baseStats:e.baseStats,abilities:[],evolution,moves:[],specialRules:'',notes:'',
+             baseStats:e.baseStats,abilities:extra.abilities,evolution,moves:extra.moves,specialRules:'',notes:'',
              coverArtId:null,status:'draft',revision:1,publishedRevision:null,updatedAt:new Date().toISOString()};
           app.items=app.items.filter(s=>s.id!==e.id).concat(model);
         }
@@ -231,6 +289,10 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
         const result=await app.client.rpc('pokedex_save_evolution_chain',
           {p_chain_id:wizard.chainId,p_entries:entries});
         if(result.error)throw result.error;
+        for(const [id,data] of inherit){
+          const upd=await app.client.from('pokedex_species').update({abilities:data.abilities,moves:data.moves}).eq('id',id);
+          if(upd.error)publishErrors.push(`${entries.find(x=>x.id===id)?.name||id}: Abilities/Moves não copiados (${upd.error.message})`);
+        }
         if(shouldPublish){
           for(const e of entries){
             const result=await app.client.rpc('pokedex_publish',{p_id:e.id});
@@ -297,7 +359,10 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     if(act==='chainWizard')openWizard();
     else if(act==='chainFromDetail')openWizard(el.dataset.id);
     else if(act==='chainFromEditor')openWizard(app.editor?.model?.id);
-    else if(act==='chainAdd' && wizard && wizard.rows.length<8){wizard.rows.push(newStage());wizard.dirty=true;drawWizard();}
+    else if(act==='chainAdd' && wizard && wizard.rows.length<8){wizard.rows.push(newStage(wizard.rows[wizard.rows.length-1]));wizard.dirty=true;drawWizard();}
+    else if(act==='chainScale' && wizard){scaleRow(index);}
+    else if(act==='chainPool' && wizard){openLinePool();}
+    else if(act==='chainPoolClear' && wizard){wizard.pool=null;drawWizard();}
     else if(act==='chainRemove' && wizard && wizard.rows.length>2){wizard.rows.splice(index,1);wizard.dirty=true;drawWizard();}
     else if(act==='chainUp')swap(index,index-1);
     else if(act==='chainDown')swap(index,index+1);
@@ -322,7 +387,14 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     }else if(el.dataset.chainField){
       const field=el.dataset.chainField;
       if(field==='mode'||field==='existingId')return;
+      const before=r[field];
       r[field]=el.value;
+      if(field==='type1'||field==='type2'||field==='classification'){
+        // propaga para as próximas etapas novas que ainda estavam iguais
+        let changed=false;
+        for(let j=+i+1;j<wizard.rows.length;j++){const n=wizard.rows[j];if(n.mode!=='new'||n[field]!==before)break;n[field]=el.value;changed=true;}
+        if(changed){drawWizard();return;}
+      }
       if(field==='slug')r.slugEdited=true;
       if(field==='name'&&!r.slugEdited){r.slug=slug(el.value);
         const input=document.querySelector(`[data-chain-index="${i}"][data-chain-field="slug"]`);
@@ -334,6 +406,7 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     if(!wizard||document.getElementById('modal')?.dataset.kind!=='chain-wizard')return;
     const el=event.target;
     if(el.id==='chainPublishAll'){wizard.publish=el.checked;return;}
+    if(el.dataset.chainInherit!=null){const r=wizard.rows[+el.dataset.chainIndex];if(r){r.inherit=el.checked;wizard.dirty=true;}return;}
     const i=el.dataset.chainIndex;if(i==null)return;
     if(el.dataset.chainField==='mode')setMode(+i,el.value);
     else if(el.dataset.chainField==='existingId')setExisting(+i,el.value);
