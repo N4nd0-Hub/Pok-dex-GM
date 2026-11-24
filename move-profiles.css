@@ -50,3 +50,7 @@
 .chain-pool div{display:grid;gap:3px}
 .chain-pool small{color:var(--muted);font-size:12.5px}
 @media (max-width:760px){.mp-cols{grid-template-columns:1fr}.mp-move{grid-template-columns:auto 40px 1fr auto}.mp-move small{display:none}.mp-head,.mp-body,.mp-foot{padding-left:14px;padding-right:14px}}
+.mp-copy{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px;padding:12px 14px;border:1px dashed var(--line2,#344457);border-radius:14px;background:var(--surface2,#141e2c)}
+.mp-copy>div{display:grid;gap:4px;flex:1;min-width:240px}
+.mp-copy small{color:var(--muted);font-size:12.5px}
+.mp-copy small b{color:var(--text)}

@@ -262,6 +262,71 @@
         API.toast?.(`${entries.length} golpe(s) adicionados ao move pool.`,'success');
       }});
   }
+  /* ---------- Copiar golpes para as evoluções ---------- */
+  function laterStages(s){
+    const items=API.app?.items||[];const out=[];const seen=new Set([s.id]);
+    let queue=[...(s.evolution?.nextIds||[])];
+    // também aceita linhas antigas ligadas só pelo nome
+    if(!queue.length&&s.evolution?.next){const n=items.find(x=>x.name===s.evolution.next);if(n)queue.push(n.id);}
+    if(!queue.length&&s.evolution?.chainId){
+      const stage=Number(s.evolution.stage)||0;
+      queue=items.filter(x=>x.evolution?.chainId===s.evolution.chainId&&(Number(x.evolution.stage)||0)>stage).map(x=>x.id);
+    }
+    while(queue.length){
+      const id=queue.shift();if(seen.has(id))continue;seen.add(id);
+      const x=items.find(i=>i.id===id);if(!x||x.status==='archived')continue;
+      out.push(x);
+      for(const n of x.evolution?.nextIds||[])queue.push(n);
+      if(!(x.evolution?.nextIds||[]).length&&x.evolution?.next){const n=items.find(i=>i.name===x.evolution.next);if(n)queue.push(n.id);}
+    }
+    return out;
+  }
+  async function propagate(){
+    const ed=API.app?.editor;if(!ed)return;
+    const s=ed.model;const targets=laterStages(s);
+    if(!targets.length){API.toast?.('Este Pokémon não tem evoluções ligadas a ele.','warning');return;}
+    if(!(s.moves||[]).length){API.toast?.('Adicione golpes antes de copiar para as evoluções.','warning');return;}
+    const editable=targets.filter(t=>!t.repository?.sourceOnly);
+    const skipped=targets.filter(t=>t.repository?.sourceOnly);
+    if(!editable.length){API.toast?.('As evoluções são mantidas por arquivos do Git e não podem ser alteradas aqui.','warning');return;}
+    const names=editable.map(t=>t.name).join(', ');
+    const replace=document.querySelector('[data-mp-copy-replace]')?.checked;
+    if(!confirm(`Copiar ${s.moves.length} golpe(s) de ${s.name||'este Pokémon'} para ${names}?\n\n${replace?'Os golpes atuais das evoluções serão SUBSTITUÍDOS.':'Os golpes que elas já têm continuam; só entram os que faltam.'}`))return;
+    const app=API.app;let ok=0;const errors=[];
+    for(const t of editable){
+      const moves=mergeMoves(replace?[]:t.moves,JSON.parse(JSON.stringify(s.moves)),false);
+      try{
+        if(app.mode==='demo'){
+          const item=app.items.find(i=>i.id===t.id);item.moves=moves;item.revision=(item.revision||1)+1;item.updatedAt=new Date().toISOString();
+          if(item.status==='published'&&t.revision===t.publishedRevision){item.publishedRevision=item.revision;app.published=app.published.filter(p=>p.id!==item.id).concat({...JSON.parse(JSON.stringify(item)),notes:''});}
+        }else{
+          const wasLive=t.status==='published'&&t.revision===t.publishedRevision;
+          const res=await app.client.from('pokedex_species').update({moves}).eq('id',t.id).eq('revision',t.revision).select('id').maybeSingle();
+          if(res.error)throw res.error;
+          if(!res.data)throw Error('foi editado em outra sessão; atualize a Pokédex');
+          if(wasLive){const pub=await app.client.rpc('pokedex_publish',{p_id:t.id});if(pub.error)throw Error('golpes salvos, mas não republicado: '+pub.error.message);}
+        }
+        ok++;
+      }catch(e){errors.push(`${t.name}: ${e.message||e}`);}
+    }
+    if(app.mode==='demo')await API.demoPersist?.();else await API.loadCatalog?.();
+    API.render?.();
+    if(errors.length)API.toast?.(`Copiado para ${ok}; falhou: ${errors.join(' · ')}`,'error');
+    else API.toast?.(`Golpes copiados para ${names}. Salve este Pokémon também para guardar a lista dele.${skipped.length?' (Ignorados por serem do Git: '+skipped.map(x=>x.name).join(', ')+')':''}`,'success');
+    injectCopy(true);
+  }
+  function injectCopy(force){
+    const ed=API.app?.editor;const cta=document.querySelector('#editorBody .mp-cta');
+    if(!ed||!cta)return;
+    const box=document.querySelector('#editorBody .mp-copy');
+    const targets=laterStages(ed.model);
+    if(!targets.length){box?.remove();return;}
+    if(box&&!force)return;box?.remove();
+    const names=targets.map(t=>t.name).join(', ');
+    cta.insertAdjacentHTML('afterend',`<div class="mp-copy"><div><b>⤵ Mesmos golpes nas evoluções</b><small>Copia a lista de golpes deste Pokémon para <b>${esc(names)}</b>. Os que estiverem publicados são republicados.</small>
+      <label class="mp-check"><input type="checkbox" data-mp-copy-replace> Substituir os golpes das evoluções (em vez de só adicionar os que faltam)</label></div>
+      <button type="button" class="btn btn-outline" data-mp-copy>Copiar para ${targets.length>1?'as evoluções':esc(targets[0].name)}</button></div>`);
+  }
   function suggestMaxLevel(s){
     const lv=Number(s?.evolution?.level)||0;
     return Math.max(50,Math.min(75,lv?lv+25:60));
@@ -272,10 +337,15 @@
     if(add&&section&&!section.querySelector('[data-mp-open]')){
       const anchor=section.querySelector(':scope > p')||add;
       anchor.insertAdjacentHTML(anchor===add?'beforebegin':'afterend',`<div class="mp-cta"><div><b>✨ Gerar Move Pool por perfil</b><small>Escolha se ele é Atacante Especial, Tanque, Suporte… e receba golpes dos tipos dele, Normal e cobertura, já com níveis.</small></div><button type="button" class="btn btn-primary" data-mp-open>Gerar move pool</button></div>`);
+      injectCopy();
     }
   }
-  document.addEventListener('click',e=>{if(e.target.closest('[data-mp-open]')){e.preventDefault();e.stopPropagation();openForEditor();}},true);
+  document.addEventListener('click',e=>{
+    if(e.target.closest('[data-mp-open]')){e.preventDefault();e.stopPropagation();openForEditor();}
+    else if(e.target.closest('[data-mp-copy]')){e.preventDefault();e.stopPropagation();
+      const b=e.target.closest('[data-mp-copy]');b.disabled=true;propagate().finally(()=>{b.disabled=false;});}
+  },true);
   new MutationObserver(inject).observe(document.documentElement,{childList:true,subtree:true});
 
-  window.POKEDEX_MOVE_PROFILES={setup,PROFILES,SIZES,generate,resolve,open,close,mergeMoves,guessProfile};
+  window.POKEDEX_MOVE_PROFILES={setup,laterStages,propagate,PROFILES,SIZES,generate,resolve,open,close,mergeMoves,guessProfile};
 })();
