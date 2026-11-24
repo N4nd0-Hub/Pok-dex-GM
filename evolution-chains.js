@@ -31,7 +31,7 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     const prevDex=Number(prev.dex)||0;
     return {...base,classification:prev.classification||'fakemon',type1:prev.type1||'Normal',type2:prev.type2||'',
       baseStats:scaleStats(prevStats,target),dex:prevDex?String(prevDex+1):'',
-      level:prev.level?String(Math.min(100,Number(prev.level)+16)):'16'};
+      level:levelNumber(prev.level)?String(Math.min(100,Number(levelNumber(prev.level))+16)):'16'};
   }
   function scaleStats(stats,target){
     const bst=STATS.reduce((sum,[k])=>sum+(Number(stats?.[k])||0),0);
@@ -43,9 +43,11 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     out[top]=Math.max(1,Math.min(255,out[top]+(target-total)));
     return out;
   }
+  // Aceita "20", "Lv 20", "Lv. 20", "Nível 20"… e devolve só o número.
+  function levelNumber(v){const m=String(v??'').match(/\d{1,3}/);return m?String(Number(m[0])):'';}
   function existingStage(s) {
     return {id:s.id,mode:'existing',name:s.name,slug:s.slug,expectedRevision:s.revision,
-      requirements:clean(s.evolution?.requirements),level:clean(s.evolution?.level),
+      requirements:clean(s.evolution?.requirements),level:levelNumber(s.evolution?.level),
       classification:s.classification,type1:s.type1,type2:s.type2||'',
       baseStats:clone(s.baseStats),dex:s.dex||'',category:s.category||'',description:s.description||''};
   }
@@ -180,7 +182,7 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     if(wizard.rows.some((r,j)=>j!==i&&r.id===id))return toast('Este Pokémon já aparece em outra etapa.','warning');
     const cid=s.evolution?.chainId;
     if(cid&&cid!==wizard.chainId)return toast('Este Pokémon pertence a outra linha. Abra a linha dele para continuar ou editar.','warning');
-    wizard.rows[i]={...existingStage(s),requirements:row.requirements,level:row.level};
+    {const ex=existingStage(s);wizard.rows[i]={...ex,requirements:clean(row.requirements)||ex.requirements,level:levelNumber(row.level)||ex.level};}
     wizard.dirty=true;drawWizard();
   }
   function scaleRow(i){
@@ -219,9 +221,9 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     const slugs=new Set(), ids=new Set();
     return wizard.rows.map((r,i)=>{
       if(ids.has(r.id))throw Error('Um Pokémon não pode aparecer duas vezes na linha.');ids.add(r.id);
-      const req=clean(r.requirements);const level=clean(r.level);
+      const req=clean(r.requirements);const rawLevel=clean(r.level);const level=levelNumber(rawLevel);
       if(req.length>300)throw Error(`Método de evolução muito longo na etapa ${i+1}.`);
-      if(level&&(!/^\d{1,3}$/.test(level)||Number(level)<1||Number(level)>999))
+      if(rawLevel&&(!level||Number(level)<1||Number(level)>999))
         throw Error(`Nível de evolução inválido na etapa ${i+1}.`);
       if(i&& !req && !level)throw Error(`Informe o método ou o nível da evolução para ${r.name||'etapa '+(i+1)}.`);
       const requirements=req|| (i&&level?`Nível ${level}`:'');
@@ -506,9 +508,9 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     const parent=byId(app.items,splitParent);
     const child=byId(app.items,document.getElementById('splitChild')?.value);
     const requirement=clean(document.getElementById('splitRequirement')?.value);
-    const level=clean(document.getElementById('splitLevel')?.value);
+    const rawSplitLevel=clean(document.getElementById('splitLevel')?.value);const level=levelNumber(rawSplitLevel);
     if(!parent||!child||parent.id===child.id)return toast('Selecione dois Pokémon diferentes.','error');
-    if(level&&(!/^\\d{1,3}$/.test(level)||+level<1||+level>999))return toast('Nível inválido.','error');
+    if(rawSplitLevel&&(!level||+level<1||+level>999))return toast('Nível inválido.','error');
     if(!requirement&&!level)return toast('Informe o método ou nível de evolução.','error');
     if((parent.evolution?.nextIds||[]).includes(child.id))return toast('Esta evolução já está vinculada.','warning');
     if(child.evolution?.previousId&&child.evolution.previousId!==parent.id)return toast('Esta espécie já tem outra pré-evolução. Edite primeiro o vínculo existente.','warning');
