@@ -89,12 +89,12 @@ window.POKEDEX_CONFIG = {
   <script src="./move-lookup.js?bank=1" defer></script>
   <script src="./gm-tools.js?bank=1" defer></script>
   <script src="./move-pool-data.js?v=1" defer></script>
-  <script src="./move-profiles.js?v=1" defer></script>
+  <script src="./move-profiles.js?v=2" defer></script>
   <link rel="stylesheet" href="./repository-catalog.css?files=1">
   <script src="./repository-catalog.js?files=1" defer></script>
   <script src="./repository-ui.js?files=1" defer></script>
 
-  <link rel="stylesheet" href="./move-profiles.css?v=1">
+  <link rel="stylesheet" href="./move-profiles.css?v=2">
 </head>
 <body>
 <div class="app-shell">
@@ -382,7 +382,7 @@ $('modalShade').addEventListener('click',evt=>{if(evt.target===$('modalShade'))c
 window.addEventListener('beforeunload',evt=>{if(app.editor?.dirty){evt.preventDefault();evt.returnValue=''}});
 window.POKEDEX_MEGA_SETUP?.({app, isEditable, modalShell, openEditor, newForm, renderEditor, editorDirty, toast, slug, esc, byId});
 window.POKEDEX_EVOLUTION_SETUP?.({app, isEditable, modalShell, closeModal, closeDrawer, openEditor, toast, slug, esc, byId, visible, artTag, hydrateArt, render, demoPersist, loadCatalog});
-window.POKEDEX_GM_TOOLS_SETUP?.({app,isEditable,modalShell,closeModal,openEditor,renderEditor,editorDirty,toast,slug,esc,byId,render,newid,TYPES,STAT_KEYS,STAT_LABELS,statsTotal});window.POKEDEX_MOVE_PROFILES?.setup?.({app,editorDirty,refreshEditor,renderEditor,toast});
+window.POKEDEX_GM_TOOLS_SETUP?.({app,isEditable,modalShell,closeModal,openEditor,renderEditor,editorDirty,toast,slug,esc,byId,render,newid,TYPES,STAT_KEYS,STAT_LABELS,statsTotal});window.POKEDEX_MOVE_PROFILES?.setup?.({app,editorDirty,refreshEditor,renderEditor,toast,isEditable,byId,demoPersist,loadCatalog,render});
 window.POKEDEX_REPOSITORY_SETUP?.({app,esc,toast,render,modalShell,openEditor,openDetail,handleArt});
 app.displayLimit=24;
 init().then(async()=>{await window.POKEDEX_REPOSITORY_UI?.load();render();}).catch(e=>{console.error(e);toast('Falha ao iniciar: '+errMsg(e),'error')});
