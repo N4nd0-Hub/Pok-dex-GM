@@ -2,6 +2,1723 @@
   "format": "pokedex-repository-v1",
   "species": [
     {
+      "id": "69371229-9cae-5dc0-9ef2-2daf90191445",
+      "slug": "machamp-ondu",
+      "dex": 68,
+      "name": "Machamp (Ondu Form)",
+      "classification": "fakemon",
+      "category": "Pokémon Salva-vidas",
+      "description": "Os machos são mais descuidados e distraídos, passando a maior parte do tempo exibindo a musculatura e suas habilidades no surfe. Só aceitam missões de resgate quando podem se destacar diante de uma plateia. A pele um pouco pegajosa ajuda a se manterem presos às pranchas. Recentemente, tornou-se comum ver esta forma regional em outras regiões, como Alola. Passam a maior parte do tempo na praia mostrando os músculos aos treinadores, e por isso as escamas cobrem o corpo para mantê-los hidratados.",
+      "type1": "Water",
+      "type2": "Fighting",
+      "baseStats": {
+        "hp": 90,
+        "atk": 130,
+        "def": 80,
+        "spa": 55,
+        "spd": 85,
+        "spe": 65
+      },
+      "abilities": [
+        {
+          "name": "Water Veil",
+          "text": "O usuário é imune a Burn e remove o status imediatamente se adquirir a Ability. Enquanto estiver com o HP cheio, também recebe -1d6 de dano Fire."
+        },
+        {
+          "name": "No Guard",
+          "text": "Moves usados pelo usuário ou diretamente contra ele ignoram testes de Accuracy e Evasion e acertam automaticamente, desde que o alvo esteja ao alcance. O usuário também pode atingir alvos ocultos ou invisíveis, mas não ignora imunidades, proteção total ou obstáculos sólidos."
+        },
+        {
+          "name": "Swift Swim",
+          "text": "Durante Rain Dance ou chuva natural, o usuário recebe +2 estágios de Speed e ignora terreno difícil causado por água. O bônus é renovado a cada rodada, não acumula e termina quando a chuva acabar."
+        }
+      ],
+      "moves": [
+        {
+          "name": "Cut Back",
+          "type": "Water",
+          "category": "Physical",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Ao evoluir",
+          "text": "Move assinatura de Machamp de Ondu. Manobra de surfe que corta a onda de volta contra o alvo. 30% de chance de reduzir a Speed do alvo em 1 estágio. Durante chuva ou submerso, a chance passa a 100% e o golpe tem taxa de crítico aumentada (+1 estágio)."
+        },
+        {
+          "name": "Low Kick",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Chuta as pernas do alvo. Quanto mais pesado o alvo, maior o Power (de 20 a 120)."
+        },
+        {
+          "name": "Scary Face",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Assusta o alvo com uma expressão ameaçadora, reduzindo a Speed dele em 2 estágios."
+        },
+        {
+          "name": "Aqua Jet",
+          "type": "Water",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 4 / herdado",
+          "text": "Envolve o corpo em água e investe contra o alvo. Prioridade +1."
+        },
+        {
+          "name": "Low Sweep",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 7 / herdado",
+          "text": "Rasteira rápida nas pernas do alvo. Reduz a Speed do alvo em 1 estágio."
+        },
+        {
+          "name": "Mach Punch",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 10 / herdado",
+          "text": "Soco tão rápido que atinge antes do alvo reagir. Prioridade +1."
+        },
+        {
+          "name": "Chilling Water",
+          "type": "Water",
+          "category": "Special",
+          "power": 50,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 13 / herdado",
+          "text": "Joga água gelada no alvo, reduzindo o Attack dele em 1 estágio."
+        },
+        {
+          "name": "Revenge",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 16 / herdado",
+          "text": "Prioridade −4. Se o usuário sofreu dano de um ataque do alvo nesta rodada, o Power dobra."
+        },
+        {
+          "name": "CPR",
+          "type": "Water",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 22 / herdado",
+          "text": "Move assinatura dos Machop de Ondu: técnica de reanimação de salva-vidas. O usuário socorre um aliado adjacente ou a si mesmo, restaurando 1/2 do HP máximo e curando Sleep e Confusion. Se o alvo estiver com 1/4 do HP ou menos, também recebe +1 estágio de Defense até o fim da batalha. Falha se usado em rodadas seguidas."
+        },
+        {
+          "name": "Brick Break",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 25 / herdado",
+          "text": "Golpe de caratê que também quebra Reflect, Light Screen e Aurora Veil do lado do alvo."
+        },
+        {
+          "name": "Jet Punch",
+          "type": "Water",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 28",
+          "text": "Soco envolto num jato d'água, rápido demais para ser evitado. Prioridade +1."
+        },
+        {
+          "name": "On Guard",
+          "type": "Fighting",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 31",
+          "text": "Move regional de Ondu. Prioridade +3. O usuário assume a guarda: até o fim da rodada, os ataques físicos que o atingirem causam metade do dano. Se for atingido por um golpe de contato nesta rodada, recebe +1 estágio de Attack. Usos consecutivos falham."
+        },
+        {
+          "name": "Liquidation",
+          "type": "Water",
+          "category": "Physical",
+          "power": 85,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 37",
+          "text": "Golpe com toda a força da água. 20% de chance de reduzir a Defense do alvo em 1 estágio."
+        },
+        {
+          "name": "Waterfall",
+          "type": "Water",
+          "category": "Physical",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 38",
+          "text": "Investe contra o alvo com a força de uma cachoeira. 20% de chance de fazer o alvo hesitar (Flinch)."
+        },
+        {
+          "name": "Bulk Up",
+          "type": "Fighting",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 40",
+          "text": "Contrai os músculos: aumenta Attack e Defense do usuário em 1 estágio."
+        },
+        {
+          "name": "Drain Punch",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 41",
+          "text": "Um soco que drena a vitalidade do alvo. Cura 25% do dano final causado, após resistências e defesas. É Contato e Punch, portanto recebe sinergia de Iron Fist. Em crítico, apenas o dano base é maximizado; a cura continua sendo 25% do dano final causado.\n\nTags: Rework • Contato • Punch • Cura."
+        },
+        {
+          "name": "Cross Chop",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 100,
+          "accuracy": 80,
+          "accuracyCanonical": 80,
+          "learn": "Lv. 43",
+          "text": "Golpe duplo com os antebraços em X. Taxa de crítico aumentada (+1 estágio)."
+        },
+        {
+          "name": "Cross Poison",
+          "type": "Poison",
+          "category": "Physical",
+          "power": 70,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 44",
+          "text": "Corte em X impregnado de veneno. Taxa de crítico aumentada (+1 estágio) e 10% de chance de Envenenar."
+        },
+        {
+          "name": "Reflected Force",
+          "type": "Water",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 46",
+          "text": "Move regional de Ondu. Prioridade −4. Usa a força das ondas para devolver o impacto: se o usuário sofreu dano de um ataque nesta rodada antes de agir, o Power dobra para 120."
+        },
+        {
+          "name": "Focus Kick",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 49",
+          "text": "Move regional de Ondu. Chute concentrado num único ponto: taxa de crítico aumentada (+1 estágio) e ignora os estágios positivos de Defense do alvo."
+        },
+        {
+          "name": "Dynamic Punch",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 100,
+          "accuracy": 50,
+          "accuracyCanonical": 50,
+          "learn": "Lv. 52",
+          "text": "Soco com toda a força concentrada. Se acertar, deixa o alvo Confuso."
+        },
+        {
+          "name": "Wave Crash",
+          "type": "Water",
+          "category": "Physical",
+          "power": 120,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 55",
+          "text": "Investe envolto em água com o corpo inteiro. O usuário recebe 1/3 do dano causado como recuo."
+        },
+        {
+          "name": "Close Combat",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 120,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 58",
+          "text": "Ataca intensamente em curta distância. Após o golpe, a Defense e a Sp.Def do usuário caem em 1 estágio."
+        },
+        {
+          "name": "Darkest Lariat",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 85,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 59",
+          "text": "Gira os braços e atinge o alvo, ignorando as mudanças de estágio de Defense e Evasão dele."
+        },
+        {
+          "name": "Reversal",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 61",
+          "text": "Quanto menos HP o usuário tiver, maior o Power (de 20, com HP alto, até 200, com 1/32 do HP ou menos)."
+        },
+        {
+          "name": "Counter",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Prioridade −5. Devolve ao último alvo o dobro do dano físico que o usuário recebeu nesta rodada."
+        },
+        {
+          "name": "Dual Chop",
+          "type": "Dragon",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "TM / treinamento",
+          "text": "Move Multi-Hit de 2 acertos fixos com as mãos em lâmina. O Power indicado é por acerto."
+        },
+        {
+          "name": "Flip Turn",
+          "type": "Water",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Ataca com uma virada na água e, em seguida, o usuário volta e troca com um Pokémon do time."
+        },
+        {
+          "name": "Whirlpool",
+          "type": "Water",
+          "category": "Special",
+          "power": 35,
+          "accuracy": 85,
+          "accuracyCanonical": 85,
+          "learn": "TM / treinamento",
+          "text": "Prende o alvo num redemoinho por 4 rodadas, causando 1/8 do HP máximo dele ao fim de cada rodada. O alvo não pode fugir nem trocar."
+        },
+        {
+          "name": "Bullet Punch",
+          "type": "Steel",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Soco de punhos rígidos como aço, mais rápido que uma bala. Prioridade +1."
+        },
+        {
+          "name": "Knock Off",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Derruba o item do alvo, que fica sem ele até o fim da batalha. Se o alvo segurar um item removível, o Power aumenta em 50%."
+        },
+        {
+          "name": "Payback",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 50,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Se o usuário agir depois do alvo nesta rodada, o Power dobra."
+        },
+        {
+          "name": "Thief",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Ataca e rouba o item do alvo, se o usuário não estiver segurando nenhum."
+        },
+        {
+          "name": "Ice Punch",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Soco congelante. 10% de chance de deixar o alvo Congelado."
+        },
+        {
+          "name": "Ice Beam",
+          "type": "Ice",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Raio de gelo. 10% de chance de deixar o alvo Congelado."
+        },
+        {
+          "name": "Blizzard",
+          "type": "Ice",
+          "category": "Special",
+          "power": 110,
+          "accuracy": 70,
+          "accuracyCanonical": 70,
+          "learn": "TM / treinamento",
+          "text": "Nevasca que atinge os inimigos ao redor. 10% de chance de Congelar. Durante neve ou granizo, não pode errar."
+        },
+        {
+          "name": "Poison Jab",
+          "type": "Poison",
+          "category": "Physical",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Golpe com o braço impregnado de veneno. 30% de chance de Envenenar o alvo."
+        },
+        {
+          "name": "Earthquake",
+          "type": "Ground",
+          "category": "Physical",
+          "power": 100,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Faz o chão tremer, atingindo todos ao redor do usuário, incluindo aliados."
+        },
+        {
+          "name": "Facade",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 70,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Se o usuário estiver Queimado, Envenenado ou Paralisado, o Power dobra. A Queimadura não reduz o dano deste golpe."
+        },
+        {
+          "name": "Rock Tomb",
+          "type": "Rock",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "TM / treinamento",
+          "text": "Arremessa rochas que cercam o alvo, reduzindo a Speed dele em 1 estágio."
+        },
+        {
+          "name": "Rock Slide",
+          "type": "Rock",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "TM / treinamento",
+          "text": "Derruba rochas sobre os inimigos ao redor. 30% de chance de fazer cada alvo hesitar (Flinch)."
+        },
+        {
+          "name": "Heavy Slam",
+          "type": "Steel",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Esmaga o alvo com o próprio peso. Quanto mais pesado o usuário for em relação ao alvo, maior o Power (de 40 a 120)."
+        },
+        {
+          "name": "Work Up",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prepara-se para lutar: aumenta Attack e Sp.Atk do usuário em 1 estágio."
+        },
+        {
+          "name": "Metronome",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Balança o dedo e usa um Move aleatório, sorteado pelo Mestre entre os Moves existentes."
+        },
+        {
+          "name": "Helping Hand",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prioridade +5. Ajuda um aliado: o próximo ataque dele nesta rodada tem o Power aumentado em 50%."
+        },
+        {
+          "name": "Endure",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prioridade +4. Nesta rodada, o usuário resiste a qualquer ataque com pelo menos 1 de HP. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Substitute",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Consome 1/4 do HP máximo do usuário para criar um substituto que recebe ataques e bloqueia efeitos de status conforme as regras do Move, até ser destruído."
+        },
+        {
+          "name": "Encore",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Obriga o alvo a repetir o último Move usado por 3 rodadas."
+        },
+        {
+          "name": "Light Screen",
+          "type": "Psychic",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Dura 3 turnos e protege todos os aliados do lado do usuário; com Light Clay dura 5 turnos. Quando um aliado sofre dano de golpe Especial, reduz o dano final em Nível do usuário ÷ 2 como dano fixo. Críticos ignoram Light Screen. Super efetivo continua aplicando suas regras normalmente; a Screen entra apenas no final como corte fixo.\n\nPrecisão especial: —.\nTags: Rework • Screen • Redução Especial • Time Side."
+        },
+        {
+          "name": "Quick Guard",
+          "type": "Fighting",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prioridade +3. Protege o usuário e os aliados de golpes com prioridade aumentada nesta rodada."
+        },
+        {
+          "name": "Coaching",
+          "type": "Fighting",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Orienta os aliados: aumenta Attack e Defense de todos os aliados (exceto o usuário) em 1 estágio."
+        },
+        {
+          "name": "Soak",
+          "type": "Water",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Encharca o alvo com muita água, transformando o tipo dele em Water puro."
+        }
+      ],
+      "evolution": {
+        "previous": "Machoke (Ondu Form)",
+        "next": "",
+        "level": "",
+        "requirements": "Troca segurando uma Surfboard",
+        "chainId": "a704eeb4-e60a-54d9-904d-0f8b120d9a5d",
+        "stage": 2,
+        "previousId": "64c7c9fd-2b45-5f42-a4f3-b790289507d4",
+        "nextIds": []
+      },
+      "specialRules": "Forma regional de Ondu (Water/Fighting). Altura 1,80 m · Peso 138,6 kg. Evolui de Machoke de Ondu ao ser trocado segurando uma Surfboard (Prancha de Surf). Abilities: Water Veil, No Guard ou Swift Swim. Moves assinatura: CPR e Cut Back (aprendido ao evoluir). Os níveis dos Moves indicam opções de aprendizado.",
+      "notes": "",
+      "coverArtId": null,
+      "coverUrl": "pokemons/artes/machamp-ondu.png",
+      "status": "published",
+      "revision": 1,
+      "publishedRevision": 1,
+      "createdAt": "2026-11-25T18:00:00Z",
+      "updatedAt": "2026-11-25T18:00:00Z",
+      "publishedAt": "2026-11-25T18:00:00Z",
+      "repository": {
+        "key": "machamp-ondu",
+        "file": "pokemons/machamp-ondu.pokemon.json",
+        "revision": 1,
+        "sourceOnly": true
+      }
+    },
+    {
+      "id": "64c7c9fd-2b45-5f42-a4f3-b790289507d4",
+      "slug": "machoke-ondu",
+      "dex": 67,
+      "name": "Machoke (Ondu Form)",
+      "classification": "fakemon",
+      "category": "Pokémon Salva-vidas",
+      "description": "Os Machoke têm papel crucial como salva-vidas nas praias de Ondu, sempre atentos para ajudar pessoas e Pokémon em perigo. Às vezes patrulham o mar para socorrer náufragos. Sua força é tanta que conseguem empurrar um navio de cruzeiro nadando sem nenhum problema. Os machos são conhecidos por exibir força e musculatura; as fêmeas são mais focadas e responsáveis, capazes de liderar grupos e sincronizar-se com eles, o que facilita as operações de resgate.",
+      "type1": "Water",
+      "type2": "Fighting",
+      "baseStats": {
+        "hp": 80,
+        "atk": 100,
+        "def": 70,
+        "spa": 50,
+        "spd": 60,
+        "spe": 45
+      },
+      "abilities": [
+        {
+          "name": "Riptide Rush",
+          "text": "Versão aprimorada de Hydro Rush, exclusiva de Machoke de Ondu. Quando Machoke acerta um ataque físico do tipo Fighting ou Water, ele ganha +1 Estágio de Speed. Durante chuva ou submerso, seus ataques do tipo Water causam +2d6 de dano e os do tipo Fighting causam +1d6."
+        },
+        {
+          "name": "No Guard",
+          "text": "Moves usados pelo usuário ou diretamente contra ele ignoram testes de Accuracy e Evasion e acertam automaticamente, desde que o alvo esteja ao alcance. O usuário também pode atingir alvos ocultos ou invisíveis, mas não ignora imunidades, proteção total ou obstáculos sólidos."
+        },
+        {
+          "name": "Swift Swim",
+          "text": "Durante Rain Dance ou chuva natural, o usuário recebe +2 estágios de Speed e ignora terreno difícil causado por água. O bônus é renovado a cada rodada, não acumula e termina quando a chuva acabar."
+        }
+      ],
+      "moves": [
+        {
+          "name": "Low Kick",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Chuta as pernas do alvo. Quanto mais pesado o alvo, maior o Power (de 20 a 120)."
+        },
+        {
+          "name": "Scary Face",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Assusta o alvo com uma expressão ameaçadora, reduzindo a Speed dele em 2 estágios."
+        },
+        {
+          "name": "Aqua Jet",
+          "type": "Water",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 4 / herdado",
+          "text": "Envolve o corpo em água e investe contra o alvo. Prioridade +1."
+        },
+        {
+          "name": "Low Sweep",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 7 / herdado",
+          "text": "Rasteira rápida nas pernas do alvo. Reduz a Speed do alvo em 1 estágio."
+        },
+        {
+          "name": "Mach Punch",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 10 / herdado",
+          "text": "Soco tão rápido que atinge antes do alvo reagir. Prioridade +1."
+        },
+        {
+          "name": "Chilling Water",
+          "type": "Water",
+          "category": "Special",
+          "power": 50,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 13 / herdado",
+          "text": "Joga água gelada no alvo, reduzindo o Attack dele em 1 estágio."
+        },
+        {
+          "name": "Revenge",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 16 / herdado",
+          "text": "Prioridade −4. Se o usuário sofreu dano de um ataque do alvo nesta rodada, o Power dobra."
+        },
+        {
+          "name": "Bubble Beam",
+          "type": "Water",
+          "category": "Special",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 19 / herdado",
+          "text": "Dispara um jato de bolhas. 10% de chance de reduzir a Speed do alvo em 1 estágio."
+        },
+        {
+          "name": "CPR",
+          "type": "Water",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 22 / herdado",
+          "text": "Move assinatura dos Machop de Ondu: técnica de reanimação de salva-vidas. O usuário socorre um aliado adjacente ou a si mesmo, restaurando 1/2 do HP máximo e curando Sleep e Confusion. Se o alvo estiver com 1/4 do HP ou menos, também recebe +1 estágio de Defense até o fim da batalha. Falha se usado em rodadas seguidas."
+        },
+        {
+          "name": "Brick Break",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 25 / herdado",
+          "text": "Golpe de caratê que também quebra Reflect, Light Screen e Aurora Veil do lado do alvo."
+        },
+        {
+          "name": "Aqua Ballet",
+          "type": "Water",
+          "category": "Physical",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Ao evoluir / Lv. 28",
+          "text": "Move assinatura de Machoke de Ondu. Golpe de contato em movimento de dança aquática. Após acertar, o usuário recebe +1 estágio de Speed. Durante chuva ou submerso, o golpe não faz teste de precisão."
+        },
+        {
+          "name": "Jet Punch",
+          "type": "Water",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 28",
+          "text": "Soco envolto num jato d'água, rápido demais para ser evitado. Prioridade +1."
+        },
+        {
+          "name": "On Guard",
+          "type": "Fighting",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 31",
+          "text": "Move regional de Ondu. Prioridade +3. O usuário assume a guarda: até o fim da rodada, os ataques físicos que o atingirem causam metade do dano. Se for atingido por um golpe de contato nesta rodada, recebe +1 estágio de Attack. Usos consecutivos falham."
+        },
+        {
+          "name": "Seismic Toss",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 34",
+          "text": "Arremessa o alvo no chão. Causa dano fixo igual ao nível do usuário."
+        },
+        {
+          "name": "Liquidation",
+          "type": "Water",
+          "category": "Physical",
+          "power": 85,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 37",
+          "text": "Golpe com toda a força da água. 20% de chance de reduzir a Defense do alvo em 1 estágio."
+        },
+        {
+          "name": "Bulk Up",
+          "type": "Fighting",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 40",
+          "text": "Contrai os músculos: aumenta Attack e Defense do usuário em 1 estágio."
+        },
+        {
+          "name": "Cross Chop",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 100,
+          "accuracy": 80,
+          "accuracyCanonical": 80,
+          "learn": "Lv. 43",
+          "text": "Golpe duplo com os antebraços em X. Taxa de crítico aumentada (+1 estágio)."
+        },
+        {
+          "name": "Reflected Force",
+          "type": "Water",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 46",
+          "text": "Move regional de Ondu. Prioridade −4. Usa a força das ondas para devolver o impacto: se o usuário sofreu dano de um ataque nesta rodada antes de agir, o Power dobra para 120."
+        },
+        {
+          "name": "Focus Kick",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 49",
+          "text": "Move regional de Ondu. Chute concentrado num único ponto: taxa de crítico aumentada (+1 estágio) e ignora os estágios positivos de Defense do alvo."
+        },
+        {
+          "name": "Dynamic Punch",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 100,
+          "accuracy": 50,
+          "accuracyCanonical": 50,
+          "learn": "Lv. 52",
+          "text": "Soco com toda a força concentrada. Se acertar, deixa o alvo Confuso."
+        },
+        {
+          "name": "Wave Crash",
+          "type": "Water",
+          "category": "Physical",
+          "power": 120,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 55",
+          "text": "Investe envolto em água com o corpo inteiro. O usuário recebe 1/3 do dano causado como recuo."
+        },
+        {
+          "name": "Close Combat",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 120,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 58",
+          "text": "Ataca intensamente em curta distância. Após o golpe, a Defense e a Sp.Def do usuário caem em 1 estágio."
+        },
+        {
+          "name": "Reversal",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 61",
+          "text": "Quanto menos HP o usuário tiver, maior o Power (de 20, com HP alto, até 200, com 1/32 do HP ou menos)."
+        },
+        {
+          "name": "Counter",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Prioridade −5. Devolve ao último alvo o dobro do dano físico que o usuário recebeu nesta rodada."
+        },
+        {
+          "name": "Dual Chop",
+          "type": "Dragon",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "TM / treinamento",
+          "text": "Move Multi-Hit de 2 acertos fixos com as mãos em lâmina. O Power indicado é por acerto."
+        },
+        {
+          "name": "Flip Turn",
+          "type": "Water",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Ataca com uma virada na água e, em seguida, o usuário volta e troca com um Pokémon do time."
+        },
+        {
+          "name": "Surf",
+          "type": "Water",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Cria uma grande onda que atinge todos ao redor do usuário, incluindo aliados."
+        },
+        {
+          "name": "Whirlpool",
+          "type": "Water",
+          "category": "Special",
+          "power": 35,
+          "accuracy": 85,
+          "accuracyCanonical": 85,
+          "learn": "TM / treinamento",
+          "text": "Prende o alvo num redemoinho por 4 rodadas, causando 1/8 do HP máximo dele ao fim de cada rodada. O alvo não pode fugir nem trocar."
+        },
+        {
+          "name": "Bullet Punch",
+          "type": "Steel",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Soco de punhos rígidos como aço, mais rápido que uma bala. Prioridade +1."
+        },
+        {
+          "name": "Knock Off",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Derruba o item do alvo, que fica sem ele até o fim da batalha. Se o alvo segurar um item removível, o Power aumenta em 50%."
+        },
+        {
+          "name": "Payback",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 50,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Se o usuário agir depois do alvo nesta rodada, o Power dobra."
+        },
+        {
+          "name": "Thief",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Ataca e rouba o item do alvo, se o usuário não estiver segurando nenhum."
+        },
+        {
+          "name": "Ice Punch",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Soco congelante. 10% de chance de deixar o alvo Congelado."
+        },
+        {
+          "name": "Ice Beam",
+          "type": "Ice",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Raio de gelo. 10% de chance de deixar o alvo Congelado."
+        },
+        {
+          "name": "Blizzard",
+          "type": "Ice",
+          "category": "Special",
+          "power": 110,
+          "accuracy": 70,
+          "accuracyCanonical": 70,
+          "learn": "TM / treinamento",
+          "text": "Nevasca que atinge os inimigos ao redor. 10% de chance de Congelar. Durante neve ou granizo, não pode errar."
+        },
+        {
+          "name": "Poison Jab",
+          "type": "Poison",
+          "category": "Physical",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Golpe com o braço impregnado de veneno. 30% de chance de Envenenar o alvo."
+        },
+        {
+          "name": "Earthquake",
+          "type": "Ground",
+          "category": "Physical",
+          "power": 100,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Faz o chão tremer, atingindo todos ao redor do usuário, incluindo aliados."
+        },
+        {
+          "name": "Facade",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 70,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Se o usuário estiver Queimado, Envenenado ou Paralisado, o Power dobra. A Queimadura não reduz o dano deste golpe."
+        },
+        {
+          "name": "Rock Tomb",
+          "type": "Rock",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "TM / treinamento",
+          "text": "Arremessa rochas que cercam o alvo, reduzindo a Speed dele em 1 estágio."
+        },
+        {
+          "name": "Rock Slide",
+          "type": "Rock",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "TM / treinamento",
+          "text": "Derruba rochas sobre os inimigos ao redor. 30% de chance de fazer cada alvo hesitar (Flinch)."
+        },
+        {
+          "name": "Heavy Slam",
+          "type": "Steel",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Esmaga o alvo com o próprio peso. Quanto mais pesado o usuário for em relação ao alvo, maior o Power (de 40 a 120)."
+        },
+        {
+          "name": "Work Up",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prepara-se para lutar: aumenta Attack e Sp.Atk do usuário em 1 estágio."
+        },
+        {
+          "name": "Metronome",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Balança o dedo e usa um Move aleatório, sorteado pelo Mestre entre os Moves existentes."
+        },
+        {
+          "name": "Helping Hand",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prioridade +5. Ajuda um aliado: o próximo ataque dele nesta rodada tem o Power aumentado em 50%."
+        },
+        {
+          "name": "Endure",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prioridade +4. Nesta rodada, o usuário resiste a qualquer ataque com pelo menos 1 de HP. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Substitute",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Consome 1/4 do HP máximo do usuário para criar um substituto que recebe ataques e bloqueia efeitos de status conforme as regras do Move, até ser destruído."
+        },
+        {
+          "name": "Encore",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Obriga o alvo a repetir o último Move usado por 3 rodadas."
+        },
+        {
+          "name": "Light Screen",
+          "type": "Psychic",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Dura 3 turnos e protege todos os aliados do lado do usuário; com Light Clay dura 5 turnos. Quando um aliado sofre dano de golpe Especial, reduz o dano final em Nível do usuário ÷ 2 como dano fixo. Críticos ignoram Light Screen. Super efetivo continua aplicando suas regras normalmente; a Screen entra apenas no final como corte fixo.\n\nPrecisão especial: —.\nTags: Rework • Screen • Redução Especial • Time Side."
+        },
+        {
+          "name": "Quick Guard",
+          "type": "Fighting",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prioridade +3. Protege o usuário e os aliados de golpes com prioridade aumentada nesta rodada."
+        },
+        {
+          "name": "Coaching",
+          "type": "Fighting",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Orienta os aliados: aumenta Attack e Defense de todos os aliados (exceto o usuário) em 1 estágio."
+        },
+        {
+          "name": "Soak",
+          "type": "Water",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Encharca o alvo com muita água, transformando o tipo dele em Water puro."
+        }
+      ],
+      "evolution": {
+        "previous": "Machop (Ondu Form)",
+        "next": "Machamp (Ondu Form)",
+        "level": "28",
+        "requirements": "Nível 28",
+        "chainId": "a704eeb4-e60a-54d9-904d-0f8b120d9a5d",
+        "stage": 1,
+        "previousId": "18e27dc1-c4d2-5e9c-98cd-6462c1474033",
+        "nextIds": [
+          "69371229-9cae-5dc0-9ef2-2daf90191445"
+        ]
+      },
+      "specialRules": "Forma regional de Ondu (Water/Fighting). Altura 1,50 m · Peso 70,5 kg. Evolui de Machop de Ondu no nível 28 e evolui para Machamp de Ondu ao ser trocado segurando uma Surfboard. Abilities: Riptide Rush (versão aprimorada de Hydro Rush, exclusiva), No Guard ou Swift Swim. Moves assinatura: CPR e Aqua Ballet (aprendido ao evoluir). Os níveis dos Moves indicam opções de aprendizado.",
+      "notes": "",
+      "coverArtId": null,
+      "coverUrl": "pokemons/artes/machoke-ondu.png",
+      "status": "published",
+      "revision": 1,
+      "publishedRevision": 1,
+      "createdAt": "2026-11-25T18:00:00Z",
+      "updatedAt": "2026-11-25T18:00:00Z",
+      "publishedAt": "2026-11-25T18:00:00Z",
+      "repository": {
+        "key": "machoke-ondu",
+        "file": "pokemons/machoke-ondu.pokemon.json",
+        "revision": 1,
+        "sourceOnly": true
+      }
+    },
+    {
+      "id": "18e27dc1-c4d2-5e9c-98cd-6462c1474033",
+      "slug": "machop-ondu",
+      "dex": 66,
+      "name": "Machop (Ondu Form)",
+      "classification": "fakemon",
+      "category": "Pokémon Salva-vidas",
+      "description": "Os Machop de Ondu são o resultado da adaptação desta espécie às zonas costeiras da região. Comportam-se como anfíbios e passam a maior parte do tempo debaixo d'água, a ponto de desenvolverem guelras que se projetam perto das costelas. Sua marca registrada são as escamas pretas que cobrem o corpo e armazenam umidade para mantê-los hidratados quando sobem à superfície. As fêmeas precisam de mais água que os machos, por isso são mais cobertas por essas escamas.",
+      "type1": "Water",
+      "type2": "Fighting",
+      "baseStats": {
+        "hp": 70,
+        "atk": 80,
+        "def": 50,
+        "spa": 35,
+        "spd": 35,
+        "spe": 35
+      },
+      "abilities": [
+        {
+          "name": "Hydro Rush",
+          "text": "Quando Machop acerta um ataque físico do tipo Fighting, ele ganha +1 Estágio de Speed. Durante chuva ou submerso, seus ataques do tipo Water causam +1d6 de dano."
+        },
+        {
+          "name": "No Guard",
+          "text": "Moves usados pelo usuário ou diretamente contra ele ignoram testes de Accuracy e Evasion e acertam automaticamente, desde que o alvo esteja ao alcance. O usuário também pode atingir alvos ocultos ou invisíveis, mas não ignora imunidades, proteção total ou obstáculos sólidos."
+        },
+        {
+          "name": "Swift Swim",
+          "text": "Durante Rain Dance ou chuva natural, o usuário recebe +2 estágios de Speed e ignora terreno difícil causado por água. O bônus é renovado a cada rodada, não acumula e termina quando a chuva acabar."
+        }
+      ],
+      "moves": [
+        {
+          "name": "Low Kick",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1",
+          "text": "Chuta as pernas do alvo. Quanto mais pesado o alvo, maior o Power (de 20 a 120)."
+        },
+        {
+          "name": "Scary Face",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1",
+          "text": "Assusta o alvo com uma expressão ameaçadora, reduzindo a Speed dele em 2 estágios."
+        },
+        {
+          "name": "Aqua Jet",
+          "type": "Water",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 4",
+          "text": "Envolve o corpo em água e investe contra o alvo. Prioridade +1."
+        },
+        {
+          "name": "Low Sweep",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 7",
+          "text": "Rasteira rápida nas pernas do alvo. Reduz a Speed do alvo em 1 estágio."
+        },
+        {
+          "name": "Mach Punch",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 10",
+          "text": "Soco tão rápido que atinge antes do alvo reagir. Prioridade +1."
+        },
+        {
+          "name": "Chilling Water",
+          "type": "Water",
+          "category": "Special",
+          "power": 50,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 13",
+          "text": "Joga água gelada no alvo, reduzindo o Attack dele em 1 estágio."
+        },
+        {
+          "name": "Revenge",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 16",
+          "text": "Prioridade −4. Se o usuário sofreu dano de um ataque do alvo nesta rodada, o Power dobra."
+        },
+        {
+          "name": "Bubble Beam",
+          "type": "Water",
+          "category": "Special",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 19",
+          "text": "Dispara um jato de bolhas. 10% de chance de reduzir a Speed do alvo em 1 estágio."
+        },
+        {
+          "name": "CPR",
+          "type": "Water",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 22",
+          "text": "Move assinatura dos Machop de Ondu: técnica de reanimação de salva-vidas. O usuário socorre um aliado adjacente ou a si mesmo, restaurando 1/2 do HP máximo e curando Sleep e Confusion. Se o alvo estiver com 1/4 do HP ou menos, também recebe +1 estágio de Defense até o fim da batalha. Falha se usado em rodadas seguidas."
+        },
+        {
+          "name": "Brick Break",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 25",
+          "text": "Golpe de caratê que também quebra Reflect, Light Screen e Aurora Veil do lado do alvo."
+        },
+        {
+          "name": "Jet Punch",
+          "type": "Water",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 28",
+          "text": "Soco envolto num jato d'água, rápido demais para ser evitado. Prioridade +1."
+        },
+        {
+          "name": "On Guard",
+          "type": "Fighting",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 31",
+          "text": "Move regional de Ondu. Prioridade +3. O usuário assume a guarda: até o fim da rodada, os ataques físicos que o atingirem causam metade do dano. Se for atingido por um golpe de contato nesta rodada, recebe +1 estágio de Attack. Usos consecutivos falham."
+        },
+        {
+          "name": "Seismic Toss",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 34",
+          "text": "Arremessa o alvo no chão. Causa dano fixo igual ao nível do usuário."
+        },
+        {
+          "name": "Liquidation",
+          "type": "Water",
+          "category": "Physical",
+          "power": 85,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 37",
+          "text": "Golpe com toda a força da água. 20% de chance de reduzir a Defense do alvo em 1 estágio."
+        },
+        {
+          "name": "Bulk Up",
+          "type": "Fighting",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 40",
+          "text": "Contrai os músculos: aumenta Attack e Defense do usuário em 1 estágio."
+        },
+        {
+          "name": "Cross Chop",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 100,
+          "accuracy": 80,
+          "accuracyCanonical": 80,
+          "learn": "Lv. 43",
+          "text": "Golpe duplo com os antebraços em X. Taxa de crítico aumentada (+1 estágio)."
+        },
+        {
+          "name": "Reflected Force",
+          "type": "Water",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 46",
+          "text": "Move regional de Ondu. Prioridade −4. Usa a força das ondas para devolver o impacto: se o usuário sofreu dano de um ataque nesta rodada antes de agir, o Power dobra para 120."
+        },
+        {
+          "name": "Focus Kick",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 49",
+          "text": "Move regional de Ondu. Chute concentrado num único ponto: taxa de crítico aumentada (+1 estágio) e ignora os estágios positivos de Defense do alvo."
+        },
+        {
+          "name": "Dynamic Punch",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 100,
+          "accuracy": 50,
+          "accuracyCanonical": 50,
+          "learn": "Lv. 52",
+          "text": "Soco com toda a força concentrada. Se acertar, deixa o alvo Confuso."
+        },
+        {
+          "name": "Wave Crash",
+          "type": "Water",
+          "category": "Physical",
+          "power": 120,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 55",
+          "text": "Investe envolto em água com o corpo inteiro. O usuário recebe 1/3 do dano causado como recuo."
+        },
+        {
+          "name": "Close Combat",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 120,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 58",
+          "text": "Ataca intensamente em curta distância. Após o golpe, a Defense e a Sp.Def do usuário caem em 1 estágio."
+        },
+        {
+          "name": "Reversal",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 61",
+          "text": "Quanto menos HP o usuário tiver, maior o Power (de 20, com HP alto, até 200, com 1/32 do HP ou menos)."
+        },
+        {
+          "name": "Counter",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Prioridade −5. Devolve ao último alvo o dobro do dano físico que o usuário recebeu nesta rodada."
+        },
+        {
+          "name": "Dual Chop",
+          "type": "Dragon",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "TM / treinamento",
+          "text": "Move Multi-Hit de 2 acertos fixos com as mãos em lâmina. O Power indicado é por acerto."
+        },
+        {
+          "name": "Flip Turn",
+          "type": "Water",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Ataca com uma virada na água e, em seguida, o usuário volta e troca com um Pokémon do time."
+        },
+        {
+          "name": "Surf",
+          "type": "Water",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Cria uma grande onda que atinge todos ao redor do usuário, incluindo aliados."
+        },
+        {
+          "name": "Whirlpool",
+          "type": "Water",
+          "category": "Special",
+          "power": 35,
+          "accuracy": 85,
+          "accuracyCanonical": 85,
+          "learn": "TM / treinamento",
+          "text": "Prende o alvo num redemoinho por 4 rodadas, causando 1/8 do HP máximo dele ao fim de cada rodada. O alvo não pode fugir nem trocar."
+        },
+        {
+          "name": "Bullet Punch",
+          "type": "Steel",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Soco de punhos rígidos como aço, mais rápido que uma bala. Prioridade +1."
+        },
+        {
+          "name": "Knock Off",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Derruba o item do alvo, que fica sem ele até o fim da batalha. Se o alvo segurar um item removível, o Power aumenta em 50%."
+        },
+        {
+          "name": "Payback",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 50,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Se o usuário agir depois do alvo nesta rodada, o Power dobra."
+        },
+        {
+          "name": "Thief",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Ataca e rouba o item do alvo, se o usuário não estiver segurando nenhum."
+        },
+        {
+          "name": "Ice Punch",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Soco congelante. 10% de chance de deixar o alvo Congelado."
+        },
+        {
+          "name": "Ice Beam",
+          "type": "Ice",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Raio de gelo. 10% de chance de deixar o alvo Congelado."
+        },
+        {
+          "name": "Blizzard",
+          "type": "Ice",
+          "category": "Special",
+          "power": 110,
+          "accuracy": 70,
+          "accuracyCanonical": 70,
+          "learn": "TM / treinamento",
+          "text": "Nevasca que atinge os inimigos ao redor. 10% de chance de Congelar. Durante neve ou granizo, não pode errar."
+        },
+        {
+          "name": "Poison Jab",
+          "type": "Poison",
+          "category": "Physical",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Golpe com o braço impregnado de veneno. 30% de chance de Envenenar o alvo."
+        },
+        {
+          "name": "Earthquake",
+          "type": "Ground",
+          "category": "Physical",
+          "power": 100,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Faz o chão tremer, atingindo todos ao redor do usuário, incluindo aliados."
+        },
+        {
+          "name": "Facade",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 70,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Se o usuário estiver Queimado, Envenenado ou Paralisado, o Power dobra. A Queimadura não reduz o dano deste golpe."
+        },
+        {
+          "name": "Rock Tomb",
+          "type": "Rock",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "TM / treinamento",
+          "text": "Arremessa rochas que cercam o alvo, reduzindo a Speed dele em 1 estágio."
+        },
+        {
+          "name": "Rock Slide",
+          "type": "Rock",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "TM / treinamento",
+          "text": "Derruba rochas sobre os inimigos ao redor. 30% de chance de fazer cada alvo hesitar (Flinch)."
+        },
+        {
+          "name": "Heavy Slam",
+          "type": "Steel",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Esmaga o alvo com o próprio peso. Quanto mais pesado o usuário for em relação ao alvo, maior o Power (de 40 a 120)."
+        },
+        {
+          "name": "Work Up",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prepara-se para lutar: aumenta Attack e Sp.Atk do usuário em 1 estágio."
+        },
+        {
+          "name": "Metronome",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Balança o dedo e usa um Move aleatório, sorteado pelo Mestre entre os Moves existentes."
+        },
+        {
+          "name": "Helping Hand",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prioridade +5. Ajuda um aliado: o próximo ataque dele nesta rodada tem o Power aumentado em 50%."
+        },
+        {
+          "name": "Endure",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prioridade +4. Nesta rodada, o usuário resiste a qualquer ataque com pelo menos 1 de HP. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Substitute",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Consome 1/4 do HP máximo do usuário para criar um substituto que recebe ataques e bloqueia efeitos de status conforme as regras do Move, até ser destruído."
+        },
+        {
+          "name": "Encore",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Obriga o alvo a repetir o último Move usado por 3 rodadas."
+        },
+        {
+          "name": "Light Screen",
+          "type": "Psychic",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Dura 3 turnos e protege todos os aliados do lado do usuário; com Light Clay dura 5 turnos. Quando um aliado sofre dano de golpe Especial, reduz o dano final em Nível do usuário ÷ 2 como dano fixo. Críticos ignoram Light Screen. Super efetivo continua aplicando suas regras normalmente; a Screen entra apenas no final como corte fixo.\n\nPrecisão especial: —.\nTags: Rework • Screen • Redução Especial • Time Side."
+        },
+        {
+          "name": "Quick Guard",
+          "type": "Fighting",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prioridade +3. Protege o usuário e os aliados de golpes com prioridade aumentada nesta rodada."
+        },
+        {
+          "name": "Coaching",
+          "type": "Fighting",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Orienta os aliados: aumenta Attack e Defense de todos os aliados (exceto o usuário) em 1 estágio."
+        },
+        {
+          "name": "Soak",
+          "type": "Water",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Encharca o alvo com muita água, transformando o tipo dele em Water puro."
+        }
+      ],
+      "evolution": {
+        "previous": "",
+        "next": "Machoke (Ondu Form)",
+        "level": "",
+        "requirements": "",
+        "chainId": "a704eeb4-e60a-54d9-904d-0f8b120d9a5d",
+        "stage": 0,
+        "previousId": null,
+        "nextIds": [
+          "64c7c9fd-2b45-5f42-a4f3-b790289507d4"
+        ]
+      },
+      "specialRules": "Forma regional de Ondu (Water/Fighting). Altura 0,80 m · Peso 19,5 kg. Evolui para Machoke de Ondu no nível 28. Abilities: Hydro Rush (principal), No Guard ou Swift Swim. Move assinatura: CPR. On Guard, Focus Kick e Reflected Force são Moves regionais de Ondu. Os níveis dos Moves indicam opções de aprendizado.",
+      "notes": "",
+      "coverArtId": null,
+      "coverUrl": "pokemons/artes/machop-ondu.png",
+      "status": "published",
+      "revision": 1,
+      "publishedRevision": 1,
+      "createdAt": "2026-11-25T18:00:00Z",
+      "updatedAt": "2026-11-25T18:00:00Z",
+      "publishedAt": "2026-11-25T18:00:00Z",
+      "repository": {
+        "key": "machop-ondu",
+        "file": "pokemons/machop-ondu.pokemon.json",
+        "revision": 1,
+        "sourceOnly": true
+      }
+    },
+    {
       "id": "e288e550-d06b-5808-8c69-ea3c272086b3",
       "slug": "plakappa",
       "dex": 8,
@@ -956,5 +2673,5 @@
     }
   ],
   "forms": [],
-  "hash": "408facb035f48175b3ee2363981335ffaea1db4341478a4b6fec8e8876f4a04d"
+  "hash": "b2db0eab7338d48f0f5cb0cb4295d350d1df0ca57c9d65b54803e70ff27f89b0"
 }
