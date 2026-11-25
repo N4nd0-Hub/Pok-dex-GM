@@ -29,14 +29,14 @@ window.POKEDEX_REPOSITORY_SETUP=function(api){
     const source=sourceOf(form?item.speciesId:item.id);if(!source)return;
     const controls=document.querySelector('#drawer .drawer-controls');
     const chain=document.getElementById('chainDrawerSection');
-    chain?.querySelectorAll('[data-action="chainFromDetail"],[data-action="chainSplit"]').forEach(el=>el.remove());
+    chain?.querySelectorAll('[data-action="chainSplit"]').forEach(el=>el.remove());
     const parent=form?app.items.find(s=>s.id===item.speciesId):item;
-    if(chain&&!chain.querySelector('.chain-drawer-card')&&!parent?.evolution?.previous&&!parent?.evolution?.next)chain.remove();
+    if(chain&&!app.gm&&!chain.querySelector('.chain-drawer-card')&&!parent?.evolution?.previous&&!parent?.evolution?.next)chain.remove();
     controls?.querySelectorAll('[data-action="unpublish"],[data-action="archive"],[data-action="delete"]').forEach(el=>el.remove());
     if(controls&&!controls.querySelector('.repository-origin'))controls.insertAdjacentHTML('beforeend',`<div class="repository-origin">Esta publicação vem do catálogo do Git. Edições salvas pelo painel GM têm prioridade.<br><a href="https://github.com/N4nd0-Hub/Pok-dex-GM/blob/main/${esc(source.file)}" target="_blank" rel="noopener">Abrir arquivo de origem ↗</a></div>`);
   }
   function afterEditor(){
-    if(sourceOf(app.editor?.model.id))document.querySelectorAll('#editorBody [data-action="chainFromEditor"]').forEach(el=>el.remove());
+    /* A evolução de um Pokémon do Git é permitida: o assistente o salva no banco antes de ligar a linha. */
   }
   function library(){
     if(!app.gm)return;

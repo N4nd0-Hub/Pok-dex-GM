@@ -6,7 +6,7 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
   'use strict';
   const {app, isEditable, modalShell, closeModal, closeDrawer, openEditor,
     toast, slug, esc, byId, visible, artTag, hydrateArt, render, demoPersist,
-    loadCatalog} = api;
+    loadCatalog, saveDraft} = api;
   const TYPES = ['Normal','Fire','Water','Electric','Grass','Ice','Fighting','Poison','Ground',
     'Flying','Psychic','Bug','Rock','Ghost','Dragon','Dark','Steel','Fairy'];
   const STATS = [['hp','HP'],['atk','Attack'],['def','Defense'],['spa','Sp.Atk'],['spd','Sp.Def'],['spe','Speed']];
@@ -56,12 +56,39 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     return gmItems().filter(s=>s.evolution?.chainId===chainId)
       .sort((a,b)=>(Number(a.evolution.stage)||0)-(Number(b.evolution.stage)||0));
   }
+  /* Pokémon antigos (ou vindos dos arquivos do Git) guardam a linha só como
+     texto: "previous"/"next" com nome, slug ou ID. Remonta a linha para não
+     desligar os estágios anteriores ao criar uma evolução nova. */
+  function findRef(ref){
+    const k=clean(ref).toLowerCase();if(!k)return null;
+    return gmItems().find(x=>x.id===ref||String(x.slug||'').toLowerCase()===k||String(x.name||'').toLowerCase()===k)||null;
+  }
+  function legacyLine(s){
+    const line=[s],seen=new Set([s.id]);
+    let cur=s;
+    while(line.length<8){
+      const e=cur.evolution||{};
+      const prev=(e.previousId&&byId(app.items,e.previousId))||findRef(e.previous);
+      if(!prev||seen.has(prev.id)||prev.evolution?.chainId)break;
+      line.unshift(prev);seen.add(prev.id);cur=prev;
+    }
+    cur=s;
+    while(line.length<8){
+      const e=cur.evolution||{};
+      const next=(Array.isArray(e.nextIds)&&e.nextIds[0]&&byId(app.items,e.nextIds[0]))||findRef(e.next);
+      if(!next||seen.has(next.id)||next.evolution?.chainId)break;
+      line.push(next);seen.add(next.id);cur=next;
+    }
+    return line;
+  }
   function stageFromCurrent(s) {
     const cid=s.evolution?.chainId;
-    const connected=cid?chainMembers(cid):[];
-    return {chainId:cid||crypto.randomUUID(),
-      rows:connected.length?connected.map(existingStage):(()=>{const first=existingStage(s);return [first,newStage(first)];})(),
-      dirty:false,saving:false,publish:false};
+    const connected=cid?chainMembers(cid):legacyLine(s);
+    const rows=connected.map(existingStage);
+    // Abre já com uma evolução nova depois da última etapa da linha.
+    if(rows.length<8)rows.push(newStage(rows[rows.length-1]));
+    return {chainId:cid||crypto.randomUUID(),rows,dirty:false,saving:false,publish:false,
+      sourceName:s.name,focus:rows.length-1};
   }
   function addButtons() {
     for (const [selector,label] of [
@@ -83,14 +110,23 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
       {chainId:crypto.randomUUID(),rows:[newStage(),newStage(),newStage()],dirty:false,saving:false,publish:false};
     if (!wizard) return;
     closeModal(true);closeDrawer();
+    wizard.title=selected?`Nova evolução de ${selected.name}`:'Criar linha evolutiva';
+    wizard.subtitle=selected?'A etapa nova já está no fim da linha: preencha nome, tipos e stats e salve.':'Cadastre até 8 estágios de uma vez ou aproveite Pokémon que já estão no banco.';
+    shellWizard();
+  }
+  function shellWizard(){
     const footer=`<span class="chain-foot-help">As espécies serão ligadas pelo ID. O banco não publica rascunhos.</span>
       <button class="btn btn-primary" data-action="chainSave" id="chainSaveButton">Salvar linha evolutiva</button>`;
-    modalShell(selected?'Continuar linha evolutiva':'Criar linha evolutiva',
-      'Cadastre até 8 estágios de uma vez ou aproveite Pokémon que já estão no banco.',
+    modalShell(wizard.title,wizard.subtitle,
       '<div class="modal-body chain-body" id="chainBody"></div>',footer);
     document.getElementById('modal').dataset.kind='chain-wizard';
     document.getElementById('modal').classList.add('chain-modal');
     drawWizard();
+    if(wizard.focus!=null)requestAnimationFrame(()=>{
+      const el=document.querySelector(`[data-chain-stage="${wizard.focus}"]`);
+      if(el){el.classList.add('chain-focus');el.scrollIntoView({block:'start',behavior:'smooth'});
+        el.querySelector('[data-chain-field="name"]')?.focus({preventScroll:true});}
+    });
   }
   const typeOptions=(selected,allowEmpty=false)=>(allowEmpty?'<option value="">Nenhum</option>':'')+
     TYPES.map(t=>`<option value="${t}" ${t===selected?'selected':''}>${t}</option>`).join('');
@@ -274,11 +310,12 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
             previous:i?names[i-1]:'',next:i<ids.length-1?names[i+1]:'',
             requirements:e.requirements||'',level:e.level||''};
           const extra=inherit.get(e.id)||{abilities:[],moves:[]};
-          const model=old?{...clone(old),evolution,revision:(old.revision||1)+1,updatedAt:new Date().toISOString()}:
+          const model=old?{...clone(old),evolution,revision:old.repository?.sourceOnly?1:(old.revision||1)+1,updatedAt:new Date().toISOString()}:
             {id:e.id,name:e.name,slug:e.slug,dex:e.dex,classification:e.classification,
              category:e.category,description:e.description,type1:e.type1,type2:e.type2,
              baseStats:e.baseStats,abilities:extra.abilities,evolution,moves:extra.moves,specialRules:'',notes:'',
              coverArtId:null,status:'draft',revision:1,publishedRevision:null,updatedAt:new Date().toISOString()};
+          if(model.repository?.sourceOnly){delete model.repository;model.status='draft';model.publishedRevision=null;}
           app.items=app.items.filter(s=>s.id!==e.id).concat(model);
         }
         if(shouldPublish)for(const e of entries){const s=byId(app.items,e.id);s.status='published';
@@ -288,6 +325,19 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
         }
         await demoPersist();
       }else{
+        // Pokémon que só existem nos arquivos do Git entram no banco primeiro
+        // (com arte, formas, Abilities e Moves), pelo mesmo caminho do editor.
+        for(const e of entries){
+          const cur=byId(app.items,e.id);
+          if(!e.existing||!cur?.repository?.sourceOnly)continue;
+          if(btn)btn.textContent=`Trazendo ${cur.name} para o banco…`;
+          if(typeof saveDraft!=='function')throw Error(`${cur.name} vem dos arquivos do Git. Salve-o no painel GM antes de criar a evolução.`);
+          const keep=wizard;openEditor(e.id);
+          try{await saveDraft(false);}finally{wizard=keep;app.editor=null;}
+          const adopted=byId(app.items,e.id);
+          if(!adopted||adopted.repository?.sourceOnly)throw Error(`Não foi possível salvar ${cur.name} no banco.`);
+          e.expectedRevision=adopted.revision;
+        }
         const result=await app.client.rpc('pokedex_save_evolution_chain',
           {p_chain_id:wizard.chainId,p_entries:entries});
         if(result.error)throw result.error;
@@ -323,6 +373,8 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
       document.getElementById('modal').dataset.kind='chain-result';
       toast(msg,publishErrors.length?'warning':'success');
     }catch(err){toast('Não foi possível salvar a linha: '+(err.message||err),'error');
+      if(wizard&&!document.getElementById('chainBody')){wizard.focus=null;shellWizard();}
+      const btn=document.getElementById('chainSaveButton');
       if(btn){btn.disabled=false;btn.textContent='Tentar salvar novamente';}
     }finally{if(wizard)wizard.saving=false;}
   }
@@ -347,7 +399,7 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
       `<div class="drawer-list">${old.previous?`Anterior: ${safe(old.previous)}<br>`:''}${old.next?`Próxima: ${safe(old.next)}`:''}</div>`;
     const box=document.createElement('section');box.id='chainDrawerSection';box.className='chain-drawer-section';
     box.innerHTML=`<h3 class="subheading">⤳ LINHA EVOLUTIVA</h3>${markup}
-       ${isEditable()?`<button class="btn btn-outline btn-sm" data-action="chainFromDetail" data-id="${safe(s.id)}">＋ ${members.length?'Continuar esta linha':'Criar evolução a partir deste Pokémon'}</button>`:''}`;
+       ${isEditable()?`<button class="btn btn-primary btn-sm chain-new-evo" data-action="chainFromDetail" data-id="${safe(s.id)}">＋ Criar nova evolução</button>`:''}`;
     target.appendChild(box);
     if(isEditable())box.insertAdjacentHTML('beforeend',`<button class="btn btn-good btn-sm" data-action="chainSplit" data-id="${safe(s.id)}" style="margin-top:10px">＋ Adicionar evolução alternativa existente</button>`);
     hydrateArt(box);
