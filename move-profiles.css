@@ -54,3 +54,6 @@
 .mp-copy>div{display:grid;gap:4px;flex:1;min-width:240px}
 .mp-copy small{color:var(--muted);font-size:12.5px}
 .mp-copy small b{color:var(--text)}
+/* Nova evolução a partir de um Pokémon do banco */
+.chain-new-evo{margin-top:10px}
+.chain-stage.chain-focus{border-color:var(--accent,#e31b3d)!important;box-shadow:0 0 0 2px color-mix(in srgb,var(--accent,#e31b3d) 45%,transparent)}
