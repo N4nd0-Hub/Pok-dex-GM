@@ -24,7 +24,14 @@
     tank:{label:'Tanque',icon:'🛡',desc:'Poucos ataques, defesa (Harden, Iron Defense, Amnesia), cura e Protect.',cats:['auto'],atk:6,status:6,setups:['setup-def'],utility:['heal','protect','hazard','status']},
     support:{label:'Suporte',icon:'✚',desc:'Telas, cura, status (Thunder Wave, Will-O-Wisp), debuffs e troca.',cats:['auto'],atk:5,status:7,setups:[],utility:['screen','heal','status','debuff','pivot','util']},
     speed:{label:'Veloz',icon:'➶',desc:'Prioridade, U-Turn/Volt Switch, Agility/Dragon Dance e golpes de alto acerto.',cats:['auto'],atk:8,status:3,setups:['setup-spe'],utility:['priority','pivot']},
-    trickster:{label:'Trapaceiro',icon:'☠',desc:'Status, armadilhas, hazards, debuffs e golpes com efeitos secundários.',cats:['auto'],atk:6,status:6,setups:[],utility:['status','trap','hazard','debuff','util']}
+    trickster:{label:'Trapaceiro',icon:'☠',desc:'Status, armadilhas, hazards, debuffs e golpes com efeitos secundários.',cats:['auto'],atk:6,status:6,setups:[],utility:['status','trap','hazard','debuff','util']},
+    // Estratégias competitivas: definem o papel do Pokémon no time.
+    bulky:{group:'strategy',label:'Bulky',icon:'🪨',desc:'Tanque que bate: aguenta golpes e responde com STAB fortes, Bulk Up/Calm Mind, dreno e cura.',cats:['auto'],atk:8,status:4,setups:['setup-atk','setup-spa','setup-def'],utility:['drain','heal','status'],power:'high'},
+    sweeper:{group:'strategy',label:'Sweeper',icon:'💨',desc:'Rápido e frágil: Dragon Dance/Nasty Plot/Agility, os golpes mais fortes e prioridade para limpar o time.',cats:['auto'],atk:10,status:2,setups:['setup-atk','setup-spa','setup-spe'],utility:['priority','crit'],power:'high'},
+    wallbreaker:{group:'strategy',label:'Wallbreaker',icon:'💥',desc:'Quebra tanques: só golpes de muito poder, recoil e cobertura extra; quase nenhum status.',cats:['auto'],atk:11,status:1,setups:[],utility:['recoil','crit'],power:'high'},
+    stall:{group:'strategy',label:'Stall',icon:'⏳',desc:'Vence pelo desgaste: cura, Toxic/Will-O-Wisp, hazards, armadilhas, defesa e poucos ataques.',cats:['auto'],atk:4,status:8,setups:['setup-def'],utility:['heal','status','hazard','trap','screen','util']},
+    pivot:{group:'strategy',label:'Pivô',icon:'↺',desc:'Entra, causa estrago e sai: U-turn/Volt Switch, Parting Shot, status e golpes que baixam atributos.',cats:['auto'],atk:7,status:5,setups:[],utility:['pivot','status','debuff','lower']},
+    lead:{group:'strategy',label:'Lead / Hazards',icon:'⛰',desc:'Abre a luta: Stealth Rock/Spikes, Taunt, telas, golpes rápidos e de suporte.',cats:['auto'],atk:6,status:6,setups:[],utility:['hazard','screen','util','priority','status']}
   };
   const TM_ONLY=new Set(['Protect','Detect','Endure','Toxic','Attract','Rest','Substitute','Sleep Talk','Facade','Helping Hand','Roar','Whirlwind']);
   const SIZES={compact:{label:'Compacto',lvl:12,tm:6},standard:{label:'Padrão',lvl:18,tm:10},full:{label:'Completo',lvl:26,tm:16}};
@@ -45,17 +52,22 @@
     return [atk>spa?'Physical':'Special'];
   }
   function generate(opts){
-    const o={types:['Normal'],profile:'physical',size:'standard',includeNormal:true,coverage:2,maxLevel:60,stats:null,seed:1,...opts};
+    const o={types:['Normal'],profile:'physical',size:'standard',includeNormal:true,coverage:2,maxLevel:60,stats:null,seed:1,extraTypes:[],...opts};
     const R=rng(o.seed);const jitter=()=>R()*0.35;
     const P=PROFILES[o.profile]||PROFILES.physical;const S=SIZES[o.size]||SIZES.standard;
     const types=[...new Set(o.types.filter(Boolean))];
+    // Tipos escolhidos à mão pelo GM (além dos tipos do Pokémon).
+    const extra=[...new Set((o.extraTypes||[]).filter(t=>ALL_TYPES.includes(t)&&!types.includes(t)&&t!=='Normal'))];
+    const learn=new Set([...types,...extra]);const canLearn=t=>learn.has(t)||t==='Normal';
+    const high=P.power==='high';
     const cats=pickCategory(o.profile,o.stats);
     const setupFits=m=>!(m.tags.has('setup-atk')&&!m.tags.has('setup-spa')&&!cats.includes('Physical'))&&!(m.tags.has('setup-spa')&&!m.tags.has('setup-atk')&&!cats.includes('Special'));
     const used=new Set();const take=m=>{used.add(m.name);return m;};
     const pop=m=>Math.log2(2+m.learners)/10;
     // ataques STAB em degraus de poder
     const stabAttacks=MOVES.filter(m=>m.tags.has('atk')&&types.includes(m.type)&&cats.includes(m.cat)&&!m.tags.has('slow'));
-    const tiers=[[0,45],[46,65],[66,85],[86,100],[101,200]];
+    const tiers=high?[[46,70],[71,85],[86,100],[101,200],[101,200]]:[[0,45],[46,65],[66,85],[86,100],[101,200]];
+    const strength=m=>high?Math.min(150,m.power||0)/100:0;
     const attacks=[];
     const atkBudget=Math.round(S.lvl*P.atk/12);
     const perType=Math.max(2,Math.ceil(atkBudget*(o.includeNormal?0.75:1)/types.length));
@@ -64,11 +76,17 @@
       let picked=0;
       for(const [lo,hi] of tiers){
         if(picked>=perType)break;
-        const c=mine.filter(m=>m.power>=lo&&m.power<=hi&&!used.has(m.name)).sort((a,b)=>(pop(b)+jitter())-(pop(a)+jitter()));
+        const c=mine.filter(m=>m.power>=lo&&m.power<=hi&&!used.has(m.name)).sort((a,b)=>(pop(b)+strength(b)+jitter())-(pop(a)+strength(a)+jitter()));
         if(c[0]){attacks.push(take(c[0]));picked++;}
       }
       // completa com variações se faltar
-      for(const m of mine.filter(m=>!used.has(m.name)).sort((a,b)=>(pop(b)+jitter())-(pop(a)+jitter()))){if(picked>=perType)break;attacks.push(take(m));picked++;}
+      for(const m of mine.filter(m=>!used.has(m.name)&&(!high||m.power>=50)).sort((a,b)=>(pop(b)+strength(b)+jitter())-(pop(a)+strength(a)+jitter()))){if(picked>=perType)break;attacks.push(take(m));picked++;}
+    }
+    // Tipos extras escolhidos pelo GM: um golpe de nível por tipo (menos no Compacto).
+    if(o.size!=='compact')for(const t of extra){
+      const c=MOVES.filter(m=>m.type===t&&m.tags.has('atk')&&cats.includes(m.cat)&&m.power>=(high?60:40)&&m.power<=90&&!used.has(m.name)&&!m.tags.has('slow'))
+        .sort((a,b)=>(pop(b)+strength(b)+jitter())-(pop(a)+strength(a)+jitter()));
+      if(c[0])attacks.push(take(c[0]));
     }
     // Normal: golpe inicial fraco + 1–2 médios/fortes
     if(o.includeNormal){
@@ -82,16 +100,17 @@
     // status de perfil
     const statusMoves=[];
     const want=(tag,n,filter=()=>true)=>{
-      const c=MOVES.filter(m=>m.tags.has(tag)&&!used.has(m.name)&&!TM_ONLY.has(m.name)&&(types.includes(m.type)||m.type==='Normal'||tag==='status'||tag==='hazard'||tag==='screen'||tag==='pivot')&&filter(m))
-        .sort((a,b)=>((types.includes(b.type)?0.6:0)+pop(b)+jitter())-((types.includes(a.type)?0.6:0)+pop(a)+jitter()));
+      const c=MOVES.filter(m=>m.tags.has(tag)&&!used.has(m.name)&&!TM_ONLY.has(m.name)&&(canLearn(m.type)||tag==='status'||tag==='hazard'||tag==='screen'||tag==='pivot'||tag==='setup-spe')&&filter(m))
+        .sort((a,b)=>((learn.has(b.type)?0.6:0)+pop(b)+jitter())-((learn.has(a.type)?0.6:0)+pop(a)+jitter()));
       for(const m of c.slice(0,n))statusMoves.push(take(m));
     };
     // debuff inicial (Growl/Leer/Tail Whip…)
-    want('debuff',1,m=>m.type==='Normal'||types.includes(m.type));
-    for(const s of P.setups)want(s,1,m=>m.cat==='Status');
+    if(P.status>=2)want('debuff',1,m=>canLearn(m.type));
+    // Setup só do lado que o Pokémon usa (Swords Dance para físico, Nasty Plot para especial).
+    for(const s of P.setups){if(s==='setup-atk'&&!cats.includes('Physical')||s==='setup-spa'&&!cats.includes('Special'))continue;want(s,1,m=>m.cat==='Status');}
     let budget=Math.max(1,Math.round(S.lvl*P.status/12)-statusMoves.length);
     for(const u of P.utility){if(budget<=0)break;if(u==='protect')continue;const before=statusMoves.length+attacks.length;
-      if(u==='priority'||u==='drain'){const c=MOVES.filter(m=>m.tags.has(u)&&m.tags.has('atk')&&cats.includes(m.cat)&&(types.includes(m.type)||m.type==='Normal')&&!used.has(m.name)).sort((a,b)=>pop(b)-pop(a));if(c[0])attacks.push(take(c[0]));}
+      if(['priority','drain','recoil','crit','lower'].includes(u)){const c=MOVES.filter(m=>m.tags.has(u)&&m.tags.has('atk')&&cats.includes(m.cat)&&canLearn(m.type)&&!used.has(m.name)).sort((a,b)=>(learn.has(b.type)?1:0)+pop(b)-(learn.has(a.type)?1:0)-pop(a));if(c[0])attacks.push(take(c[0]));}
       else want(u,u==='status'||u==='util'?2:1,m=>u!=='status'||m.cat==='Status');
       budget-=(statusMoves.length+attacks.length)-before;}
     // níveis: ordena por "força" e espalha de 1 até o nível máximo
@@ -107,13 +126,18 @@
     });
     // Treino/TM/Tutor: cobertura + utilidade comum
     const tmList=[];
-    const cov=coverageTypes(types).slice(0,Math.max(0,o.coverage)*2);
+    // Cobertura: tipos escolhidos à mão têm prioridade; sem escolha, usa a sugestão automática.
+    const manual=extra.length>0;
+    const cov=manual?extra:coverageTypes(types).slice(0,Math.max(0,o.coverage)*2);
+    const covWanted=manual?extra.length:o.coverage;
     let covPicked=0;
     for(const t of cov){
-      if(covPicked>=o.coverage)break;
-      const c=MOVES.filter(m=>m.type===t&&m.tags.has('atk')&&cats.includes(m.cat)&&m.power>=70&&m.power<=110&&m.tm>=80&&!used.has(m.name)&&!m.tags.has('slow'))
-        .sort((a,b)=>(pop(b)+jitter())-(pop(a)+jitter()));
-      if(c[0]){tmList.push({...take(c[0]),coverage:true});covPicked++;}
+      if(covPicked>=covWanted)break;
+      const pool=MOVES.filter(m=>m.type===t&&m.tags.has('atk')&&cats.includes(m.cat)&&!used.has(m.name)&&!m.tags.has('slow'));
+      const c=pool.filter(m=>m.power>=70&&m.power<=(high?130:110)&&m.tm>=(manual?0:80))
+        .sort((a,b)=>(pop(b)+strength(b)+jitter())-(pop(a)+strength(a)+jitter()));
+      const pick=c[0]||(manual?pool.sort((a,b)=>b.power-a.power)[0]:null);
+      if(pick){tmList.push({...take(pick),coverage:true});covPicked++;}
     }
     for(const t of types){
       const c=MOVES.filter(m=>m.type===t&&m.tags.has('atk')&&cats.includes(m.cat)&&m.tm>=40&&!used.has(m.name)).sort((a,b)=>b.tm-a.tm);
@@ -121,11 +145,11 @@
     }
     const common=['Protect','Rest','Substitute','Sleep Talk','Facade','Endure','Toxic','Attract'];
     for(const name of common){if(tmList.length>=S.tm)break;const m=MOVES.find(x=>x.name===name);if(m&&!used.has(m.name)&&(m.cat==='Status'||cats.includes(m.cat)))tmList.push(take(m));}
-    for(const m of MOVES.filter(m=>(types.includes(m.type)||m.type==='Normal')&&m.tm>=150&&!used.has(m.name)&&(m.cat==='Status'?P.status>=4&&setupFits(m):cats.includes(m.cat))).sort((a,b)=>b.tm-a.tm)){
+    for(const m of MOVES.filter(m=>canLearn(m.type)&&m.tm>=150&&!used.has(m.name)&&(m.cat==='Status'?P.status>=4&&setupFits(m):cats.includes(m.cat))).sort((a,b)=>b.tm-a.tm)){
       if(tmList.length>=S.tm)break;tmList.push(take(m));
     }
     return {
-      profile:o.profile,types,cats,
+      profile:o.profile,types,extraTypes:extra,cats,
       levelUp:learnset,
       tm:tmList.map(m=>({...m,learn:'Training/TM/Tutor'}))
     };
@@ -169,18 +193,28 @@
         <label class="mp-field"><span>Tipo 2</span><select data-mp="type2">${typeOptions(ui.opts.types[1]||'',true)}</select></label>
         <label class="mp-field"><span>Nível máx. do último golpe</span><input type="number" min="10" max="100" data-mp="maxLevel" value="${ui.opts.maxLevel}"></label>
       </div>
-      <div class="mp-label">PERFIL DO POKÉMON</div>
-      <div class="mp-profiles">${Object.entries(PROFILES).map(([k,p])=>`<button type="button" class="mp-profile${k===ui.opts.profile?' on':''}" data-mp-profile="${k}"><i>${p.icon}</i><b>${p.label}</b><small>${p.desc}</small></button>`).join('')}</div>
+      <div class="mp-label">ESTILO DE LUTA</div>
+      <div class="mp-profiles">${profileButtons(p=>!p.group)}</div>
+      <div class="mp-label">ESTRATÉGIA NO TIME</div>
+      <div class="mp-profiles">${profileButtons(p=>p.group==='strategy')}</div>
+      <div class="mp-label mp-types-label"><span>TIPOS QUE ELE PODE APRENDER</span>
+        ${ui.opts.extraTypes.length?'<button type="button" class="btn btn-outline btn-sm" data-mp-act="autoTypes">Voltar ao automático</button>':''}</div>
+      <div class="mp-types-help">${ui.opts.extraTypes.length?`Cobertura manual: golpes de ${ui.opts.extraTypes.map(esc).join(', ')}${ui.opts.size==='compact'?' (só Treino/TM no Compacto)':' por nível e por Treino/TM'}.`:'Os tipos dele (STAB) já estão incluídos. Toque em outros tipos para escolher a cobertura à mão; sem escolha, ela é automática.'}</div>
+      <div class="mp-types">${ALL_TYPES.map(t=>{const own=ui.opts.types.includes(t),normal=t==='Normal'&&!own;
+        const on=own||(normal?ui.opts.includeNormal:ui.opts.extraTypes.includes(t));
+        return `<button type="button" class="mp-tchip${on?' on':''}${own?' own':''}" style="--t:${TYPE_COLORS[t]}" data-mp-type="${t}" aria-pressed="${on}" ${own?'disabled title="Tipo do Pokémon (STAB)"':''}>${t}${own?'<small>STAB</small>':''}</button>`;}).join('')}</div>
       <div class="mp-row mp-opts">
         <div class="mp-seg">${Object.entries(SIZES).map(([k,s])=>`<button type="button" class="${k===ui.opts.size?'on':''}" data-mp-size="${k}">${s.label}<small>${s.lvl} por nível · ${s.tm} TM</small></button>`).join('')}</div>
-        <label class="mp-check"><input type="checkbox" data-mp="includeNormal" ${ui.opts.includeNormal?'checked':''}> Incluir golpes Normal</label>
-        <label class="mp-field mp-cov"><span>Cobertura (outros tipos)</span><input type="range" min="0" max="4" data-mp="coverage" value="${ui.opts.coverage}"><b>${ui.opts.coverage}</b></label>
+        ${ui.opts.extraTypes.length?'':`<label class="mp-field mp-cov"><span>Cobertura automática (outros tipos)</span><input type="range" min="0" max="4" data-mp="coverage" value="${ui.opts.coverage}"><b>${ui.opts.coverage}</b></label>`}
       </div>
       <div class="mp-preview-head"><b>Prévia · ${r.levelUp.length} por nível · ${r.tm.length} Treino/TM</b>
         <span>${r.cats.map(c=>c==='Physical'?'Físico':'Especial').join(' + ')}</span>
         <button type="button" class="btn btn-outline btn-sm" data-mp-act="reroll">🎲 Sortear de novo</button></div>
       <div class="mp-cols"><div><div class="mp-label">POR NÍVEL</div><div class="mp-list">${r.levelUp.map((m,i)=>moveChip(m,i,'lv')).join('')}</div></div>
       <div><div class="mp-label">TREINO / TM / TUTOR</div><div class="mp-list">${r.tm.map((m,i)=>moveChip(m,i,'tm')).join('')}</div></div></div>`;
+  }
+  function profileButtons(filter){
+    return Object.entries(PROFILES).filter(([,p])=>filter(p)).map(([k,p])=>`<button type="button" class="mp-profile${k===ui.opts.profile?' on':''}" data-mp-profile="${k}" aria-pressed="${k===ui.opts.profile}"><i>${p.icon}</i><b>${p.label}</b><small>${p.desc}</small></button>`).join('');
   }
   function regen(){ui.result=generate(ui.opts);draw();}
   function open(options){
@@ -196,7 +230,7 @@
       <button type="button" class="btn btn-outline" data-mp-act="close">Cancelar</button>
       <button type="button" class="btn btn-primary" data-mp-act="apply">${esc(options.applyLabel||'Adicionar golpes')}</button></footer></div>`;
     document.body.appendChild(el);
-    ui={el,options,opts:{types:options.types?.length?options.types:['Normal'],profile:options.profile||guessProfile(options.stats),size:'standard',includeNormal:true,coverage:2,maxLevel:options.maxLevel||60,stats:options.stats,seed:Date.now()%100000},replace:!!options.replace};
+    ui={el,options,opts:{types:options.types?.length?options.types:['Normal'],profile:options.profile||guessProfile(options.stats),size:'standard',includeNormal:true,coverage:2,extraTypes:[],maxLevel:options.maxLevel||60,stats:options.stats,seed:Date.now()%100000},replace:!!options.replace};
     regen();
     el.addEventListener('click',onClick);el.addEventListener('change',onChange);el.addEventListener('input',onInput);
     el.querySelector('[data-mp-act="apply"]').focus();
@@ -219,21 +253,27 @@
     if(t===ui.el){close();return;}
     const prof=t.closest('[data-mp-profile]');if(prof){ui.opts.profile=prof.dataset.mpProfile;regen();return;}
     const size=t.closest('[data-mp-size]');if(size){ui.opts.size=size.dataset.mpSize;regen();return;}
+    const tchip=t.closest('[data-mp-type]');if(tchip&&!tchip.disabled){const ty=tchip.dataset.mpType;
+      if(ty==='Normal')ui.opts.includeNormal=!ui.opts.includeNormal;
+      else{const x=new Set(ui.opts.extraTypes);x.has(ty)?x.delete(ty):x.add(ty);ui.opts.extraTypes=ALL_TYPES.filter(k=>x.has(k));}
+      regen();return;}
     const act=t.closest('[data-mp-act]')?.dataset.mpAct;
     if(act==='close')close();
+    else if(act==='autoTypes'){ui.opts.extraTypes=[];regen();}
     else if(act==='reroll'){ui.opts.seed=(ui.opts.seed*7919+13)%1000003;regen();}
     else if(act==='apply'){
       const moves=selected();if(!moves.length)return;
       const btn=t.closest('button');btn.disabled=true;const status=ui.el.querySelector('.mp-status');
       const entries=await resolve(moves,(d,n)=>{status.textContent=`Traduzindo golpes… ${d}/${n}`;});
       const replace=ui.el.querySelector('[data-mp="replace"]').checked;
-      try{await ui.options.onApply?.(entries,{replace,profile:ui.opts.profile,types:ui.result.types});}finally{close();}
+      try{await ui.options.onApply?.(entries,{replace,profile:ui.opts.profile,types:ui.result.types,extraTypes:ui.result.extraTypes});}finally{close();}
     }
   }
   function onChange(e){
     const k=e.target.dataset.mp;if(!k)return;
     if(k==='type1')ui.opts.types=[e.target.value,ui.opts.types[1]].filter(Boolean);
     else if(k==='type2')ui.opts.types=[ui.opts.types[0],e.target.value].filter(Boolean);
+    if(k==='type1'||k==='type2')ui.opts.extraTypes=ui.opts.extraTypes.filter(t=>!ui.opts.types.includes(t));
     else if(k==='includeNormal')ui.opts.includeNormal=e.target.checked;
     else if(k==='maxLevel')ui.opts.maxLevel=Math.max(10,Math.min(100,+e.target.value||60));
     else if(k==='replace')return;
@@ -336,7 +376,7 @@
     const section=add?.closest('.form-section')||add?.parentElement;
     if(add&&section&&!section.querySelector('[data-mp-open]')){
       const anchor=section.querySelector(':scope > p')||add;
-      anchor.insertAdjacentHTML(anchor===add?'beforebegin':'afterend',`<div class="mp-cta"><div><b>✨ Gerar Move Pool por perfil</b><small>Escolha se ele é Atacante Especial, Tanque, Suporte… e receba golpes dos tipos dele, Normal e cobertura, já com níveis.</small></div><button type="button" class="btn btn-primary" data-mp-open>Gerar move pool</button></div>`);
+      anchor.insertAdjacentHTML(anchor===add?'beforebegin':'afterend',`<div class="mp-cta"><div><b>✨ Gerar Move Pool por perfil</b><small>Escolha o estilo (Físico, Especial, Tanque…) ou a estratégia (Bulky, Sweeper, Stall…) e os tipos que ele pode aprender. Os golpes já vêm com níveis.</small></div><button type="button" class="btn btn-primary" data-mp-open>Gerar move pool</button></div>`);
       injectCopy();
     }
   }
