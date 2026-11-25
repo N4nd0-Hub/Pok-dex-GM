@@ -6,13 +6,15 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
   'use strict';
   const {app, isEditable, modalShell, closeModal, closeDrawer, openEditor,
     toast, slug, esc, byId, visible, artTag, hydrateArt, render, demoPersist,
-    loadCatalog, saveDraft} = api;
+    loadCatalog, saveDraft, handleArt} = api;
   const TYPES = ['Normal','Fire','Water','Electric','Grass','Ice','Fighting','Poison','Ground',
     'Flying','Psychic','Bug','Rock','Ghost','Dragon','Dark','Steel','Fairy'];
   const STATS = [['hp','HP'],['atk','Attack'],['def','Defense'],['spa','Sp.Atk'],['spd','Sp.Def'],['spe','Speed']];
   const STAT_DEFAULT = {hp:50,atk:50,def:50,spa:50,spd:50,spe:50};
   const ACTIONS = new Set(['chainScale','chainPool','chainPoolClear','chainWizard','chainFromDetail','chainFromEditor','chainAdd',
-    'chainRemove','chainUp','chainDown','chainSave','chainEditStage','chainSplit','chainSplitSave']);
+    'chainRemove','chainUp','chainDown','chainSave','chainEditStage','chainSplit','chainSplitSave',
+    'chainAbilityAdd','chainAbilityRemove','chainArtClear']);
+  const ART_TYPES={'image/png':'png','image/jpeg':'jpg','image/webp':'webp'};
   const own = (obj,key) => Object.prototype.hasOwnProperty.call(obj,key);
   const clone = x => JSON.parse(JSON.stringify(x));
   const clean = val => String(val ?? '').trim();
@@ -22,7 +24,8 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
   function newStage(prev=null) {
     const base={id:crypto.randomUUID(),mode:'new',name:'',slug:'',slugEdited:false,
       dex:'',classification:'fakemon',category:'',description:'',type1:'Normal',type2:'',
-      baseStats:clone(STAT_DEFAULT),requirements:'',level:'',inherit:true};
+      baseStats:clone(STAT_DEFAULT),requirements:'',level:'',inherit:true,
+      abilities:[],abilityTouched:false,artFile:null,artUrl:''};
     if(!prev)return base;
     // Herda tipagem, classe e uma distribuição de stats um pouco mais forte da etapa anterior.
     const prevStats=prev.baseStats||STAT_DEFAULT;
@@ -45,6 +48,23 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
   }
   // Aceita "20", "Lv 20", "Lv. 20", "Nível 20"… e devolve só o número.
   function levelNumber(v){const m=String(v??'').match(/\d{1,3}/);return m?String(Number(m[0])):'';}
+  /* Abilities de uma etapa nova: enquanto o GM não mexer, seguem as da etapa
+     anterior; depois de editadas, ficam como ele deixou. */
+  function prevAbilities(i){
+    const p=wizard.rows[i-1];if(!p)return [];
+    const list=p.mode==='existing'?(byId(app.items,p.id)?.abilities||[]):stageAbilities(i-1);
+    return list.filter(a=>clean(a?.name)).map(a=>({name:clean(a.name),text:String(a.text||'')}));
+  }
+  function stageAbilities(i){
+    const r=wizard?.rows[i];if(!r||r.mode!=='new')return [];
+    if(!Array.isArray(r.abilities))r.abilities=[];
+    if(!r.abilityTouched&&i>0)r.abilities=prevAbilities(i);
+    return r.abilities;
+  }
+  function libraryAbility(name){
+    const lib=window.POKEDEX_SYSTEM_LIBRARY,norm=lib?.normalize||(x=>String(x||'').toLowerCase().trim());
+    return (lib?.data?.abilities||[]).find(a=>norm(a.name)===norm(name))||null;
+  }
   function existingStage(s) {
     return {id:s.id,mode:'existing',name:s.name,slug:s.slug,expectedRevision:s.revision,
       requirements:clean(s.evolution?.requirements),level:levelNumber(s.evolution?.level),
@@ -146,17 +166,18 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     target.innerHTML=`<div class="chain-info">
         <strong>⤳ Uma linha evolutiva, vários Pokémon.</strong>
         Você pode combinar espécies existentes com Fakemon novos. Clique em <b>Salvar linha</b> para
-        cadastrar e vincular todos os estágios em uma operação. Etapas novas herdam tipos, Abilities e Moves da anterior, e o BST alvo escala os stats na mesma proporção.
+        cadastrar e vincular todos os estágios em uma operação. Cada etapa nova pode ter sua própria arte e Abilities personalizadas. Ela já começa com os tipos, as Abilities e os Moves da anterior, e o BST alvo escala os stats na mesma proporção.
       </div>
       <div class="chain-preview" id="chainPreviewBar" aria-label="Prévia da linha evolutiva"></div>
       ${window.POKEDEX_MOVE_PROFILES?`<div class="chain-pool"><div><b>✨ Move pool da linha ${wizard.pool?`· ${wizard.pool.moves.length} golpes (${safe(wizard.pool.profileLabel)})`:''}</b>
         <small>${wizard.pool?'Será adicionado a todos os estágios novos ao salvar.':'Escolha um perfil (Atacante Especial, Tanque…) e os golpes vão para todos os estágios novos.'}</small></div>
         <span>${wizard.pool?'<button class="btn btn-outline btn-sm" data-action="chainPoolClear">Remover</button> ':''}<button class="btn btn-primary btn-sm" data-action="chainPool">${wizard.pool?'Gerar de novo':'Gerar move pool'}</button></span></div>`:''}
+      <datalist id="chainAbilityNames">${(window.POKEDEX_SYSTEM_LIBRARY?.data?.abilities||[]).map(a=>`<option value="${safe(a.name)}"></option>`).join('')}</datalist>
       ${wizard.rows.map(drawStage).join('')}
       <div class="chain-toolbar"><button class="btn btn-outline" data-action="chainAdd" ${wizard.rows.length>=8?'disabled':''}>＋ Adicionar evolução</button>
         <span>${wizard.rows.length}/8 estágios</span></div>
       <label class="chain-publish-choice"><input type="checkbox" id="chainPublishAll" ${wizard.publish?'checked':''}>
-        <span><b>Publicar todos após salvar</b><small>Opcional. Antes de marcar, preencha os Base Stats corretos. Abilities, Moves e artes podem ser adicionados após o cadastro; não use esta opção para modelos incompletos.</small></span>
+        <span><b>Publicar todos após salvar</b><small>Opcional. Antes de marcar, preencha os Base Stats corretos. Confira a arte e as Abilities de cada etapa; Moves e detalhes podem ser completados depois no editor.</small></span>
       </label>
       <p class="chain-footnote">O cadastro não muda fichas de jogadores existentes. Etapas em rascunho só ficam visíveis para o GM. Linhas ramificadas, como Eevee, devem ser configuradas separadamente.</p>`;
     preview();
@@ -179,6 +200,7 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
         <label class="chain-field"><span>Fonte desta etapa</span><select data-chain-index="${i}" data-chain-field="mode">
           <option value="new" ${existing?'':'selected'}>Criar Pokémon novo</option>
           <option value="existing" ${existing?'selected':''}>Usar Pokémon do banco</option></select></label>
+        ${existing?'':drawArt(r,i)}
         ${existing?`<label class="chain-field"><span>Espécie existente</span>
           <input type="search" data-chain-filter="${i}" placeholder="Filtrar opções por nome ou slug…" autocomplete="off">
           <select data-chain-index="${i}" data-chain-field="existingId" id="chainExisting${i}">${options}</select></label>
@@ -192,7 +214,8 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
           <div class="chain-stats-title">Base Stats <b data-chain-bst="${i}">BST ${bst}</b></div>
           <div class="chain-stats">${stats}</div>
           <label class="chain-field chain-full"><span>Descrição rápida (opcional)</span><input maxlength="500" placeholder="Pokémon personalizado, detalhes da espécie…" data-chain-index="${i}" data-chain-field="description" value="${safe(r.description)}"></label>
-          ${i?`<div class="chain-inherit chain-full"><label><input type="checkbox" data-chain-index="${i}" data-chain-inherit ${r.inherit!==false?'checked':''}> Herdar Abilities e Moves de ${safe(stageTitle(wizard.rows[i-1],i-1))}</label>
+          ${drawAbilities(r,i)}
+          ${i?`<div class="chain-inherit chain-full"><label><input type="checkbox" data-chain-index="${i}" data-chain-inherit ${r.inherit!==false?'checked':''}> Herdar Moves de ${safe(stageTitle(wizard.rows[i-1],i-1))}</label>
             <span class="chain-bst-tool">BST alvo <input type="number" min="60" max="900" step="5" data-chain-index="${i}" data-chain-field="bstTarget" value="${safe(r.bstTarget||bst)}">
             <button type="button" class="btn btn-outline btn-sm" data-action="chainScale" data-index="${i}" title="Usa a mesma proporção de stats da etapa anterior">Escalar da etapa anterior</button></span></div>`:''}`}
       </div>
@@ -204,7 +227,36 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
         </div></div>`:'<div class="chain-base-tag">ESTÁGIO INICIAL</div>'}
     </section>`;
   }
+  function drawArt(r,i){
+    return `<div class="chain-field chain-art"><span>Arte (opcional)</span><div class="chain-art-row">
+      <label class="chain-art-pick" title="Escolher imagem">${r.artUrl?`<img src="${safe(r.artUrl)}" alt="Arte de ${safe(stageTitle(r,i))}">`:'<span aria-hidden="true">＋</span>'}
+        <input type="file" accept="image/png,image/jpeg,image/webp" data-chain-art="${i}" aria-label="Arte de ${safe(stageTitle(r,i))}"></label>
+      <div class="chain-art-info">${r.artFile?`<b>${safe(r.artFile.name)}</b><button type="button" class="btn btn-outline btn-sm" data-action="chainArtClear" data-index="${i}">Remover</button>`:
+        '<b>Toque para escolher a imagem</b><small>PNG transparente, JPEG ou WebP · até 10 MB</small>'}</div></div></div>`;
+  }
+  function drawAbilities(r,i){
+    const list=stageAbilities(i);
+    const from=i?safe(stageTitle(wizard.rows[i-1],i-1)):'';
+    const note=!list.length?'Nenhuma Ability ainda. Use uma do banco ou crie uma personalizada.':
+      !r.abilityTouched&&i?`Copiadas de ${from}. Edite, remova ou adicione outras.`:'Digite o nome de uma Ability do banco para preencher o efeito, ou escreva uma nova.';
+    return `<div class="chain-abil chain-full"><div class="chain-abil-head"><div><b>Abilities</b><small>${note}</small></div>
+      <button type="button" class="btn btn-outline btn-sm" data-action="chainAbilityAdd" data-index="${i}" ${list.length>=6?'disabled':''}>＋ Ability personalizada</button></div>
+      ${list.map((a,k)=>`<div class="chain-abil-row">
+        <input list="chainAbilityNames" maxlength="80" autocomplete="off" placeholder="Nome em inglês (ex.: Intimidate)" aria-label="Nome da Ability ${k+1}" data-chain-ability="${i}" data-k="${k}" data-sub="name" value="${safe(a.name)}">
+        <textarea rows="2" maxlength="1500" placeholder="Efeito em português" aria-label="Efeito da Ability ${k+1}" data-chain-ability="${i}" data-k="${k}" data-sub="text">${safe(a.text)}</textarea>
+        <button type="button" class="chain-mini chain-danger" title="Remover Ability" data-action="chainAbilityRemove" data-index="${i}" data-k="${k}">✕</button></div>`).join('')}</div>`;
+  }
+  function setArt(i,file){
+    const r=wizard?.rows[i];if(!r||!file)return;
+    if(!ART_TYPES[file.type]||!/\.(png|jpe?g|webp)$/i.test(file.name))return toast('Aceito apenas PNG, JPEG ou WebP.','error');
+    if(file.size<1||file.size>10485760)return toast('A arte deve ter até 10 MB.','error');
+    if(r.artUrl)URL.revokeObjectURL(r.artUrl);
+    r.artFile=file;r.artUrl=URL.createObjectURL(file);wizard.dirty=true;drawWizard();
+  }
+  function clearArt(i){const r=wizard?.rows[i];if(!r)return;if(r.artUrl)URL.revokeObjectURL(r.artUrl);r.artFile=null;r.artUrl='';wizard.dirty=true;drawWizard();}
+  function touchAbilities(i){const r=wizard.rows[i];const list=stageAbilities(i);r.abilities=list;r.abilityTouched=true;return list;}
   function swap(i,j){if(!wizard||i<0||j<0||i>=wizard.rows.length||j>=wizard.rows.length)return;
+    for(const k of [i,j])if(wizard.rows[k].mode==='new')touchAbilities(k);
     [wizard.rows[i],wizard.rows[j]]=[wizard.rows[j],wizard.rows[i]];wizard.dirty=true;drawWizard();}
   function setMode(i,mode){const row=wizard.rows[i];if(!row)return;
     const preserved={requirements:row.requirements,level:row.level};
@@ -243,10 +295,10 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     entries.forEach((e,i)=>{
       const row=wizard.rows[i];
       if(e.existing){const s=byId(app.items,e.id);prev={abilities:clone(s?.abilities||[]),moves:clone(s?.moves||[])};return;}
-      let abilities=[],moves=[];
-      if(row?.inherit!==false&&prev){abilities=clone(prev.abilities);moves=clone(prev.moves).map(m=>({...m,learn:m.learn&&/herdado/i.test(m.learn)?m.learn:(m.learn||'herdado')}));}
+      let moves=[];
+      const abilities=clone(stageAbilities(i)).filter(a=>a&&clean(a.name)).map(a=>({name:clean(a.name),text:clean(a.text)}));
+      if(row?.inherit!==false&&prev){moves=clone(prev.moves).map(m=>({...m,learn:m.learn&&/herdado/i.test(m.learn)?m.learn:(m.learn||'herdado')}));}
       if(wizard.pool)moves=window.POKEDEX_MOVE_PROFILES.mergeMoves(moves,clone(wizard.pool.moves),false);
-      abilities=abilities.filter(a=>a&&clean(a.name));
       if(abilities.length||moves.length)out.set(e.id,{abilities,moves});
       prev={abilities,moves};
     });
@@ -276,6 +328,10 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
       if(slugs.has(key)||gmItems().some(s=>s.slug===key))
         throw Error(`O slug “${key}” já existe ou está repetido. Use um slug exclusivo.`);
       slugs.add(key);
+      for(const a of stageAbilities(i)){
+        if(!clean(a.name)&&clean(a.text))throw Error(`${name}: uma Ability está sem nome.`);
+        if(clean(a.name).length>80)throw Error(`${name}: nome de Ability muito longo.`);
+      }
       const dex=clean(r.dex);
       if(dex&&(!/^\d{1,6}$/.test(dex)||+dex<1||+dex>999999))throw Error(`Número Pokédex inválido para ${name}.`);
       if(!TYPES.includes(r.type1)||r.type2&&(!TYPES.includes(r.type2)||r.type1===r.type2))
@@ -293,9 +349,10 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     let entries;
     try{entries=getPayload()}catch(e){toast(e.message,'error');return;}
     const shouldPublish=Boolean(wizard.publish);
-    const incomplete=entries.filter(x=>!x.existing);
-    if(shouldPublish && incomplete.length && !confirm(
-      `Publicar ${entries.length} Pokémon agora? ${incomplete.length} são novos e ainda não possuem Abilities, Moves ou artes cadastradas nesta tela. Você pode cancelar e salvar apenas os rascunhos.`))return;
+    const noArt=wizard.rows.filter(r=>r.mode==='new'&&!r.artFile).map(r=>clean(r.name));
+    if(shouldPublish && noArt.length && !confirm(
+      `Publicar ${entries.length} Pokémon agora? ${noArt.join(', ')} ainda ${noArt.length>1?'estão':'está'} sem arte. Você pode cancelar e salvar apenas os rascunhos.`))return;
+    const arts=wizard.rows.filter(r=>r.mode==='new'&&r.artFile).map(r=>({id:r.id,name:clean(r.name),file:r.artFile}));
     wizard.saving=true;
     const btn=document.getElementById('chainSaveButton');if(btn){btn.disabled=true;btn.textContent='Salvando estágios…';}
     let publishErrors=[];const publishedNames=[],publishedIds=[];
@@ -311,17 +368,12 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
             requirements:e.requirements||'',level:e.level||''};
           const extra=inherit.get(e.id)||{abilities:[],moves:[]};
           const model=old?{...clone(old),evolution,revision:old.repository?.sourceOnly?1:(old.revision||1)+1,updatedAt:new Date().toISOString()}:
-            {id:e.id,name:e.name,slug:e.slug,dex:e.dex,classification:e.classification,
+            {id:e.id,name:e.name,slug:e.slug,dex:e.dex?Number(e.dex):null,classification:e.classification,
              category:e.category,description:e.description,type1:e.type1,type2:e.type2,
              baseStats:e.baseStats,abilities:extra.abilities,evolution,moves:extra.moves,specialRules:'',notes:'',
              coverArtId:null,status:'draft',revision:1,publishedRevision:null,updatedAt:new Date().toISOString()};
           if(model.repository?.sourceOnly){delete model.repository;model.status='draft';model.publishedRevision=null;}
           app.items=app.items.filter(s=>s.id!==e.id).concat(model);
-        }
-        if(shouldPublish)for(const e of entries){const s=byId(app.items,e.id);s.status='published';
-          s.publishedRevision=s.revision;s.publishedAt=new Date().toISOString();
-          app.published=app.published.filter(p=>p.id!==e.id).concat({...clone(s),notes:''});
-          publishedNames.push(s.name);publishedIds.push(s.id);
         }
         await demoPersist();
       }else{
@@ -345,7 +397,34 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
           const upd=await app.client.from('pokedex_species').update({abilities:data.abilities,moves:data.moves}).eq('id',id);
           if(upd.error)publishErrors.push(`${entries.find(x=>x.id===id)?.name||id}: Abilities/Moves não copiados (${upd.error.message})`);
         }
-        if(shouldPublish){
+        await loadCatalog();
+      }
+      // Artes: cada etapa nova recebe a imagem pelo mesmo caminho do editor
+      // (miniatura, armazenamento e vínculo de capa), já com o Pokémon no banco.
+      for(const a of arts){
+        if(btn)btn.textContent=`Enviando arte de ${a.name}…`;
+        const keep=wizard;
+        try{
+          if(typeof handleArt!=='function')throw Error('envio indisponível');
+          openEditor(a.id);
+          if(app.editor?.model?.id!==a.id)throw Error('Pokémon não encontrado depois de salvar');
+          if(app.editor.model.dex!=null&&!Number.isInteger(app.editor.model.dex))app.editor.model.dex=Number(app.editor.model.dex)||null;
+          await handleArt(a.file,'species');
+          if(!app.editor?.model?.coverArtId)throw Error('imagem recusada');
+          await saveDraft(false);
+        }catch(err){publishErrors.push(`${a.name}: arte não salva (${err.message||err}). Adicione pelo editor.`);}
+        finally{wizard=keep;app.editor=null;}
+      }
+      if(shouldPublish){
+        if(btn)btn.textContent='Publicando…';
+        if(app.mode==='demo'){
+          for(const e of entries){const s=byId(app.items,e.id);if(!s)continue;s.status='published';
+            s.publishedRevision=s.revision;s.publishedAt=new Date().toISOString();
+            app.published=app.published.filter(p=>p.id!==e.id).concat({...clone(s),notes:''});
+            publishedNames.push(s.name);publishedIds.push(s.id);
+          }
+          await demoPersist();
+        }else{
           for(const e of entries){
             const result=await app.client.rpc('pokedex_publish',{p_id:e.id});
             const name=e.name||byId(app.items,e.id)?.name||e.id;
@@ -353,24 +432,25 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
             else {publishedNames.push(name);publishedIds.push(e.id);}
           }
         }
-        await loadCatalog();
       }
+      if(app.mode!=='demo'&&(arts.length||shouldPublish))await loadCatalog();
       const snapshot=clone(entries), msg=publishErrors.length?
-        `Linha salva. ${publishedNames.length} publicado(s); ${publishErrors.length} publicação(ões) falharam.`:
+        `Linha salva, mas ${publishErrors.length} item(ns) precisam de atenção.`:
         shouldPublish?`${entries.length} estágio(s) salvos e publicados.`:
         `${entries.length} estágio(s) vinculados em rascunho. Agora complete cada um e publique.`;
       wizard=null;render();
       modalShell('Linha evolutiva salva',msg,
         `<div class="modal-body chain-result"><div class="chain-info"><strong>✓ Linha vinculada</strong>
         ${shouldPublish?'As etapas publicadas já estão disponíveis na Pokédex pública.':'Os Pokémon já estão no seu banco GM; a publicação é feita quando você decidir.'}</div>
-        ${snapshot.map((e,i)=>`<div class="chain-done"><span class="chain-counter">${i+1}</span>
+        ${snapshot.map((e,i)=>`<div class="chain-done"><span class="chain-counter">${i+1}</span><span class="chain-done-art">${byId(app.items,e.id)?artTag(byId(app.items,e.id)):''}</span>
           <b>${safe(e.name||byId(app.items,e.id)?.name||'Pokémon')}</b>
           <span class="badge ${publishedIds.includes(e.id)?'published':'draft'}">${publishedIds.includes(e.id)?'Publicado':'Salvo'}</span>
           <button class="btn btn-outline btn-sm" data-action="chainEditStage" data-id="${safe(e.id)}">Editar</button></div>`).join('')}
-        ${publishErrors.length?`<div class="chain-error">Publicação parcial. Corrija e publique individualmente:<br>${publishErrors.map(e=>safe(e)).join('<br>')}</div>`:''}
+        ${publishErrors.length?`<div class="chain-error">Alguns passos não foram concluídos. Corrija pelo editor de cada Pokémon:<br>${publishErrors.map(e=>safe(e)).join('<br>')}</div>`:''}
         <p class="chain-footnote">O GM pode adicionar novas evoluções usando o botão "Continuar esta linha" nos detalhes de um estágio.</p>
         </div>`,`<button class="btn btn-outline" data-action="closeModal">Fechar</button>`);
       document.getElementById('modal').dataset.kind='chain-result';
+      hydrateArt(document.getElementById('modal'));
       toast(msg,publishErrors.length?'warning':'success');
     }catch(err){toast('Não foi possível salvar a linha: '+(err.message||err),'error');
       if(wizard&&!document.getElementById('chainBody')){wizard.focus=null;shellWizard();}
@@ -422,6 +502,10 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     else if(act==='chainDown')swap(index,index+1);
     else if(act==='chainSave')saveChain();
     else if(act==='chainEditStage'){closeModal(true);openEditor(el.dataset.id);}
+    else if(act==='chainArtClear' && wizard)clearArt(index);
+    else if(act==='chainAbilityAdd' && wizard){const list=touchAbilities(index);if(list.length<6){list.push({name:'',text:''});wizard.dirty=true;drawWizard();
+      requestAnimationFrame(()=>document.querySelector(`[data-chain-ability="${index}"][data-k="${list.length-1}"][data-sub="name"]`)?.focus());}}
+    else if(act==='chainAbilityRemove' && wizard){const list=touchAbilities(index);list.splice(Number(el.dataset.k),1);wizard.dirty=true;drawWizard();}
   },true);
   document.addEventListener('input',event=>{
     if(!wizard||document.getElementById('modal')?.dataset.kind!=='chain-wizard')return;
@@ -431,6 +515,10 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
       const q=el.value.trim().toLowerCase();
       for(const option of select.options)option.hidden=!!q&&!option.textContent.toLowerCase().includes(q);
       return;
+    }
+    if(el.dataset.chainAbility!=null){
+      const i=+el.dataset.chainAbility,list=touchAbilities(i),a=list[+el.dataset.k];if(!a)return;
+      a[el.dataset.sub==='text'?'text':'name']=el.value;wizard.dirty=true;return;
     }
     const i=el.dataset.chainIndex;
     if(i==null)return;
@@ -460,6 +548,14 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
     if(!wizard||document.getElementById('modal')?.dataset.kind!=='chain-wizard')return;
     const el=event.target;
     if(el.id==='chainPublishAll'){wizard.publish=el.checked;return;}
+    if(el.dataset.chainArt!=null){setArt(+el.dataset.chainArt,el.files?.[0]);return;}
+    if(el.dataset.chainAbility!=null&&el.dataset.sub==='name'){
+      // Ability do banco: completa o efeito quando ele ainda está vazio.
+      const list=touchAbilities(+el.dataset.chainAbility),a=list[+el.dataset.k],m=a&&libraryAbility(a.name);
+      if(m){a.name=m.name;el.value=m.name;if(!clean(a.text)){a.text=m.description||'';
+        const t=el.parentElement.querySelector('textarea');if(t)t.value=a.text;}}
+      return;
+    }
     if(el.dataset.chainInherit!=null){const r=wizard.rows[+el.dataset.chainIndex];if(r){r.inherit=el.checked;wizard.dirty=true;}return;}
     const i=el.dataset.chainIndex;if(i==null)return;
     if(el.dataset.chainField==='mode')setMode(+i,el.value);
@@ -514,6 +610,26 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
         background:#1c2c3a;border:1px solid #3b4e5f;border-radius:10px;padding:11px 14px}
       .chain-done b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}.chain-error{padding:14px;color:#ffbec5;
         background:#442b35;border:1px solid #9b5561;border-radius:9px;line-height:1.6}
+      .chain-art-row{display:flex;align-items:center;gap:12px}
+      .chain-art-pick{position:relative;display:grid;place-items:center;flex:0 0 64px;width:64px;height:64px;border-radius:12px;
+        border:2px dashed #4a6a80;background:#13202e;color:#7ee3b3;font-size:24px;cursor:pointer;overflow:hidden}
+      .chain-art-pick:hover,.chain-art-pick:focus-within{border-color:#75d6b1;background:#1b3038}
+      .chain-art-pick img{width:100%;height:100%;object-fit:contain}
+      .chain-art-pick input{position:absolute;inset:0;opacity:0;cursor:pointer}
+      .chain-art-info{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;font-weight:600}
+      .chain-art-info b{color:#e6f2fa;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+      .chain-art-info small{color:#9cb0c2;font-weight:400}
+      .chain-abil{display:flex;flex-direction:column;gap:9px;border:1px solid #344b60;border-radius:11px;padding:13px;background:#162232}
+      .chain-abil-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+      .chain-abil-head>div{display:flex;flex-direction:column;gap:4px}.chain-abil-head b{color:#bdccdc;font-size:12px}
+      .chain-abil-head small{color:#93a8ba;font-size:11px}
+      .chain-abil-row{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr) 30px;gap:8px;align-items:start}
+      .chain-abil-row input,.chain-abil-row textarea{width:100%;min-width:0;background:#13202e;border:1px solid #40516a;border-radius:9px;
+        color:#f2f6fa;padding:10px 12px;font:inherit;font-size:13px}
+      .chain-abil-row textarea{resize:vertical;min-height:43px;line-height:1.45}
+      .chain-abil-row input:focus,.chain-abil-row textarea:focus{border-color:#67d5ab;outline:2px solid #67d5ab30}
+      .chain-abil-row .chain-mini{margin-top:6px}
+      .chain-done-art{display:grid;place-items:center;width:40px;height:40px;flex:0 0 40px}.chain-done-art img{width:40px;height:40px;object-fit:contain}
       .chain-drawer-section{margin-top:24px;border-top:1px solid #344559;padding-top:22px}
       .chain-drawer-section>.btn{margin-top:15px}.chain-drawer-scroll{display:flex;gap:7px;overflow-x:auto;
         align-items:stretch;padding:7px 0 10px}
@@ -526,7 +642,8 @@ window.POKEDEX_EVOLUTION_SETUP = function (api) {
       .chain-drawer-card .chain-evo-req{color:#9ee8b8}.chain-drawer-arrow{align-self:center;font-size:18px;color:#81e1b8}
       @media(max-width:760px){.chain-grid{grid-template-columns:1fr}.chain-method-fields{flex-direction:column;align-items:stretch}
       .chain-method-fields .chain-level{flex:auto}.chain-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
-      .chain-stage{padding:14px}.chain-foot-help{display:none}.chain-preview-pill{min-width:110px}.chain-drawer-card{min-width:100px;flex-basis:100px}}
+      .chain-stage{padding:14px}.chain-foot-help{display:none}
+      .chain-abil-row{grid-template-columns:minmax(0,1fr) 30px}.chain-abil-row textarea{grid-column:1/-1;grid-row:2}.chain-preview-pill{min-width:110px}.chain-drawer-card{min-width:100px;flex-basis:100px}}
     `;
     document.head.append(style);
   }
