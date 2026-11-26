@@ -1,0 +1,200 @@
+{
+  "schema": "pokedex-pokemon-v1",
+  "key": "soulito",
+  "name": "Soulito",
+  "classification": "fakemon",
+  "status": "published",
+  "dex": 58,
+  "category": "Pokémon Alma Errante",
+  "description": "Usa folhas mortas como corpo e um chapéu de folha como disfarce. Espalha espinhos e esporos pelo caminho e assobia para atrair os que se perdem na mata.",
+  "type1": "Ghost",
+  "type2": "Grass",
+  "baseStats": {
+    "hp": 60,
+    "atk": 35,
+    "def": 55,
+    "spa": 100,
+    "spd": 75,
+    "spe": 75
+  },
+  "abilities": [
+    "Lonesome Whistle"
+  ],
+  "moves": [
+    {
+      "name": "Astonish",
+      "learn": "Lv. 1 / lembrança"
+    },
+    {
+      "name": "Disable",
+      "learn": "Lv. 1 / lembrança",
+      "text": "Impede o alvo de usar o último golpe utilizado por 4 turnos."
+    },
+    {
+      "name": "Absorb",
+      "learn": "Lv. 4 / herdado",
+      "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+    },
+    {
+      "name": "Echoed Voice",
+      "learn": "Lv. 7 / herdado",
+      "text": "Move sonoro. A cada uso consecutivo, o Power aumenta em 40, até o máximo de 200."
+    },
+    {
+      "name": "Confuse Ray",
+      "learn": "Lv. 10 / herdado"
+    },
+    {
+      "name": "Round",
+      "learn": "Lv. 12 / herdado"
+    },
+    {
+      "name": "Mega Drain",
+      "learn": "Lv. 14 / herdado",
+      "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+    },
+    {
+      "name": "Hex",
+      "learn": "Lv. 17 / herdado"
+    },
+    {
+      "name": "Will-O-Wisp",
+      "learn": "Lv. 20 / herdado"
+    },
+    {
+      "name": "Lost Lullaby",
+      "learn": "Lv. 22 / herdado"
+    },
+    {
+      "name": "Leech Seed",
+      "learn": "Ao evoluir / Lv. 24"
+    },
+    {
+      "name": "Spikes",
+      "learn": "Lv. 27",
+      "text": "Espalha espinhos no campo inimigo. Pokémon que entram em campo (exceto voadores) sofrem 1d6 de dano por camada (até 3)."
+    },
+    {
+      "name": "Stun Spore",
+      "learn": "Lv. 30"
+    },
+    {
+      "name": "Grass Knot",
+      "learn": "Lv. 32",
+      "text": "O Power depende do peso do alvo: quanto mais pesado, maior o dano, até Power 120."
+    },
+    {
+      "name": "Dirge Whistle",
+      "learn": "Lv. 34"
+    },
+    {
+      "name": "Toxic Spikes",
+      "learn": "Lv. 37",
+      "text": "Espalha espinhos venenosos no campo inimigo. Quem entra em campo fica com Poison (2 camadas: Toxic). Pokémon Poison que entram removem os espinhos."
+    },
+    {
+      "name": "Shadow Ball",
+      "learn": "Lv. 40"
+    },
+    {
+      "name": "Protect",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Substitute",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Toxic",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Taunt",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Trick",
+      "learn": "TM / treinamento",
+      "text": "Troca o item segurado do usuário com o do alvo."
+    },
+    {
+      "name": "Destiny Bond",
+      "learn": "TM / treinamento",
+      "text": "Se o usuário desmaiar antes do seu próximo turno, o Pokémon que o derrubou também desmaia."
+    },
+    {
+      "name": "Pain Split",
+      "learn": "TM / treinamento",
+      "text": "Soma o HP atual do usuário e do alvo e divide o valor igualmente entre os dois."
+    },
+    {
+      "name": "Curse",
+      "learn": "TM / treinamento",
+      "text": "Usuário Ghost: perde 50% do HP máximo e amaldiçoa o alvo, que perde 1/4 do HP máximo no fim de cada turno. Outros tipos: +1 estágio de Attack e Defense e −1 estágio de Speed."
+    },
+    {
+      "name": "Haze",
+      "learn": "TM / treinamento",
+      "text": "Zera todos os estágios de atributos de todos os Pokémon em campo."
+    },
+    {
+      "name": "Night Shade",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Snarl",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Stealth Rock",
+      "learn": "TM / treinamento",
+      "text": "Espalha pedras pontiagudas no campo inimigo. Quem entra em campo sofre dano conforme a efetividade do tipo Rock."
+    },
+    {
+      "name": "Thunder Wave",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Rest",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Sleep Talk",
+      "learn": "TM / treinamento",
+      "text": "Só funciona dormindo: usa aleatoriamente outro golpe conhecido do usuário."
+    },
+    {
+      "name": "Endure",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Energy Ball",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Hyper Voice",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Perish Song",
+      "learn": "TM / treinamento",
+      "text": "Move sonoro. Todos os Pokémon que ouvirem desmaiam após 3 turnos, a menos que saiam de campo."
+    },
+    {
+      "name": "Giga Drain",
+      "learn": "TM / treinamento",
+      "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+    }
+  ],
+  "evolution": {
+    "previous": "monomoi",
+    "next": "thesilbon",
+    "level": "42",
+    "requirements": "Nível 42"
+  },
+  "specialRules": "Trapaceiro rápido: coloca hazards (Spikes, Toxic Spikes, Stealth Rock), aplica status (Will-O-Wisp, Stun Spore, Leech Seed, Confusion) e desgasta o alvo com Hex e Dirge Whistle.",
+  "art": "artes/soulito.webp",
+  "forms": [],
+  "revision": 1,
+  "updatedAt": "2026-11-26T22:30:00Z"
+}

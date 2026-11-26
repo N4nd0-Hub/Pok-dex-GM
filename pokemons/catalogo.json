@@ -2,6 +2,301 @@
   "format": "pokedex-repository-v1",
   "species": [
     {
+      "id": "884b23d8-97e2-53a0-89c9-497e5ed7dd58",
+      "slug": "buddice",
+      "dex": null,
+      "name": "Buddice",
+      "classification": "fakemon",
+      "category": "Pokémon Botão Gélido",
+      "description": "Um broto de gelo venenoso que guarda toxinas congeladas em suas pétalas. Morde e espeta com rapidez, alternando frio e veneno para enfraquecer a presa.",
+      "type1": "Ice",
+      "type2": "Poison",
+      "baseStats": {
+        "hp": 35,
+        "atk": 40,
+        "def": 30,
+        "spa": 20,
+        "spd": 35,
+        "spe": 25
+      },
+      "abilities": [
+        {
+          "name": "Cryotoxin",
+          "text": "Quando acerta um golpe Ice ou Poison, o próximo golpe do outro tipo contra o mesmo alvo recebe +2d6 de dano. O bônus só pode ser ativado 1 vez por turno. A sequência é perdida se o usuário sair de campo."
+        }
+      ],
+      "moves": [
+        {
+          "name": "Poison Sting",
+          "type": "Poison",
+          "category": "Physical",
+          "power": 15,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1",
+          "text": "Tem 30% de chance de causar Poison no alvo."
+        },
+        {
+          "name": "Powder Snow",
+          "type": "Ice",
+          "category": "Special",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1",
+          "text": "Tem 10% de chance de causar Freeze no alvo."
+        },
+        {
+          "name": "Leer",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 4",
+          "text": "Reduz o alvo’s Defesa em 1 estágio."
+        },
+        {
+          "name": "Ice Shard",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 7",
+          "text": "Causa dano normal sem efeito adicional."
+        },
+        {
+          "name": "Acid",
+          "type": "Poison",
+          "category": "Special",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 10",
+          "text": "Tem 10% chance de lower o alvo’s Special Defesa em 1 estágio."
+        },
+        {
+          "name": "Bite",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 13",
+          "text": "Tem 30% de chance de causar Flinch no alvo."
+        },
+        {
+          "name": "Icy Wind",
+          "type": "Ice",
+          "category": "Special",
+          "power": 55,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "Lv. 16",
+          "text": "Atinge os oponentes com uma rajada gelada e reduz a Speed dos alvos atingidos em 1 estágio."
+        },
+        {
+          "name": "Poison Fang",
+          "type": "Poison",
+          "category": "Physical",
+          "power": 50,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 19",
+          "text": "Tem 50% chance de badly Poison o alvo."
+        },
+        {
+          "name": "Ice Fang",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "Lv. 22",
+          "text": "Morde o alvo com presas geladas. Tem 10% de chance de causar Freeze e 10% de chance de fazer o alvo hesitar (Flinch)."
+        },
+        {
+          "name": "Venoshock",
+          "type": "Poison",
+          "category": "Special",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 25",
+          "text": "Inflicts double dano if o alvo is Poisoned."
+        },
+        {
+          "name": "Haze",
+          "type": "Ice",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 28",
+          "text": "Zera todos os estágios de atributos de todos os Pokémon em campo."
+        },
+        {
+          "name": "Poison Jab",
+          "type": "Poison",
+          "category": "Physical",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 31",
+          "text": "Golpe com o braço impregnado de veneno. 30% de chance de Envenenar o alvo."
+        },
+        {
+          "name": "Agility",
+          "type": "Psychic",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 34",
+          "text": "Aumenta o usuário’s Velocidade em 2 estágios."
+        },
+        {
+          "name": "Swords Dance",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 37",
+          "text": "O usuário entra em Postura Ofensiva até o fim do próximo turno. O primeiro move Físico de dano usado no próximo turno causa o dobro do dano final. Após ativar a dobra, acertando ou errando, o efeito termina. Se o usuário ficar Incapacitado por Sleep, Freeze ou Flinch antes de atacar, o efeito é perdido.\n\nPrecisão especial: —.\nTags: Rework • Setup • Next Hit x2 • Físico."
+        },
+        {
+          "name": "Protect",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Protege o usuário dos golpes recebidos neste turno. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Substitute",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Consome 1/4 do HP máximo do usuário para criar um substituto que recebe ataques e bloqueia efeitos de status conforme as regras do Move, até ser destruído."
+        },
+        {
+          "name": "Toxic",
+          "type": "Poison",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "TM / treinamento",
+          "text": "Badly poisons o alvo, inflicting more dano every turno."
+        },
+        {
+          "name": "Ice Punch",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Soco congelante. 10% de chance de deixar o alvo Congelado."
+        },
+        {
+          "name": "Snowscape",
+          "type": "Ice",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Invoca neve por 5 turnos. Pokémon do tipo Ice recebem +1 estágio de Defense enquanto a neve durar."
+        },
+        {
+          "name": "Aerial Ace",
+          "type": "Flying",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Este Move nunca erra."
+        },
+        {
+          "name": "Taunt",
+          "type": "Dark",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Provoca o alvo por 3 turnos, impedindo-o de usar Moves Status."
+        },
+        {
+          "name": "Endure",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prioridade +4. Nesta rodada, o usuário resiste a qualquer ataque com pelo menos 1 de HP. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Rest",
+          "type": "Psychic",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "O usuário dorme por 2 turnos e recupera completamente seu HP."
+        },
+        {
+          "name": "Facade",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 70,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Se o usuário estiver Queimado, Envenenado ou Paralisado, o Power dobra. A Queimadura não reduz o dano deste golpe."
+        }
+      ],
+      "evolution": {
+        "previous": "",
+        "next": "Toxicle",
+        "level": "39",
+        "requirements": "Nível 39",
+        "chainId": "92a3a3b3-8437-5136-b5df-8f30d0de9a3d",
+        "stage": 0,
+        "previousId": null,
+        "nextIds": [
+          "352153c6-749b-5628-a786-67b8daf4f40b"
+        ]
+      },
+      "specialRules": "Evolui para Toxicle no nível 39. Prefere golpes físicos de Ice e Poison, alternando os dois tipos para ativar Cryotoxin.",
+      "notes": "",
+      "coverArtId": null,
+      "coverUrl": "pokemons/artes/buddice.webp",
+      "status": "published",
+      "revision": 1,
+      "publishedRevision": 1,
+      "createdAt": "2026-11-26T22:30:00Z",
+      "updatedAt": "2026-11-26T22:30:00Z",
+      "publishedAt": "2026-11-26T22:30:00Z",
+      "repository": {
+        "key": "buddice",
+        "file": "pokemons/buddice.pokemon.json",
+        "revision": 1,
+        "sourceOnly": true
+      }
+    },
+    {
       "id": "69371229-9cae-5dc0-9ef2-2daf90191445",
       "slug": "machamp-ondu",
       "dex": 68,
@@ -1719,6 +2014,311 @@
       }
     },
     {
+      "id": "66a56115-52f6-51a6-b7a8-7676fa5d242c",
+      "slug": "monomoi",
+      "dex": 57,
+      "name": "Monomoi",
+      "classification": "fakemon",
+      "category": "Pokémon Alma Solitária",
+      "description": "Um espírito pequeno que vaga sozinho pelas florestas assobiando. Seus assobios confundem viajantes, que acabam andando em círculos até se perderem.",
+      "type1": "Ghost",
+      "type2": "",
+      "baseStats": {
+        "hp": 40,
+        "atk": 25,
+        "def": 35,
+        "spa": 70,
+        "spd": 50,
+        "spe": 30
+      },
+      "abilities": [
+        {
+          "name": "Lonesome Whistle",
+          "text": "Os assobios de Monomoi carregam sua energia espiritual. Moves sonoros são considerados Ghost para receber STAB. Quando um move sonoro acerta, o alvo perde 1 estágio de Accuracy por 3 rodadas. Uma nova aplicação apenas renova a duração."
+        }
+      ],
+      "moves": [
+        {
+          "name": "Astonish",
+          "type": "Ghost",
+          "category": "Physical",
+          "power": 30,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1",
+          "text": "Tem 30% de chance de causar Flinch no alvo."
+        },
+        {
+          "name": "Disable",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1",
+          "text": "Impede o alvo de usar o último golpe utilizado por 4 turnos."
+        },
+        {
+          "name": "Absorb",
+          "type": "Grass",
+          "category": "Special",
+          "power": 20,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 4",
+          "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+        },
+        {
+          "name": "Echoed Voice",
+          "type": "Normal",
+          "category": "Special",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 7",
+          "text": "Move sonoro. A cada uso consecutivo, o Power aumenta em 40, até o máximo de 200."
+        },
+        {
+          "name": "Confuse Ray",
+          "type": "Ghost",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 10",
+          "text": "Confuses o alvo."
+        },
+        {
+          "name": "Round",
+          "type": "Normal",
+          "category": "Special",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 12",
+          "text": "Has double Poder if it’s used more than once per turno."
+        },
+        {
+          "name": "Mega Drain",
+          "type": "Grass",
+          "category": "Special",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 14",
+          "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+        },
+        {
+          "name": "Hex",
+          "type": "Ghost",
+          "category": "Special",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 17",
+          "text": "Has double Poder if o alvo tem major status ailment."
+        },
+        {
+          "name": "Will-O-Wisp",
+          "type": "Fire",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 85,
+          "accuracyCanonical": 85,
+          "learn": "Lv. 20",
+          "text": "Burns o alvo."
+        },
+        {
+          "name": "Lost Lullaby",
+          "type": "Ghost",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 22",
+          "text": "O usuário assobia uma melodia incompleta que faz o alvo perder a noção de direção. Aplica Confusion por 1d3 turnos. Caso o alvo já esteja com a Precisão reduzida, também sofre -1 Estágio de Sp.Def. Não pode aplicar novamente Confusion enquanto a condição anterior ainda estiver ativa.\n\nTags: Sonoro.\nPokémon listados: monomoi, soulito, thesilbon.\nRegra de aprendizado: É considerado um move sonoro."
+        },
+        {
+          "name": "Protect",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Protege o usuário dos golpes recebidos neste turno. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Substitute",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Consome 1/4 do HP máximo do usuário para criar um substituto que recebe ataques e bloqueia efeitos de status conforme as regras do Move, até ser destruído."
+        },
+        {
+          "name": "Toxic",
+          "type": "Poison",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "TM / treinamento",
+          "text": "Badly poisons o alvo, inflicting more dano every turno."
+        },
+        {
+          "name": "Taunt",
+          "type": "Dark",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Provoca o alvo por 3 turnos, impedindo-o de usar Moves Status."
+        },
+        {
+          "name": "Night Shade",
+          "type": "Ghost",
+          "category": "Special",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Inflicts dano equal to o usuário’s level."
+        },
+        {
+          "name": "Snarl",
+          "type": "Dark",
+          "category": "Special",
+          "power": 55,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "TM / treinamento",
+          "text": "Tem 100% chance de lower o alvo’s Special Ataque em 1 estágio."
+        },
+        {
+          "name": "Pain Split",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Soma o HP atual do usuário e do alvo e divide o valor igualmente entre os dois."
+        },
+        {
+          "name": "Curse",
+          "type": "Ghost",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Usuário Ghost: perde 50% do HP máximo e amaldiçoa o alvo, que perde 1/4 do HP máximo no fim de cada turno. Outros tipos: +1 estágio de Attack e Defense e −1 estágio de Speed."
+        },
+        {
+          "name": "Rest",
+          "type": "Psychic",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "O usuário dorme por 2 turnos e recupera completamente seu HP."
+        },
+        {
+          "name": "Endure",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prioridade +4. Nesta rodada, o usuário resiste a qualquer ataque com pelo menos 1 de HP. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Grass Knot",
+          "type": "Grass",
+          "category": "Special",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "O Power depende do peso do alvo: quanto mais pesado, maior o dano, até Power 120."
+        },
+        {
+          "name": "Shadow Ball",
+          "type": "Ghost",
+          "category": "Special",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Tem 20% chance de lower o alvo’s Special Defesa em 1 estágio."
+        },
+        {
+          "name": "Energy Ball",
+          "type": "Grass",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Tem 10% chance de lower o alvo’s Special Defesa em 1 estágio."
+        },
+        {
+          "name": "Hyper Voice",
+          "type": "Normal",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Causa dano normal sem efeito adicional."
+        },
+        {
+          "name": "Perish Song",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Move sonoro. Todos os Pokémon que ouvirem desmaiam após 3 turnos, a menos que saiam de campo."
+        }
+      ],
+      "evolution": {
+        "previous": "",
+        "next": "Soulito",
+        "level": "24",
+        "requirements": "Nível 24",
+        "chainId": "41338548-cb62-5593-92fa-acd53d9ea886",
+        "stage": 0,
+        "previousId": null,
+        "nextIds": [
+          "f1491c3f-2cd5-54ee-9cdc-556d894811d7"
+        ]
+      },
+      "specialRules": "Trapaceiro: prefere atrapalhar com Confusion, Burn e redução de Precisão em vez de causar dano direto. Moves sonoros contam como Ghost para STAB (Lonesome Whistle).",
+      "notes": "",
+      "coverArtId": null,
+      "coverUrl": "pokemons/artes/monomoi.webp",
+      "status": "published",
+      "revision": 1,
+      "publishedRevision": 1,
+      "createdAt": "2026-11-26T22:30:00Z",
+      "updatedAt": "2026-11-26T22:30:00Z",
+      "publishedAt": "2026-11-26T22:30:00Z",
+      "repository": {
+        "key": "monomoi",
+        "file": "pokemons/monomoi.pokemon.json",
+        "revision": 1,
+        "sourceOnly": true
+      }
+    },
+    {
       "id": "e288e550-d06b-5808-8c69-ea3c272086b3",
       "slug": "plakappa",
       "dex": 8,
@@ -2670,8 +3270,1405 @@
         "revision": 1,
         "sourceOnly": true
       }
+    },
+    {
+      "id": "f1491c3f-2cd5-54ee-9cdc-556d894811d7",
+      "slug": "soulito",
+      "dex": 58,
+      "name": "Soulito",
+      "classification": "fakemon",
+      "category": "Pokémon Alma Errante",
+      "description": "Usa folhas mortas como corpo e um chapéu de folha como disfarce. Espalha espinhos e esporos pelo caminho e assobia para atrair os que se perdem na mata.",
+      "type1": "Ghost",
+      "type2": "Grass",
+      "baseStats": {
+        "hp": 60,
+        "atk": 35,
+        "def": 55,
+        "spa": 100,
+        "spd": 75,
+        "spe": 75
+      },
+      "abilities": [
+        {
+          "name": "Lonesome Whistle",
+          "text": "Os assobios de Monomoi carregam sua energia espiritual. Moves sonoros são considerados Ghost para receber STAB. Quando um move sonoro acerta, o alvo perde 1 estágio de Accuracy por 3 rodadas. Uma nova aplicação apenas renova a duração."
+        }
+      ],
+      "moves": [
+        {
+          "name": "Astonish",
+          "type": "Ghost",
+          "category": "Physical",
+          "power": 30,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Tem 30% de chance de causar Flinch no alvo."
+        },
+        {
+          "name": "Disable",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Impede o alvo de usar o último golpe utilizado por 4 turnos."
+        },
+        {
+          "name": "Absorb",
+          "type": "Grass",
+          "category": "Special",
+          "power": 20,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 4 / herdado",
+          "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+        },
+        {
+          "name": "Echoed Voice",
+          "type": "Normal",
+          "category": "Special",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 7 / herdado",
+          "text": "Move sonoro. A cada uso consecutivo, o Power aumenta em 40, até o máximo de 200."
+        },
+        {
+          "name": "Confuse Ray",
+          "type": "Ghost",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 10 / herdado",
+          "text": "Confuses o alvo."
+        },
+        {
+          "name": "Round",
+          "type": "Normal",
+          "category": "Special",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 12 / herdado",
+          "text": "Has double Poder if it’s used more than once per turno."
+        },
+        {
+          "name": "Mega Drain",
+          "type": "Grass",
+          "category": "Special",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 14 / herdado",
+          "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+        },
+        {
+          "name": "Hex",
+          "type": "Ghost",
+          "category": "Special",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 17 / herdado",
+          "text": "Has double Poder if o alvo tem major status ailment."
+        },
+        {
+          "name": "Will-O-Wisp",
+          "type": "Fire",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 85,
+          "accuracyCanonical": 85,
+          "learn": "Lv. 20 / herdado",
+          "text": "Burns o alvo."
+        },
+        {
+          "name": "Lost Lullaby",
+          "type": "Ghost",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 22 / herdado",
+          "text": "O usuário assobia uma melodia incompleta que faz o alvo perder a noção de direção. Aplica Confusion por 1d3 turnos. Caso o alvo já esteja com a Precisão reduzida, também sofre -1 Estágio de Sp.Def. Não pode aplicar novamente Confusion enquanto a condição anterior ainda estiver ativa.\n\nTags: Sonoro.\nPokémon listados: monomoi, soulito, thesilbon.\nRegra de aprendizado: É considerado um move sonoro."
+        },
+        {
+          "name": "Leech Seed",
+          "type": "Grass",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Ao evoluir / Lv. 24",
+          "text": "Seeds o alvo, stealing HP from it every turno."
+        },
+        {
+          "name": "Spikes",
+          "type": "Ground",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 27",
+          "text": "Espalha espinhos no campo inimigo. Pokémon que entram em campo (exceto voadores) sofrem 1d6 de dano por camada (até 3)."
+        },
+        {
+          "name": "Stun Spore",
+          "type": "Grass",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 75,
+          "accuracyCanonical": 75,
+          "learn": "Lv. 30",
+          "text": "Paralyzes o alvo."
+        },
+        {
+          "name": "Grass Knot",
+          "type": "Grass",
+          "category": "Special",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 32",
+          "text": "O Power depende do peso do alvo: quanto mais pesado, maior o dano, até Power 120."
+        },
+        {
+          "name": "Dirge Whistle",
+          "type": "Ghost",
+          "category": "Special",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 34",
+          "text": "O usuário produz um assobio fúnebre que atravessa o corpo do alvo. Se o alvo estiver com a Precisão reduzida, o golpe recebe +1d6 de dano. Caso o alvo esteja sob Confusion, Infatuation ou outra condição mental, o bônus aumenta para +2d6. Apenas o maior bônus é aplicado.\n\nTags: Sonoro.\nPokémon listados: monomoi, soulito, thesilbon.\nRegra de aprendizado: É considerado um move sonoro. Apenas o maior bônus de dano é aplicado."
+        },
+        {
+          "name": "Toxic Spikes",
+          "type": "Poison",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 37",
+          "text": "Espalha espinhos venenosos no campo inimigo. Quem entra em campo fica com Poison (2 camadas: Toxic). Pokémon Poison que entram removem os espinhos."
+        },
+        {
+          "name": "Shadow Ball",
+          "type": "Ghost",
+          "category": "Special",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 40",
+          "text": "Tem 20% chance de lower o alvo’s Special Defesa em 1 estágio."
+        },
+        {
+          "name": "Protect",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Protege o usuário dos golpes recebidos neste turno. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Substitute",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Consome 1/4 do HP máximo do usuário para criar um substituto que recebe ataques e bloqueia efeitos de status conforme as regras do Move, até ser destruído."
+        },
+        {
+          "name": "Toxic",
+          "type": "Poison",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "TM / treinamento",
+          "text": "Badly poisons o alvo, inflicting more dano every turno."
+        },
+        {
+          "name": "Taunt",
+          "type": "Dark",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Provoca o alvo por 3 turnos, impedindo-o de usar Moves Status."
+        },
+        {
+          "name": "Trick",
+          "type": "Psychic",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Troca o item segurado do usuário com o do alvo."
+        },
+        {
+          "name": "Destiny Bond",
+          "type": "Ghost",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Se o usuário desmaiar antes do seu próximo turno, o Pokémon que o derrubou também desmaia."
+        },
+        {
+          "name": "Pain Split",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Soma o HP atual do usuário e do alvo e divide o valor igualmente entre os dois."
+        },
+        {
+          "name": "Curse",
+          "type": "Ghost",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Usuário Ghost: perde 50% do HP máximo e amaldiçoa o alvo, que perde 1/4 do HP máximo no fim de cada turno. Outros tipos: +1 estágio de Attack e Defense e −1 estágio de Speed."
+        },
+        {
+          "name": "Haze",
+          "type": "Ice",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Zera todos os estágios de atributos de todos os Pokémon em campo."
+        },
+        {
+          "name": "Night Shade",
+          "type": "Ghost",
+          "category": "Special",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Inflicts dano equal to o usuário’s level."
+        },
+        {
+          "name": "Snarl",
+          "type": "Dark",
+          "category": "Special",
+          "power": 55,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "TM / treinamento",
+          "text": "Tem 100% chance de lower o alvo’s Special Ataque em 1 estágio."
+        },
+        {
+          "name": "Stealth Rock",
+          "type": "Rock",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Espalha pedras pontiagudas no campo inimigo. Quem entra em campo sofre dano conforme a efetividade do tipo Rock."
+        },
+        {
+          "name": "Thunder Wave",
+          "type": "Electric",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "TM / treinamento",
+          "text": "Paralyzes o alvo."
+        },
+        {
+          "name": "Rest",
+          "type": "Psychic",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "O usuário dorme por 2 turnos e recupera completamente seu HP."
+        },
+        {
+          "name": "Sleep Talk",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Só funciona dormindo: usa aleatoriamente outro golpe conhecido do usuário."
+        },
+        {
+          "name": "Endure",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prioridade +4. Nesta rodada, o usuário resiste a qualquer ataque com pelo menos 1 de HP. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Energy Ball",
+          "type": "Grass",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Tem 10% chance de lower o alvo’s Special Defesa em 1 estágio."
+        },
+        {
+          "name": "Hyper Voice",
+          "type": "Normal",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Causa dano normal sem efeito adicional."
+        },
+        {
+          "name": "Perish Song",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Move sonoro. Todos os Pokémon que ouvirem desmaiam após 3 turnos, a menos que saiam de campo."
+        },
+        {
+          "name": "Giga Drain",
+          "type": "Grass",
+          "category": "Special",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+        }
+      ],
+      "evolution": {
+        "previous": "Monomoi",
+        "next": "Thesilbon",
+        "level": "42",
+        "requirements": "Nível 42",
+        "chainId": "41338548-cb62-5593-92fa-acd53d9ea886",
+        "stage": 1,
+        "previousId": "66a56115-52f6-51a6-b7a8-7676fa5d242c",
+        "nextIds": [
+          "63b74801-5ff1-52cb-b6cc-a41e52a1791d"
+        ]
+      },
+      "specialRules": "Trapaceiro rápido: coloca hazards (Spikes, Toxic Spikes, Stealth Rock), aplica status (Will-O-Wisp, Stun Spore, Leech Seed, Confusion) e desgasta o alvo com Hex e Dirge Whistle.",
+      "notes": "",
+      "coverArtId": null,
+      "coverUrl": "pokemons/artes/soulito.webp",
+      "status": "published",
+      "revision": 1,
+      "publishedRevision": 1,
+      "createdAt": "2026-11-26T22:30:00Z",
+      "updatedAt": "2026-11-26T22:30:00Z",
+      "publishedAt": "2026-11-26T22:30:00Z",
+      "repository": {
+        "key": "soulito",
+        "file": "pokemons/soulito.pokemon.json",
+        "revision": 1,
+        "sourceOnly": true
+      }
+    },
+    {
+      "id": "63b74801-5ff1-52cb-b6cc-a41e52a1791d",
+      "slug": "thesilbon",
+      "dex": 59,
+      "name": "Thesilbon",
+      "classification": "fakemon",
+      "category": "Pokémon Assobio Fúnebre",
+      "description": "Dizem que quem ouve seu assobio de perto já está perdido. Caminha entre plantações com a foice ao ombro, colhendo a vitalidade dos que se desviam da estrada.",
+      "type1": "Ghost",
+      "type2": "Grass",
+      "baseStats": {
+        "hp": 80,
+        "atk": 45,
+        "def": 70,
+        "spa": 130,
+        "spd": 95,
+        "spe": 120
+      },
+      "abilities": [
+        {
+          "name": "Funeral Whistle",
+          "text": "O assobio de Thesilbon atravessa corpos e perturba diretamente a alma de quem o escuta. Moves sonoros são considerados Ghost para receber STAB. O STAB de moves sonoros passa a conceder +2d6, em vez de +1d6. Quando um move sonoro acerta, o alvo perde 1 estágio de Accuracy por 3 rodadas. Caso o alvo erre um Move enquanto estiver sob esse efeito, Thesilbon recebe +1 estágio de Speed, que permanece até ser removido. O aumento de Speed só pode acontecer 1 vez por turno."
+        }
+      ],
+      "moves": [
+        {
+          "name": "Astonish",
+          "type": "Ghost",
+          "category": "Physical",
+          "power": 30,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Tem 30% de chance de causar Flinch no alvo."
+        },
+        {
+          "name": "Disable",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Impede o alvo de usar o último golpe utilizado por 4 turnos."
+        },
+        {
+          "name": "Absorb",
+          "type": "Grass",
+          "category": "Special",
+          "power": 20,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 4 / herdado / herdado",
+          "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+        },
+        {
+          "name": "Echoed Voice",
+          "type": "Normal",
+          "category": "Special",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 7 / herdado / herdado",
+          "text": "Move sonoro. A cada uso consecutivo, o Power aumenta em 40, até o máximo de 200."
+        },
+        {
+          "name": "Confuse Ray",
+          "type": "Ghost",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 10 / herdado / herdado",
+          "text": "Confuses o alvo."
+        },
+        {
+          "name": "Round",
+          "type": "Normal",
+          "category": "Special",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 12 / herdado / herdado",
+          "text": "Has double Poder if it’s used more than once per turno."
+        },
+        {
+          "name": "Mega Drain",
+          "type": "Grass",
+          "category": "Special",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 14 / herdado / herdado",
+          "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+        },
+        {
+          "name": "Hex",
+          "type": "Ghost",
+          "category": "Special",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 17 / herdado / herdado",
+          "text": "Has double Poder if o alvo tem major status ailment."
+        },
+        {
+          "name": "Will-O-Wisp",
+          "type": "Fire",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 85,
+          "accuracyCanonical": 85,
+          "learn": "Lv. 20 / herdado / herdado",
+          "text": "Burns o alvo."
+        },
+        {
+          "name": "Lost Lullaby",
+          "type": "Ghost",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 22 / herdado / herdado",
+          "text": "O usuário assobia uma melodia incompleta que faz o alvo perder a noção de direção. Aplica Confusion por 1d3 turnos. Caso o alvo já esteja com a Precisão reduzida, também sofre -1 Estágio de Sp.Def. Não pode aplicar novamente Confusion enquanto a condição anterior ainda estiver ativa.\n\nTags: Sonoro.\nPokémon listados: monomoi, soulito, thesilbon.\nRegra de aprendizado: É considerado um move sonoro."
+        },
+        {
+          "name": "Leech Seed",
+          "type": "Grass",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 24 / herdado",
+          "text": "Seeds o alvo, stealing HP from it every turno."
+        },
+        {
+          "name": "Spikes",
+          "type": "Ground",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 27 / herdado",
+          "text": "Espalha espinhos no campo inimigo. Pokémon que entram em campo (exceto voadores) sofrem 1d6 de dano por camada (até 3)."
+        },
+        {
+          "name": "Stun Spore",
+          "type": "Grass",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 75,
+          "accuracyCanonical": 75,
+          "learn": "Lv. 30 / herdado",
+          "text": "Paralyzes o alvo."
+        },
+        {
+          "name": "Grass Knot",
+          "type": "Grass",
+          "category": "Special",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 32 / herdado",
+          "text": "O Power depende do peso do alvo: quanto mais pesado, maior o dano, até Power 120."
+        },
+        {
+          "name": "Dirge Whistle",
+          "type": "Ghost",
+          "category": "Special",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 34 / herdado",
+          "text": "O usuário produz um assobio fúnebre que atravessa o corpo do alvo. Se o alvo estiver com a Precisão reduzida, o golpe recebe +1d6 de dano. Caso o alvo esteja sob Confusion, Infatuation ou outra condição mental, o bônus aumenta para +2d6. Apenas o maior bônus é aplicado.\n\nTags: Sonoro.\nPokémon listados: monomoi, soulito, thesilbon.\nRegra de aprendizado: É considerado um move sonoro. Apenas o maior bônus de dano é aplicado."
+        },
+        {
+          "name": "Toxic Spikes",
+          "type": "Poison",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 37 / herdado",
+          "text": "Espalha espinhos venenosos no campo inimigo. Quem entra em campo fica com Poison (2 camadas: Toxic). Pokémon Poison que entram removem os espinhos."
+        },
+        {
+          "name": "Shadow Ball",
+          "type": "Ghost",
+          "category": "Special",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 40 / herdado",
+          "text": "Tem 20% chance de lower o alvo’s Special Defesa em 1 estágio."
+        },
+        {
+          "name": "Phantom Force",
+          "type": "Ghost",
+          "category": "Physical",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Ao evoluir / Lv. 42",
+          "text": "O usuário desaparece no primeiro turno, ficando fora de alcance, e ataca no seguinte. Atravessa Protect e Detect."
+        },
+        {
+          "name": "Nasty Plot",
+          "type": "Dark",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 44",
+          "text": "Aumenta o usuário’s Special Ataque em 2 estágios."
+        },
+        {
+          "name": "Hyper Voice",
+          "type": "Normal",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 46",
+          "text": "Causa dano normal sem efeito adicional."
+        },
+        {
+          "name": "Strength Sap",
+          "type": "Grass",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 48",
+          "text": "Recupera HP igual ao Attack atual do alvo e reduz o Attack do alvo em 1 estágio."
+        },
+        {
+          "name": "Perish Song",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 51",
+          "text": "Move sonoro. Todos os Pokémon que ouvirem desmaiam após 3 turnos, a menos que saiam de campo."
+        },
+        {
+          "name": "Energy Ball",
+          "type": "Grass",
+          "category": "Special",
+          "power": 90,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 54",
+          "text": "Tem 10% chance de lower o alvo’s Special Defesa em 1 estágio."
+        },
+        {
+          "name": "Leaf Storm",
+          "type": "Grass",
+          "category": "Special",
+          "power": 130,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 58",
+          "text": "Reduz o usuário’s Special Ataque em 2 estágios after inflicting dano."
+        },
+        {
+          "name": "Protect",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Protege o usuário dos golpes recebidos neste turno. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Substitute",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Consome 1/4 do HP máximo do usuário para criar um substituto que recebe ataques e bloqueia efeitos de status conforme as regras do Move, até ser destruído."
+        },
+        {
+          "name": "Toxic",
+          "type": "Poison",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "TM / treinamento",
+          "text": "Badly poisons o alvo, inflicting more dano every turno."
+        },
+        {
+          "name": "Taunt",
+          "type": "Dark",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Provoca o alvo por 3 turnos, impedindo-o de usar Moves Status."
+        },
+        {
+          "name": "Trick",
+          "type": "Psychic",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Troca o item segurado do usuário com o do alvo."
+        },
+        {
+          "name": "Destiny Bond",
+          "type": "Ghost",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Se o usuário desmaiar antes do seu próximo turno, o Pokémon que o derrubou também desmaia."
+        },
+        {
+          "name": "Pain Split",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Soma o HP atual do usuário e do alvo e divide o valor igualmente entre os dois."
+        },
+        {
+          "name": "Curse",
+          "type": "Ghost",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Usuário Ghost: perde 50% do HP máximo e amaldiçoa o alvo, que perde 1/4 do HP máximo no fim de cada turno. Outros tipos: +1 estágio de Attack e Defense e −1 estágio de Speed."
+        },
+        {
+          "name": "Haze",
+          "type": "Ice",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Zera todos os estágios de atributos de todos os Pokémon em campo."
+        },
+        {
+          "name": "Night Shade",
+          "type": "Ghost",
+          "category": "Special",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Inflicts dano equal to o usuário’s level."
+        },
+        {
+          "name": "Snarl",
+          "type": "Dark",
+          "category": "Special",
+          "power": 55,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "TM / treinamento",
+          "text": "Tem 100% chance de lower o alvo’s Special Ataque em 1 estágio."
+        },
+        {
+          "name": "Stealth Rock",
+          "type": "Rock",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Espalha pedras pontiagudas no campo inimigo. Quem entra em campo sofre dano conforme a efetividade do tipo Rock."
+        },
+        {
+          "name": "Thunder Wave",
+          "type": "Electric",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "TM / treinamento",
+          "text": "Paralyzes o alvo."
+        },
+        {
+          "name": "Rest",
+          "type": "Psychic",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "O usuário dorme por 2 turnos e recupera completamente seu HP."
+        },
+        {
+          "name": "Sleep Talk",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Só funciona dormindo: usa aleatoriamente outro golpe conhecido do usuário."
+        },
+        {
+          "name": "Endure",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prioridade +4. Nesta rodada, o usuário resiste a qualquer ataque com pelo menos 1 de HP. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Giga Drain",
+          "type": "Grass",
+          "category": "Special",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+        },
+        {
+          "name": "Solar Beam",
+          "type": "Grass",
+          "category": "Special",
+          "power": 120,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Requires a turno to charge before attacking."
+        },
+        {
+          "name": "Sunny Day",
+          "type": "Fire",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Invoca sol forte por 5 turnos. Golpes Fire recebem +1d6 e golpes Water sofrem −1d6."
+        },
+        {
+          "name": "Spite",
+          "type": "Ghost",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Reduz os PP do último golpe usado pelo alvo em 4."
+        },
+        {
+          "name": "Parting Shot",
+          "type": "Dark",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Reduz o Attack e o Sp.Atk do alvo em 1 estágio e o usuário volta para a Pokébola, trocando de lugar com um aliado."
+        }
+      ],
+      "evolution": {
+        "previous": "Soulito",
+        "next": "",
+        "level": "42",
+        "requirements": "Nível 42",
+        "chainId": "41338548-cb62-5593-92fa-acd53d9ea886",
+        "stage": 2,
+        "previousId": "f1491c3f-2cd5-54ee-9cdc-556d894811d7",
+        "nextIds": []
+      },
+      "specialRules": "Trapaceiro veloz e atacante especial: espalha hazards e status, pune alvos confusos ou com Precisão reduzida (Dirge Whistle, Hex) e usa Perish Song, Destiny Bond e Parting Shot para controlar o ritmo. O STAB de moves sonoros vale +2d6 (Funeral Whistle).",
+      "notes": "",
+      "coverArtId": null,
+      "coverUrl": "pokemons/artes/thesilbon.webp",
+      "status": "published",
+      "revision": 1,
+      "publishedRevision": 1,
+      "createdAt": "2026-11-26T22:30:00Z",
+      "updatedAt": "2026-11-26T22:30:00Z",
+      "publishedAt": "2026-11-26T22:30:00Z",
+      "repository": {
+        "key": "thesilbon",
+        "file": "pokemons/thesilbon.pokemon.json",
+        "revision": 1,
+        "sourceOnly": true
+      }
+    },
+    {
+      "id": "352153c6-749b-5628-a786-67b8daf4f40b",
+      "slug": "toxicle",
+      "dex": null,
+      "name": "Toxicle",
+      "classification": "fakemon",
+      "category": "Pokémon Lâmina Tóxica",
+      "description": "Um caçador veloz e agressivo, com lâminas de gelo embebidas em veneno. Avança antes que o alvo reaja e alterna cortes gelados e perfurações tóxicas sem parar.",
+      "type1": "Ice",
+      "type2": "Poison",
+      "baseStats": {
+        "hp": 75,
+        "atk": 120,
+        "def": 75,
+        "spa": 70,
+        "spd": 80,
+        "spe": 105
+      },
+      "abilities": [
+        {
+          "name": "Cryotoxin",
+          "text": "Quando acerta um golpe Ice ou Poison, o próximo golpe do outro tipo contra o mesmo alvo recebe +2d6 de dano. O bônus só pode ser ativado 1 vez por turno. A sequência é perdida se o usuário sair de campo."
+        }
+      ],
+      "moves": [
+        {
+          "name": "Poison Sting",
+          "type": "Poison",
+          "category": "Physical",
+          "power": 15,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Tem 30% de chance de causar Poison no alvo."
+        },
+        {
+          "name": "Powder Snow",
+          "type": "Ice",
+          "category": "Special",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Tem 10% de chance de causar Freeze no alvo."
+        },
+        {
+          "name": "Leer",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1 / lembrança",
+          "text": "Reduz o alvo’s Defesa em 1 estágio."
+        },
+        {
+          "name": "Ice Shard",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 7 / herdado",
+          "text": "Causa dano normal sem efeito adicional."
+        },
+        {
+          "name": "Bite",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 13 / herdado",
+          "text": "Tem 30% de chance de causar Flinch no alvo."
+        },
+        {
+          "name": "Icy Wind",
+          "type": "Ice",
+          "category": "Special",
+          "power": 55,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "Lv. 16 / herdado",
+          "text": "Atinge os oponentes com uma rajada gelada e reduz a Speed dos alvos atingidos em 1 estágio."
+        },
+        {
+          "name": "Poison Fang",
+          "type": "Poison",
+          "category": "Physical",
+          "power": 50,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 19 / herdado",
+          "text": "Tem 50% chance de badly Poison o alvo."
+        },
+        {
+          "name": "Ice Fang",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "Lv. 22 / herdado",
+          "text": "Morde o alvo com presas geladas. Tem 10% de chance de causar Freeze e 10% de chance de fazer o alvo hesitar (Flinch)."
+        },
+        {
+          "name": "Venoshock",
+          "type": "Poison",
+          "category": "Special",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 25 / herdado",
+          "text": "Inflicts double dano if o alvo is Poisoned."
+        },
+        {
+          "name": "Haze",
+          "type": "Ice",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 28 / herdado",
+          "text": "Zera todos os estágios de atributos de todos os Pokémon em campo."
+        },
+        {
+          "name": "Poison Jab",
+          "type": "Poison",
+          "category": "Physical",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 31 / herdado",
+          "text": "Golpe com o braço impregnado de veneno. 30% de chance de Envenenar o alvo."
+        },
+        {
+          "name": "Agility",
+          "type": "Psychic",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 34 / herdado",
+          "text": "Aumenta o usuário’s Velocidade em 2 estágios."
+        },
+        {
+          "name": "Swords Dance",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 37 / herdado",
+          "text": "O usuário entra em Postura Ofensiva até o fim do próximo turno. O primeiro move Físico de dano usado no próximo turno causa o dobro do dano final. Após ativar a dobra, acertando ou errando, o efeito termina. Se o usuário ficar Incapacitado por Sleep, Freeze ou Flinch antes de atacar, o efeito é perdido.\n\nPrecisão especial: —.\nTags: Rework • Setup • Next Hit x2 • Físico."
+        },
+        {
+          "name": "Icicle Crash",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 85,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Ao evoluir / Lv. 39",
+          "text": "Tem 30% de chance de causar Flinch no alvo."
+        },
+        {
+          "name": "Cross Poison",
+          "type": "Poison",
+          "category": "Physical",
+          "power": 70,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 42",
+          "text": "Corte em X impregnado de veneno. Taxa de crítico aumentada (+1 estágio) e 10% de chance de Envenenar."
+        },
+        {
+          "name": "Icicle Spear",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 25,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 45",
+          "text": "Atinge de 2 a 5 vezes no mesmo turno."
+        },
+        {
+          "name": "Night Slash",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 70,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 48",
+          "text": "Has an increased chance for a acerto crítico."
+        },
+        {
+          "name": "Gunk Shot",
+          "type": "Poison",
+          "category": "Physical",
+          "power": 120,
+          "accuracy": 80,
+          "accuracyCanonical": 80,
+          "learn": "Lv. 52",
+          "text": "Tem 30% de chance de causar Poison no alvo."
+        },
+        {
+          "name": "Triple Axel",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 20,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 56",
+          "text": "Move Multi-Hit de até 3 acertos; cada acerto tem Power maior que o anterior (20, 40 e 60). Faz um teste de precisão por acerto."
+        },
+        {
+          "name": "Dire Claw",
+          "type": "Poison",
+          "category": "Physical",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 60",
+          "text": "Garras devastadoras com taxa de crítico aumentada. Tem 50% de chance de causar Poison, Paralysis ou Sleep no alvo."
+        },
+        {
+          "name": "Protect",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Protege o usuário dos golpes recebidos neste turno. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Substitute",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Consome 1/4 do HP máximo do usuário para criar um substituto que recebe ataques e bloqueia efeitos de status conforme as regras do Move, até ser destruído."
+        },
+        {
+          "name": "Toxic",
+          "type": "Poison",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "TM / treinamento",
+          "text": "Badly poisons o alvo, inflicting more dano every turno."
+        },
+        {
+          "name": "Ice Punch",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Soco congelante. 10% de chance de deixar o alvo Congelado."
+        },
+        {
+          "name": "Snowscape",
+          "type": "Ice",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Invoca neve por 5 turnos. Pokémon do tipo Ice recebem +1 estágio de Defense enquanto a neve durar."
+        },
+        {
+          "name": "Aerial Ace",
+          "type": "Flying",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Este Move nunca erra."
+        },
+        {
+          "name": "Taunt",
+          "type": "Dark",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Provoca o alvo por 3 turnos, impedindo-o de usar Moves Status."
+        },
+        {
+          "name": "U-turn",
+          "type": "Bug",
+          "category": "Physical",
+          "power": 70,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Após atacar, o usuário volta para a Pokébola e troca de lugar com um aliado."
+        },
+        {
+          "name": "Knock Off",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Derruba o item do alvo, que fica sem ele até o fim da batalha. Se o alvo segurar um item removível, o Power aumenta em 50%."
+        },
+        {
+          "name": "Throat Chop",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Prevents o alvo from using sound-based moves por 2 turnos."
+        },
+        {
+          "name": "Low Kick",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Chuta as pernas do alvo. Quanto mais pesado o alvo, maior o Power (de 20 a 120)."
+        },
+        {
+          "name": "Poison Tail",
+          "type": "Poison",
+          "category": "Physical",
+          "power": 50,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Taxa de crítico aumentada. Tem 10% de chance de causar Poison."
+        },
+        {
+          "name": "Ice Spinner",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Gira com os pés cobertos de gelo. Destrói o terreno ativo no campo, se houver."
+        },
+        {
+          "name": "Endure",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Prioridade +4. Nesta rodada, o usuário resiste a qualquer ataque com pelo menos 1 de HP. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Rest",
+          "type": "Psychic",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "O usuário dorme por 2 turnos e recupera completamente seu HP."
+        },
+        {
+          "name": "Facade",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 70,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Se o usuário estiver Queimado, Envenenado ou Paralisado, o Power dobra. A Queimadura não reduz o dano deste golpe."
+        },
+        {
+          "name": "Toxic Spikes",
+          "type": "Poison",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Espalha espinhos venenosos no campo inimigo. Quem entra em campo fica com Poison (2 camadas: Toxic). Pokémon Poison que entram removem os espinhos."
+        },
+        {
+          "name": "Sucker Punch",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 70,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Only works if o alvo is about to use a damaging move."
+        }
+      ],
+      "evolution": {
+        "previous": "Buddice",
+        "next": "",
+        "level": "39",
+        "requirements": "Nível 39",
+        "chainId": "92a3a3b3-8437-5136-b5df-8f30d0de9a3d",
+        "stage": 1,
+        "previousId": "884b23d8-97e2-53a0-89c9-497e5ed7dd58",
+        "nextIds": []
+      },
+      "specialRules": "Sweeper físico rápido de Ice e Poison: Swords Dance/Agility para preparar e Ice Shard com prioridade para finalizar. Alterne golpes Ice e Poison para ativar Cryotoxin.",
+      "notes": "",
+      "coverArtId": null,
+      "coverUrl": "pokemons/artes/toxicle.webp",
+      "status": "published",
+      "revision": 1,
+      "publishedRevision": 1,
+      "createdAt": "2026-11-26T22:30:00Z",
+      "updatedAt": "2026-11-26T22:30:00Z",
+      "publishedAt": "2026-11-26T22:30:00Z",
+      "repository": {
+        "key": "toxicle",
+        "file": "pokemons/toxicle.pokemon.json",
+        "revision": 1,
+        "sourceOnly": true
+      }
     }
   ],
-  "forms": [],
-  "hash": "b2db0eab7338d48f0f5cb0cb4295d350d1df0ca57c9d65b54803e70ff27f89b0"
+  "forms": [
+    {
+      "id": "24e46a85-5fff-5105-9013-de0114c24067",
+      "speciesId": "352153c6-749b-5628-a786-67b8daf4f40b",
+      "slug": "toxicle-mega-toxicle",
+      "name": "Mega Toxicle",
+      "kind": "mega",
+      "type1": "Ice",
+      "type2": "Poison",
+      "baseStats": {
+        "hp": 75,
+        "atk": 150,
+        "def": 90,
+        "spa": 70,
+        "spd": 95,
+        "spe": 145
+      },
+      "abilities": [
+        {
+          "name": "Cryotoxic Arsenal",
+          "text": "Funciona como Cryotoxin, mas o golpe recebe +3d6 de dano e reduz a Speed do alvo em 1 estágio por 3 rodadas. Só pode ser ativada 1 vez por turno."
+        }
+      ],
+      "specialRules": "Mega Evolução de Toxicle. Recebe +100 BST em relação a Toxicle.",
+      "artId": null,
+      "artUrl": "pokemons/artes/mega-toxicle.webp",
+      "status": "published",
+      "revision": 1,
+      "updatedAt": "2026-11-26T22:30:00Z",
+      "repository": {
+        "key": "toxicle/mega-toxicle",
+        "file": "pokemons/toxicle.pokemon.json",
+        "revision": 1,
+        "sourceOnly": true
+      }
+    }
+  ],
+  "hash": "d4f3dea2180ebe97e2126700c65eb46306ea18ac8d0d3fd09105027f29154d01"
 }

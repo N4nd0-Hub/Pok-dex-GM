@@ -1,0 +1,237 @@
+{
+  "schema": "pokedex-pokemon-v1",
+  "key": "thesilbon",
+  "name": "Thesilbon",
+  "classification": "fakemon",
+  "status": "published",
+  "dex": 59,
+  "category": "Pokémon Assobio Fúnebre",
+  "description": "Dizem que quem ouve seu assobio de perto já está perdido. Caminha entre plantações com a foice ao ombro, colhendo a vitalidade dos que se desviam da estrada.",
+  "type1": "Ghost",
+  "type2": "Grass",
+  "baseStats": {
+    "hp": 80,
+    "atk": 45,
+    "def": 70,
+    "spa": 130,
+    "spd": 95,
+    "spe": 120
+  },
+  "abilities": [
+    "Funeral Whistle"
+  ],
+  "moves": [
+    {
+      "name": "Astonish",
+      "learn": "Lv. 1 / lembrança"
+    },
+    {
+      "name": "Disable",
+      "learn": "Lv. 1 / lembrança",
+      "text": "Impede o alvo de usar o último golpe utilizado por 4 turnos."
+    },
+    {
+      "name": "Absorb",
+      "learn": "Lv. 4 / herdado / herdado",
+      "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+    },
+    {
+      "name": "Echoed Voice",
+      "learn": "Lv. 7 / herdado / herdado",
+      "text": "Move sonoro. A cada uso consecutivo, o Power aumenta em 40, até o máximo de 200."
+    },
+    {
+      "name": "Confuse Ray",
+      "learn": "Lv. 10 / herdado / herdado"
+    },
+    {
+      "name": "Round",
+      "learn": "Lv. 12 / herdado / herdado"
+    },
+    {
+      "name": "Mega Drain",
+      "learn": "Lv. 14 / herdado / herdado",
+      "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+    },
+    {
+      "name": "Hex",
+      "learn": "Lv. 17 / herdado / herdado"
+    },
+    {
+      "name": "Will-O-Wisp",
+      "learn": "Lv. 20 / herdado / herdado"
+    },
+    {
+      "name": "Lost Lullaby",
+      "learn": "Lv. 22 / herdado / herdado"
+    },
+    {
+      "name": "Leech Seed",
+      "learn": "Lv. 24 / herdado"
+    },
+    {
+      "name": "Spikes",
+      "learn": "Lv. 27 / herdado",
+      "text": "Espalha espinhos no campo inimigo. Pokémon que entram em campo (exceto voadores) sofrem 1d6 de dano por camada (até 3)."
+    },
+    {
+      "name": "Stun Spore",
+      "learn": "Lv. 30 / herdado"
+    },
+    {
+      "name": "Grass Knot",
+      "learn": "Lv. 32 / herdado",
+      "text": "O Power depende do peso do alvo: quanto mais pesado, maior o dano, até Power 120."
+    },
+    {
+      "name": "Dirge Whistle",
+      "learn": "Lv. 34 / herdado"
+    },
+    {
+      "name": "Toxic Spikes",
+      "learn": "Lv. 37 / herdado",
+      "text": "Espalha espinhos venenosos no campo inimigo. Quem entra em campo fica com Poison (2 camadas: Toxic). Pokémon Poison que entram removem os espinhos."
+    },
+    {
+      "name": "Shadow Ball",
+      "learn": "Lv. 40 / herdado"
+    },
+    {
+      "name": "Phantom Force",
+      "learn": "Ao evoluir / Lv. 42",
+      "text": "O usuário desaparece no primeiro turno, ficando fora de alcance, e ataca no seguinte. Atravessa Protect e Detect."
+    },
+    {
+      "name": "Nasty Plot",
+      "learn": "Lv. 44"
+    },
+    {
+      "name": "Hyper Voice",
+      "learn": "Lv. 46"
+    },
+    {
+      "name": "Strength Sap",
+      "learn": "Lv. 48",
+      "text": "Recupera HP igual ao Attack atual do alvo e reduz o Attack do alvo em 1 estágio."
+    },
+    {
+      "name": "Perish Song",
+      "learn": "Lv. 51",
+      "text": "Move sonoro. Todos os Pokémon que ouvirem desmaiam após 3 turnos, a menos que saiam de campo."
+    },
+    {
+      "name": "Energy Ball",
+      "learn": "Lv. 54"
+    },
+    {
+      "name": "Leaf Storm",
+      "learn": "Lv. 58"
+    },
+    {
+      "name": "Protect",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Substitute",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Toxic",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Taunt",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Trick",
+      "learn": "TM / treinamento",
+      "text": "Troca o item segurado do usuário com o do alvo."
+    },
+    {
+      "name": "Destiny Bond",
+      "learn": "TM / treinamento",
+      "text": "Se o usuário desmaiar antes do seu próximo turno, o Pokémon que o derrubou também desmaia."
+    },
+    {
+      "name": "Pain Split",
+      "learn": "TM / treinamento",
+      "text": "Soma o HP atual do usuário e do alvo e divide o valor igualmente entre os dois."
+    },
+    {
+      "name": "Curse",
+      "learn": "TM / treinamento",
+      "text": "Usuário Ghost: perde 50% do HP máximo e amaldiçoa o alvo, que perde 1/4 do HP máximo no fim de cada turno. Outros tipos: +1 estágio de Attack e Defense e −1 estágio de Speed."
+    },
+    {
+      "name": "Haze",
+      "learn": "TM / treinamento",
+      "text": "Zera todos os estágios de atributos de todos os Pokémon em campo."
+    },
+    {
+      "name": "Night Shade",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Snarl",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Stealth Rock",
+      "learn": "TM / treinamento",
+      "text": "Espalha pedras pontiagudas no campo inimigo. Quem entra em campo sofre dano conforme a efetividade do tipo Rock."
+    },
+    {
+      "name": "Thunder Wave",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Rest",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Sleep Talk",
+      "learn": "TM / treinamento",
+      "text": "Só funciona dormindo: usa aleatoriamente outro golpe conhecido do usuário."
+    },
+    {
+      "name": "Endure",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Giga Drain",
+      "learn": "TM / treinamento",
+      "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+    },
+    {
+      "name": "Solar Beam",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Sunny Day",
+      "learn": "TM / treinamento",
+      "text": "Invoca sol forte por 5 turnos. Golpes Fire recebem +1d6 e golpes Water sofrem −1d6."
+    },
+    {
+      "name": "Spite",
+      "learn": "TM / treinamento",
+      "text": "Reduz os PP do último golpe usado pelo alvo em 4."
+    },
+    {
+      "name": "Parting Shot",
+      "learn": "TM / treinamento",
+      "text": "Reduz o Attack e o Sp.Atk do alvo em 1 estágio e o usuário volta para a Pokébola, trocando de lugar com um aliado."
+    }
+  ],
+  "evolution": {
+    "previous": "soulito",
+    "next": "",
+    "level": "42",
+    "requirements": "Nível 42"
+  },
+  "specialRules": "Trapaceiro veloz e atacante especial: espalha hazards e status, pune alvos confusos ou com Precisão reduzida (Dirge Whistle, Hex) e usa Perish Song, Destiny Bond e Parting Shot para controlar o ritmo. O STAB de moves sonoros vale +2d6 (Funeral Whistle).",
+  "art": "artes/thesilbon.webp",
+  "forms": [],
+  "revision": 1,
+  "updatedAt": "2026-11-26T22:30:00Z"
+}

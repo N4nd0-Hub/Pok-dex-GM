@@ -1,0 +1,218 @@
+{
+  "schema": "pokedex-pokemon-v1",
+  "key": "toxicle",
+  "name": "Toxicle",
+  "classification": "fakemon",
+  "status": "published",
+  "dex": null,
+  "category": "Pokémon Lâmina Tóxica",
+  "description": "Um caçador veloz e agressivo, com lâminas de gelo embebidas em veneno. Avança antes que o alvo reaja e alterna cortes gelados e perfurações tóxicas sem parar.",
+  "type1": "Ice",
+  "type2": "Poison",
+  "baseStats": {
+    "hp": 75,
+    "atk": 120,
+    "def": 75,
+    "spa": 70,
+    "spd": 80,
+    "spe": 105
+  },
+  "abilities": [
+    "Cryotoxin"
+  ],
+  "moves": [
+    {
+      "name": "Poison Sting",
+      "learn": "Lv. 1 / lembrança"
+    },
+    {
+      "name": "Powder Snow",
+      "learn": "Lv. 1 / lembrança"
+    },
+    {
+      "name": "Leer",
+      "learn": "Lv. 1 / lembrança"
+    },
+    {
+      "name": "Ice Shard",
+      "learn": "Lv. 7 / herdado"
+    },
+    {
+      "name": "Bite",
+      "learn": "Lv. 13 / herdado"
+    },
+    {
+      "name": "Icy Wind",
+      "learn": "Lv. 16 / herdado"
+    },
+    {
+      "name": "Poison Fang",
+      "learn": "Lv. 19 / herdado"
+    },
+    {
+      "name": "Ice Fang",
+      "learn": "Lv. 22 / herdado",
+      "text": "Morde o alvo com presas geladas. Tem 10% de chance de causar Freeze e 10% de chance de fazer o alvo hesitar (Flinch)."
+    },
+    {
+      "name": "Venoshock",
+      "learn": "Lv. 25 / herdado"
+    },
+    {
+      "name": "Haze",
+      "learn": "Lv. 28 / herdado",
+      "text": "Zera todos os estágios de atributos de todos os Pokémon em campo."
+    },
+    {
+      "name": "Poison Jab",
+      "learn": "Lv. 31 / herdado"
+    },
+    {
+      "name": "Agility",
+      "learn": "Lv. 34 / herdado"
+    },
+    {
+      "name": "Swords Dance",
+      "learn": "Lv. 37 / herdado"
+    },
+    {
+      "name": "Icicle Crash",
+      "learn": "Ao evoluir / Lv. 39"
+    },
+    {
+      "name": "Cross Poison",
+      "learn": "Lv. 42"
+    },
+    {
+      "name": "Icicle Spear",
+      "learn": "Lv. 45"
+    },
+    {
+      "name": "Night Slash",
+      "learn": "Lv. 48"
+    },
+    {
+      "name": "Gunk Shot",
+      "learn": "Lv. 52"
+    },
+    {
+      "name": "Triple Axel",
+      "learn": "Lv. 56",
+      "text": "Move Multi-Hit de até 3 acertos; cada acerto tem Power maior que o anterior (20, 40 e 60). Faz um teste de precisão por acerto."
+    },
+    {
+      "name": "Dire Claw",
+      "learn": "Lv. 60",
+      "text": "Garras devastadoras com taxa de crítico aumentada. Tem 50% de chance de causar Poison, Paralysis ou Sleep no alvo."
+    },
+    {
+      "name": "Protect",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Substitute",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Toxic",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Ice Punch",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Snowscape",
+      "learn": "TM / treinamento",
+      "text": "Invoca neve por 5 turnos. Pokémon do tipo Ice recebem +1 estágio de Defense enquanto a neve durar."
+    },
+    {
+      "name": "Aerial Ace",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Taunt",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "U-turn",
+      "learn": "TM / treinamento",
+      "text": "Após atacar, o usuário volta para a Pokébola e troca de lugar com um aliado."
+    },
+    {
+      "name": "Knock Off",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Throat Chop",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Low Kick",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Poison Tail",
+      "learn": "TM / treinamento",
+      "text": "Taxa de crítico aumentada. Tem 10% de chance de causar Poison."
+    },
+    {
+      "name": "Ice Spinner",
+      "learn": "TM / treinamento",
+      "text": "Gira com os pés cobertos de gelo. Destrói o terreno ativo no campo, se houver."
+    },
+    {
+      "name": "Endure",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Rest",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Facade",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Toxic Spikes",
+      "learn": "TM / treinamento",
+      "text": "Espalha espinhos venenosos no campo inimigo. Quem entra em campo fica com Poison (2 camadas: Toxic). Pokémon Poison que entram removem os espinhos."
+    },
+    {
+      "name": "Sucker Punch",
+      "learn": "TM / treinamento"
+    }
+  ],
+  "evolution": {
+    "previous": "buddice",
+    "next": "",
+    "level": "39",
+    "requirements": "Nível 39"
+  },
+  "specialRules": "Sweeper físico rápido de Ice e Poison: Swords Dance/Agility para preparar e Ice Shard com prioridade para finalizar. Alterne golpes Ice e Poison para ativar Cryotoxin.",
+  "art": "artes/toxicle.webp",
+  "forms": [
+    {
+      "key": "mega-toxicle",
+      "name": "Mega Toxicle",
+      "kind": "mega",
+      "type1": "Ice",
+      "type2": "Poison",
+      "baseStats": {
+        "hp": 75,
+        "atk": 150,
+        "def": 90,
+        "spa": 70,
+        "spd": 95,
+        "spe": 145
+      },
+      "abilities": [
+        "Cryotoxic Arsenal"
+      ],
+      "specialRules": "Mega Evolução de Toxicle. Recebe +100 BST em relação a Toxicle.",
+      "art": "artes/mega-toxicle.webp"
+    }
+  ],
+  "revision": 1,
+  "updatedAt": "2026-11-26T22:30:00Z"
+}

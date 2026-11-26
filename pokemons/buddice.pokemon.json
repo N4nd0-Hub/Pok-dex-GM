@@ -1,0 +1,135 @@
+{
+  "schema": "pokedex-pokemon-v1",
+  "key": "buddice",
+  "name": "Buddice",
+  "classification": "fakemon",
+  "status": "published",
+  "dex": null,
+  "category": "Pokémon Botão Gélido",
+  "description": "Um broto de gelo venenoso que guarda toxinas congeladas em suas pétalas. Morde e espeta com rapidez, alternando frio e veneno para enfraquecer a presa.",
+  "type1": "Ice",
+  "type2": "Poison",
+  "baseStats": {
+    "hp": 35,
+    "atk": 40,
+    "def": 30,
+    "spa": 20,
+    "spd": 35,
+    "spe": 25
+  },
+  "abilities": [
+    "Cryotoxin"
+  ],
+  "moves": [
+    {
+      "name": "Poison Sting",
+      "learn": "Lv. 1"
+    },
+    {
+      "name": "Powder Snow",
+      "learn": "Lv. 1"
+    },
+    {
+      "name": "Leer",
+      "learn": "Lv. 4"
+    },
+    {
+      "name": "Ice Shard",
+      "learn": "Lv. 7"
+    },
+    {
+      "name": "Acid",
+      "learn": "Lv. 10"
+    },
+    {
+      "name": "Bite",
+      "learn": "Lv. 13"
+    },
+    {
+      "name": "Icy Wind",
+      "learn": "Lv. 16"
+    },
+    {
+      "name": "Poison Fang",
+      "learn": "Lv. 19"
+    },
+    {
+      "name": "Ice Fang",
+      "learn": "Lv. 22",
+      "text": "Morde o alvo com presas geladas. Tem 10% de chance de causar Freeze e 10% de chance de fazer o alvo hesitar (Flinch)."
+    },
+    {
+      "name": "Venoshock",
+      "learn": "Lv. 25"
+    },
+    {
+      "name": "Haze",
+      "learn": "Lv. 28",
+      "text": "Zera todos os estágios de atributos de todos os Pokémon em campo."
+    },
+    {
+      "name": "Poison Jab",
+      "learn": "Lv. 31"
+    },
+    {
+      "name": "Agility",
+      "learn": "Lv. 34"
+    },
+    {
+      "name": "Swords Dance",
+      "learn": "Lv. 37"
+    },
+    {
+      "name": "Protect",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Substitute",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Toxic",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Ice Punch",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Snowscape",
+      "learn": "TM / treinamento",
+      "text": "Invoca neve por 5 turnos. Pokémon do tipo Ice recebem +1 estágio de Defense enquanto a neve durar."
+    },
+    {
+      "name": "Aerial Ace",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Taunt",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Endure",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Rest",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Facade",
+      "learn": "TM / treinamento"
+    }
+  ],
+  "evolution": {
+    "previous": "",
+    "next": "toxicle",
+    "level": "39",
+    "requirements": "Nível 39"
+  },
+  "specialRules": "Evolui para Toxicle no nível 39. Prefere golpes físicos de Ice e Poison, alternando os dois tipos para ativar Cryotoxin.",
+  "art": "artes/buddice.webp",
+  "forms": [],
+  "revision": 1,
+  "updatedAt": "2026-11-26T22:30:00Z"
+}
