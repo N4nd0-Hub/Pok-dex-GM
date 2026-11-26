@@ -1,0 +1,144 @@
+{
+  "schema": "pokedex-pokemon-v1",
+  "key": "monomoi",
+  "name": "Monomoi",
+  "classification": "fakemon",
+  "status": "published",
+  "dex": 57,
+  "category": "Pokémon Alma Solitária",
+  "description": "Um espírito pequeno que vaga sozinho pelas florestas assobiando. Seus assobios confundem viajantes, que acabam andando em círculos até se perderem.",
+  "type1": "Ghost",
+  "type2": "",
+  "baseStats": {
+    "hp": 40,
+    "atk": 25,
+    "def": 35,
+    "spa": 70,
+    "spd": 50,
+    "spe": 30
+  },
+  "abilities": [
+    "Lonesome Whistle"
+  ],
+  "moves": [
+    {
+      "name": "Astonish",
+      "learn": "Lv. 1"
+    },
+    {
+      "name": "Disable",
+      "learn": "Lv. 1",
+      "text": "Impede o alvo de usar o último golpe utilizado por 4 turnos."
+    },
+    {
+      "name": "Absorb",
+      "learn": "Lv. 4",
+      "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+    },
+    {
+      "name": "Echoed Voice",
+      "learn": "Lv. 7",
+      "text": "Move sonoro. A cada uso consecutivo, o Power aumenta em 40, até o máximo de 200."
+    },
+    {
+      "name": "Confuse Ray",
+      "learn": "Lv. 10"
+    },
+    {
+      "name": "Round",
+      "learn": "Lv. 12"
+    },
+    {
+      "name": "Mega Drain",
+      "learn": "Lv. 14",
+      "text": "Drena o alvo. O usuário recupera 50% do dano causado."
+    },
+    {
+      "name": "Hex",
+      "learn": "Lv. 17"
+    },
+    {
+      "name": "Will-O-Wisp",
+      "learn": "Lv. 20"
+    },
+    {
+      "name": "Lost Lullaby",
+      "learn": "Lv. 22"
+    },
+    {
+      "name": "Protect",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Substitute",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Toxic",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Taunt",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Night Shade",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Snarl",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Pain Split",
+      "learn": "TM / treinamento",
+      "text": "Soma o HP atual do usuário e do alvo e divide o valor igualmente entre os dois."
+    },
+    {
+      "name": "Curse",
+      "learn": "TM / treinamento",
+      "text": "Usuário Ghost: perde 50% do HP máximo e amaldiçoa o alvo, que perde 1/4 do HP máximo no fim de cada turno. Outros tipos: +1 estágio de Attack e Defense e −1 estágio de Speed."
+    },
+    {
+      "name": "Rest",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Endure",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Grass Knot",
+      "learn": "TM / treinamento",
+      "text": "O Power depende do peso do alvo: quanto mais pesado, maior o dano, até Power 120."
+    },
+    {
+      "name": "Shadow Ball",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Energy Ball",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Hyper Voice",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Perish Song",
+      "learn": "TM / treinamento",
+      "text": "Move sonoro. Todos os Pokémon que ouvirem desmaiam após 3 turnos, a menos que saiam de campo."
+    }
+  ],
+  "evolution": {
+    "previous": "",
+    "next": "soulito",
+    "level": "24",
+    "requirements": "Nível 24"
+  },
+  "specialRules": "Trapaceiro: prefere atrapalhar com Confusion, Burn e redução de Precisão em vez de causar dano direto. Moves sonoros contam como Ghost para STAB (Lonesome Whistle).",
+  "art": "artes/monomoi.webp",
+  "forms": [],
+  "revision": 1,
+  "updatedAt": "2026-11-26T22:30:00Z"
+}
