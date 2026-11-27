@@ -85,6 +85,7 @@
       baseStats:stats(d.baseStats),ability:aa[0] || {name:'',description:''},
       abilities:aa,image:{dataUrl:art(d.artUrl || d.thumbUrl || '')},
       specialRules:d.specialRules ? [String(d.specialRules)] : [],
+      trigger:d.trigger && typeof d.trigger==='object' ? d.trigger : null,
       revision:Number(record.revision || d.revision || 1)};
   }
   function adaptIndependentMega(record) {
@@ -385,6 +386,14 @@
     }
     try {
       applyIntegratedCustomSpecies(selected,{preserveInvested:mode==='current',syncCurrent:mode!=='current'});
+      // formas por gatilho (mudam sozinhas na Arena; botão na ficha)
+      if(current){
+        var trig=(species.forms||[]).filter(function(f){return f.formType==='trigger';}).map(function(f){
+          return {id:f.id,name:f.name,types:f.types,baseStats:f.baseStats,image:(f.image&&f.image.dataUrl)||'',trigger:f.trigger||{},specialRules:f.specialRules||[]};
+        });
+        current.triggerForms=trig.length?trig:[];
+        if(!trig.length)current.formActive=null;
+      }
       if(current && current.apiData) {
         current.apiData.gmCatalogId=species.gmId;
         current.apiData.gmCatalogRevision=species.revision;
