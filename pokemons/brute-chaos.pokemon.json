@@ -25,44 +25,152 @@
   ],
   "moves": [
     {
+      "name": "Tackle",
+      "learn": "Lv. 1"
+    },
+    {
+      "name": "Leer",
+      "learn": "Lv. 1"
+    },
+    {
+      "name": "Mud-Slap",
+      "learn": "Lv. 1"
+    },
+    {
+      "name": "Rock Smash",
+      "learn": "Lv. 4"
+    },
+    {
+      "name": "Mud Shot",
+      "learn": "Lv. 7"
+    },
+    {
+      "name": "Bulk Up",
+      "learn": "Lv. 10"
+    },
+    {
+      "name": "Rock Tomb",
+      "learn": "Lv. 13"
+    },
+    {
+      "name": "Drain Punch",
+      "learn": "Lv. 16"
+    },
+    {
+      "name": "Bulldoze",
+      "learn": "Lv. 19"
+    },
+    {
+      "name": "Body Press",
+      "learn": "Lv. 22"
+    },
+    {
       "name": "High Horsepower",
       "learn": "Lv. 25"
     },
     {
-      "name": "Close Combat",
-      "learn": "Lv. 25"
-    },
-    {
-      "name": "Body Press",
-      "learn": "Lv. 25"
-    },
-    {
-      "name": "Mud Shot",
-      "learn": "Lv. 25"
-    },
-    {
-      "name": "Liquidation",
-      "learn": "Lv. 25"
+      "name": "Stealth Rock",
+      "learn": "Lv. 28"
     },
     {
       "name": "Rock Slide",
-      "learn": "Lv. 25"
+      "learn": "Lv. 31"
     },
     {
-      "name": "Bulk Up",
-      "learn": "Lv. 25"
+      "name": "Iron Defense",
+      "learn": "Lv. 34"
     },
     {
-      "name": "Sandstorm",
-      "learn": "Lv. 25"
+      "name": "Liquidation",
+      "learn": "Lv. 37"
     },
     {
-      "name": "Stealth Rock",
-      "learn": "Lv. 25"
+      "name": "Earthquake",
+      "learn": "Lv. 40"
+    },
+    {
+      "name": "Hammer Arm",
+      "learn": "Lv. 43"
+    },
+    {
+      "name": "Slack Off",
+      "learn": "Lv. 46"
+    },
+    {
+      "name": "Close Combat",
+      "learn": "Lv. 49"
+    },
+    {
+      "name": "Headlong Rush",
+      "learn": "Lv. 53"
     },
     {
       "name": "Protect",
-      "learn": "Lv. 25"
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Sandstorm",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Sunny Day",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Rest",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Sleep Talk",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Curse",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Substitute",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Toxic",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Roar",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Rapid Spin",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Knock Off",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Ice Punch",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Thunder Punch",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Stone Edge",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Iron Head",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Heavy Slam",
+      "learn": "TM / treinamento"
+    },
+    {
+      "name": "Seismic Toss",
+      "learn": "TM / treinamento"
     }
   ],
   "evolution": {
@@ -104,5 +212,6 @@
       "specialRules": "Forma por gatilho: aparece quando a Protosynthesis ativa e some quando ela apaga. Mesmos status e tipos da forma normal.",
       "art": "artes/brute-chaos-despertado.png"
     }
-  ]
+  ],
+  "revision": 2
 }
