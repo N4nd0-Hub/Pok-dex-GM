@@ -2,6 +2,155 @@
   "format": "pokedex-repository-v1",
   "species": [
     {
+      "id": "1bf6c777-5003-5e87-b0b0-4bd3ac335b81",
+      "slug": "brute-chaos",
+      "dex": null,
+      "name": "Brute Chaos",
+      "classification": "fakemon",
+      "category": "Pokémon Paradoxo",
+      "description": "Uma criatura Paradoxo movida por energia primitiva. Sob calor intenso, essa energia desperta e Brute Chaos assume a Forma Despertada, muito mais forte e agressiva.",
+      "type1": "Ground",
+      "type2": "Fighting",
+      "baseStats": {
+        "hp": 109,
+        "atk": 155,
+        "def": 87,
+        "spa": 45,
+        "spd": 87,
+        "spe": 87
+      },
+      "abilities": [
+        {
+          "name": "Protosynthesis",
+          "text": "A energia primitiva de Paradoxo dentro de Brute Chaos desperta sob calor intenso. Enquanto estiver sob Sol Forte (ou com Booster Energy), o seu maior atributo (Attack) é supercarregado: ×1,3. Durante esse tempo, golpes físicos Ground e Fighting recebem +1QD de dano extra. Ganha ainda +20 de Speed para fins de iniciativa. Na primeira vez em cada batalha que Protosynthesis ativa, Brute Chaos reduz em −1QD o dano físico recebido até o fim daquele turno. Ao ativar, Brute Chaos assume a Forma Despertada."
+        }
+      ],
+      "moves": [
+        {
+          "name": "High Horsepower",
+          "type": "Ground",
+          "category": "Physical",
+          "power": 95,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "Lv. 25",
+          "text": "Causa dano normal sem efeito adicional."
+        },
+        {
+          "name": "Close Combat",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 120,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 25",
+          "text": "Ataca intensamente em curta distância. Após o golpe, a Defense e a Sp.Def do usuário caem em 1 estágio."
+        },
+        {
+          "name": "Body Press",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 25",
+          "text": "Dano is calculated using o usuário's Defesa stat as its Ataque, including stat stage changes."
+        },
+        {
+          "name": "Mud Shot",
+          "type": "Ground",
+          "category": "Special",
+          "power": 55,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "Lv. 25",
+          "text": "Tem 100% chance de lower o alvo’s Velocidade em 1 estágio."
+        },
+        {
+          "name": "Liquidation",
+          "type": "Water",
+          "category": "Physical",
+          "power": 85,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 25",
+          "text": "Golpe com toda a força da água. 20% de chance de reduzir a Defense do alvo em 1 estágio."
+        },
+        {
+          "name": "Rock Slide",
+          "type": "Rock",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 25",
+          "text": "Derruba rochas sobre os inimigos ao redor. 30% de chance de fazer cada alvo hesitar (Flinch)."
+        },
+        {
+          "name": "Bulk Up",
+          "type": "Fighting",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 25",
+          "text": "Contrai os músculos: aumenta Attack e Defense do usuário em 1 estágio."
+        },
+        {
+          "name": "Sandstorm",
+          "type": "Rock",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 25",
+          "text": "Changes the weather to a sandstorm for five turnos."
+        },
+        {
+          "name": "Stealth Rock",
+          "type": "Rock",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 25",
+          "text": "Espalha pedras pontiagudas no campo inimigo. Quem entra em campo sofre dano conforme a efetividade do tipo Rock."
+        },
+        {
+          "name": "Protect",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 25",
+          "text": "Protege o usuário dos golpes recebidos neste turno. Usos consecutivos reduzem a chance de sucesso."
+        }
+      ],
+      "evolution": {
+        "previous": "",
+        "next": "",
+        "level": "",
+        "requirements": ""
+      },
+      "specialRules": "Muda de forma sozinho: sob Sol Forte ou com Booster Energy, a Protosynthesis desperta e Brute Chaos vira a Forma Despertada. Volta ao normal quando o Sol acaba (com Booster Energy, até sair de campo).",
+      "notes": "",
+      "coverArtId": null,
+      "coverUrl": "pokemons/artes/brute-chaos.png",
+      "status": "published",
+      "revision": 1,
+      "publishedRevision": 1,
+      "createdAt": null,
+      "updatedAt": null,
+      "publishedAt": null,
+      "repository": {
+        "key": "brute-chaos",
+        "file": "pokemons/brute-chaos.pokemon.json",
+        "revision": 1,
+        "sourceOnly": true
+      }
+    },
+    {
       "id": "884b23d8-97e2-53a0-89c9-497e5ed7dd58",
       "slug": "buddice",
       "dex": null,
@@ -4635,6 +4784,52 @@
   ],
   "forms": [
     {
+      "id": "f09c55ad-588f-534d-bede-0e4cc1539d08",
+      "speciesId": "1bf6c777-5003-5e87-b0b0-4bd3ac335b81",
+      "slug": "brute-chaos-despertado",
+      "name": "Brute Chaos (Forma Despertada)",
+      "kind": "trigger",
+      "type1": "Ground",
+      "type2": "Fighting",
+      "baseStats": {
+        "hp": 109,
+        "atk": 155,
+        "def": 87,
+        "spa": 45,
+        "spd": 87,
+        "spe": 87
+      },
+      "abilities": [
+        {
+          "name": "Protosynthesis",
+          "text": "Durante Sunny Day ou após consumir Booster Energy, o maior Status Total do usuário, exceto HP, é multiplicado por x1,3; se for Speed, o multiplicador é x1,5. Enquanto o bônus estiver ativo, esse atributo não pode ser reduzido por inimigos; o efeito do clima termina com ele, o da Booster Energy dura até o usuário sair e os dois não acumulam."
+        }
+      ],
+      "specialRules": "Forma por gatilho: aparece quando a Protosynthesis ativa e some quando ela apaga. Mesmos status e tipos da forma normal.",
+      "artId": null,
+      "artUrl": "pokemons/artes/brute-chaos-despertado.png",
+      "status": "published",
+      "revision": 1,
+      "updatedAt": null,
+      "repository": {
+        "key": "brute-chaos/despertado",
+        "file": "pokemons/brute-chaos.pokemon.json",
+        "revision": 1,
+        "sourceOnly": true
+      },
+      "trigger": {
+        "weather": [
+          "sun"
+        ],
+        "items": [
+          "Booster Energy"
+        ],
+        "ability": "Protosynthesis",
+        "hpBelow": null,
+        "text": "Sol Forte ou Booster Energy (Protosynthesis ativa)"
+      }
+    },
+    {
       "id": "24e46a85-5fff-5105-9013-de0114c24067",
       "speciesId": "352153c6-749b-5628-a786-67b8daf4f40b",
       "slug": "toxicle-mega-toxicle",
@@ -4670,5 +4865,5 @@
       }
     }
   ],
-  "hash": "d4f3dea2180ebe97e2126700c65eb46306ea18ac8d0d3fd09105027f29154d01"
+  "hash": "bcfdf51540bb21308ec2a4d3e26ae22ffbc4640ca9f3e6fb88ae88637a95f7ab"
 }

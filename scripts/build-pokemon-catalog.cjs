@@ -126,10 +126,12 @@ async function build(options={}){
       const formKeys=new Set();
       for(const form of list(raw.forms||[],'forms')){
         const formKey=slug(form.key,'forms.key');if(formKeys.has(formKey))fail('Formas com key duplicada.');formKeys.add(formKey);
-        const kind=form.kind||'alternate';if(!['mega','regional','alternate','shiny','primal','gigantamax','other'].includes(kind))fail('forms.kind inválido.');
+        const kind=form.kind||'alternate';if(!['mega','regional','alternate','shiny','primal','gigantamax','trigger','other'].includes(kind))fail('forms.kind inválido.');
+        const trig=form.trigger&&typeof form.trigger==='object'?{weather:Array.isArray(form.trigger.weather)?form.trigger.weather.map(String):[],items:Array.isArray(form.trigger.items)?form.trigger.items.map(String):[],ability:form.trigger.ability?String(form.trigger.ability):'',hpBelow:Number(form.trigger.hpBelow)||null,text:form.trigger.text?String(form.trigger.text):''}:null;
+        if(kind==='trigger'&&!trig)fail('Forma por gatilho precisa de trigger.');
         const f1=type(form.type1,'forms.type1'),f2=type(form.type2,'forms.type2',true);if(f1===f2)fail('Tipos repetidos na forma.');
         const fa=list(form.abilities,'forms.abilities').map(ability);if(!fa.length)fail('Informe ao menos uma Ability para a forma.');
-        forms.push({id:stableId(key+'/forms/'+formKey),speciesId:id,slug:slug(form.slug||speciesSlug+'-'+formKey,'forms.slug'),name:text(form.name,'forms.name',true),kind,type1:f1,type2:f2,baseStats:stats(form.baseStats,'forms.baseStats'),abilities:fa,specialRules:text(form.specialRules,'forms.specialRules'),artId:null,artUrl:art(form.art,'forms.art'),status:status(form.status||state),revision,updatedAt:date,repository:{...repository,key:key+'/'+formKey}});
+        forms.push({id:stableId(key+'/forms/'+formKey),speciesId:id,slug:slug(form.slug||speciesSlug+'-'+formKey,'forms.slug'),name:text(form.name,'forms.name',true),kind,type1:f1,type2:f2,baseStats:stats(form.baseStats,'forms.baseStats'),abilities:fa,specialRules:text(form.specialRules,'forms.specialRules'),artId:null,artUrl:art(form.art,'forms.art'),status:status(form.status||state),revision,updatedAt:date,repository:{...repository,key:key+'/'+formKey},...(trig?{trigger:trig}:{})});
       }
     }catch(error){fail(filename+': '+error.message);}
   }
