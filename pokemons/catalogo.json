@@ -27,6 +27,106 @@
       ],
       "moves": [
         {
+          "name": "Tackle",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1",
+          "text": "Causa dano normal sem efeito adicional."
+        },
+        {
+          "name": "Leer",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1",
+          "text": "Reduz o alvo’s Defesa em 1 estágio."
+        },
+        {
+          "name": "Mud-Slap",
+          "type": "Ground",
+          "category": "Special",
+          "power": 20,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 1",
+          "text": "Tem 100% chance de lower o alvo’s Precisão em 1 estágio."
+        },
+        {
+          "name": "Rock Smash",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 40,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 4",
+          "text": "Tem 50% chance de lower o alvo’s Defesa em 1 estágio."
+        },
+        {
+          "name": "Mud Shot",
+          "type": "Ground",
+          "category": "Special",
+          "power": 55,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "Lv. 7",
+          "text": "Tem 100% chance de lower o alvo’s Velocidade em 1 estágio."
+        },
+        {
+          "name": "Bulk Up",
+          "type": "Fighting",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 10",
+          "text": "Contrai os músculos: aumenta Attack e Defense do usuário em 1 estágio."
+        },
+        {
+          "name": "Rock Tomb",
+          "type": "Rock",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 95,
+          "learn": "Lv. 13",
+          "text": "Arremessa rochas que cercam o alvo, reduzindo a Speed dele em 1 estágio."
+        },
+        {
+          "name": "Drain Punch",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 16",
+          "text": "Um soco que drena a vitalidade do alvo. Cura 25% do dano final causado, após resistências e defesas. É Contato e Punch, portanto recebe sinergia de Iron Fist. Em crítico, apenas o dano base é maximizado; a cura continua sendo 25% do dano final causado.\n\nTags: Rework • Contato • Punch • Cura."
+        },
+        {
+          "name": "Bulldoze",
+          "type": "Ground",
+          "category": "Physical",
+          "power": 60,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 19",
+          "text": "Tem 100% chance de lower o alvo’s Velocidade em 1 estágio."
+        },
+        {
+          "name": "Body Press",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 22",
+          "text": "Dano is calculated using o usuário's Defesa stat as its Ataque, including stat stage changes."
+        },
+        {
           "name": "High Horsepower",
           "type": "Ground",
           "category": "Physical",
@@ -37,44 +137,14 @@
           "text": "Causa dano normal sem efeito adicional."
         },
         {
-          "name": "Close Combat",
-          "type": "Fighting",
-          "category": "Physical",
-          "power": 120,
-          "accuracy": 90,
-          "accuracyCanonical": 100,
-          "learn": "Lv. 25",
-          "text": "Ataca intensamente em curta distância. Após o golpe, a Defense e a Sp.Def do usuário caem em 1 estágio."
-        },
-        {
-          "name": "Body Press",
-          "type": "Fighting",
-          "category": "Physical",
-          "power": 80,
-          "accuracy": 90,
-          "accuracyCanonical": 100,
-          "learn": "Lv. 25",
-          "text": "Dano is calculated using o usuário's Defesa stat as its Ataque, including stat stage changes."
-        },
-        {
-          "name": "Mud Shot",
-          "type": "Ground",
-          "category": "Special",
-          "power": 55,
-          "accuracy": 90,
-          "accuracyCanonical": 95,
-          "learn": "Lv. 25",
-          "text": "Tem 100% chance de lower o alvo’s Velocidade em 1 estágio."
-        },
-        {
-          "name": "Liquidation",
-          "type": "Water",
-          "category": "Physical",
-          "power": 85,
-          "accuracy": 90,
-          "accuracyCanonical": 100,
-          "learn": "Lv. 25",
-          "text": "Golpe com toda a força da água. 20% de chance de reduzir a Defense do alvo em 1 estágio."
+          "name": "Stealth Rock",
+          "type": "Rock",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 28",
+          "text": "Espalha pedras pontiagudas no campo inimigo. Quem entra em campo sofre dano conforme a efetividade do tipo Rock."
         },
         {
           "name": "Rock Slide",
@@ -83,38 +153,78 @@
           "power": 75,
           "accuracy": 90,
           "accuracyCanonical": 90,
-          "learn": "Lv. 25",
+          "learn": "Lv. 31",
           "text": "Derruba rochas sobre os inimigos ao redor. 30% de chance de fazer cada alvo hesitar (Flinch)."
         },
         {
-          "name": "Bulk Up",
+          "name": "Iron Defense",
+          "type": "Steel",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "Lv. 34",
+          "text": "O usuário entra em Postura Defensiva até ser atingido. O próximo golpe Físico que acertar tem o dano final reduzido pela metade. Após reduzir 1 golpe, o efeito termina. Se o próximo golpe Físico errar, a postura não é gasta.\n\nPrecisão especial: —.\nTags: Rework • Setup • Damage Cut 50% • Físico."
+        },
+        {
+          "name": "Liquidation",
+          "type": "Water",
+          "category": "Physical",
+          "power": 85,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 37",
+          "text": "Golpe com toda a força da água. 20% de chance de reduzir a Defense do alvo em 1 estágio."
+        },
+        {
+          "name": "Earthquake",
+          "type": "Ground",
+          "category": "Physical",
+          "power": 100,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 40",
+          "text": "Faz o chão tremer, atingindo todos ao redor do usuário, incluindo aliados."
+        },
+        {
+          "name": "Hammer Arm",
           "type": "Fighting",
-          "category": "Status",
-          "power": 0,
-          "accuracy": null,
-          "accuracyCanonical": null,
-          "learn": "Lv. 25",
-          "text": "Contrai os músculos: aumenta Attack e Defense do usuário em 1 estágio."
+          "category": "Physical",
+          "power": 100,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "Lv. 43",
+          "text": "Reduz user’s Velocidade em 1 estágio."
         },
         {
-          "name": "Sandstorm",
-          "type": "Rock",
+          "name": "Slack Off",
+          "type": "Normal",
           "category": "Status",
           "power": 0,
           "accuracy": null,
           "accuracyCanonical": null,
-          "learn": "Lv. 25",
-          "text": "Changes the weather to a sandstorm for five turnos."
+          "learn": "Lv. 46",
+          "text": "Heals o usuário by half its max HP."
         },
         {
-          "name": "Stealth Rock",
-          "type": "Rock",
-          "category": "Status",
-          "power": 0,
-          "accuracy": null,
-          "accuracyCanonical": null,
-          "learn": "Lv. 25",
-          "text": "Espalha pedras pontiagudas no campo inimigo. Quem entra em campo sofre dano conforme a efetividade do tipo Rock."
+          "name": "Close Combat",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 120,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 49",
+          "text": "Ataca intensamente em curta distância. Após o golpe, a Defense e a Sp.Def do usuário caem em 1 estágio."
+        },
+        {
+          "name": "Headlong Rush",
+          "type": "Ground",
+          "category": "Physical",
+          "power": 120,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "Lv. 53",
+          "text": "O usuário smashes into o alvo in a full-body tackle. This also reduz o usuário’s defensive stats."
         },
         {
           "name": "Protect",
@@ -123,8 +233,168 @@
           "power": 0,
           "accuracy": null,
           "accuracyCanonical": null,
-          "learn": "Lv. 25",
+          "learn": "TM / treinamento",
           "text": "Protege o usuário dos golpes recebidos neste turno. Usos consecutivos reduzem a chance de sucesso."
+        },
+        {
+          "name": "Sandstorm",
+          "type": "Rock",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Changes the weather to a sandstorm for five turnos."
+        },
+        {
+          "name": "Sunny Day",
+          "type": "Fire",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Invoca sol forte por 5 turnos. Golpes Fire recebem +1d6 e golpes Water sofrem −1d6."
+        },
+        {
+          "name": "Rest",
+          "type": "Psychic",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "O usuário dorme por 2 turnos e recupera completamente seu HP."
+        },
+        {
+          "name": "Sleep Talk",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Só funciona dormindo: usa aleatoriamente outro golpe conhecido do usuário."
+        },
+        {
+          "name": "Curse",
+          "type": "Ghost",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Usuário Ghost: perde 50% do HP máximo e amaldiçoa o alvo, que perde 1/4 do HP máximo no fim de cada turno. Outros tipos: +1 estágio de Attack e Defense e −1 estágio de Speed."
+        },
+        {
+          "name": "Substitute",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Consome 1/4 do HP máximo do usuário para criar um substituto que recebe ataques e bloqueia efeitos de status conforme as regras do Move, até ser destruído."
+        },
+        {
+          "name": "Toxic",
+          "type": "Poison",
+          "category": "Status",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 90,
+          "learn": "TM / treinamento",
+          "text": "Badly poisons o alvo, inflicting more dano every turno."
+        },
+        {
+          "name": "Roar",
+          "type": "Normal",
+          "category": "Status",
+          "power": 0,
+          "accuracy": null,
+          "accuracyCanonical": null,
+          "learn": "TM / treinamento",
+          "text": "Immediately ends wild battles. Forces trainers to switch Pokémon."
+        },
+        {
+          "name": "Rapid Spin",
+          "type": "Normal",
+          "category": "Physical",
+          "power": 50,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Frees o usuário from binding moves, removes Leech Seed, and blows away Spikes."
+        },
+        {
+          "name": "Knock Off",
+          "type": "Dark",
+          "category": "Physical",
+          "power": 65,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Derruba o item do alvo, que fica sem ele até o fim da batalha. Se o alvo segurar um item removível, o Power aumenta em 50%."
+        },
+        {
+          "name": "Ice Punch",
+          "type": "Ice",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Soco congelante. 10% de chance de deixar o alvo Congelado."
+        },
+        {
+          "name": "Thunder Punch",
+          "type": "Electric",
+          "category": "Physical",
+          "power": 75,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Tem 10% de chance de causar Paralysis no alvo."
+        },
+        {
+          "name": "Stone Edge",
+          "type": "Rock",
+          "category": "Physical",
+          "power": 100,
+          "accuracy": 80,
+          "accuracyCanonical": 80,
+          "learn": "TM / treinamento",
+          "text": "Has an increased chance for a acerto crítico."
+        },
+        {
+          "name": "Iron Head",
+          "type": "Steel",
+          "category": "Physical",
+          "power": 80,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Tem 30% de chance de causar Flinch no alvo."
+        },
+        {
+          "name": "Heavy Slam",
+          "type": "Steel",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Esmaga o alvo com o próprio peso. Quanto mais pesado o usuário for em relação ao alvo, maior o Power (de 40 a 120)."
+        },
+        {
+          "name": "Seismic Toss",
+          "type": "Fighting",
+          "category": "Physical",
+          "power": 0,
+          "accuracy": 90,
+          "accuracyCanonical": 100,
+          "learn": "TM / treinamento",
+          "text": "Arremessa o alvo no chão. Causa dano fixo igual ao nível do usuário."
         }
       ],
       "evolution": {
@@ -138,15 +408,15 @@
       "coverArtId": null,
       "coverUrl": "pokemons/artes/brute-chaos.png",
       "status": "published",
-      "revision": 1,
-      "publishedRevision": 1,
+      "revision": 2,
+      "publishedRevision": 2,
       "createdAt": null,
       "updatedAt": null,
       "publishedAt": null,
       "repository": {
         "key": "brute-chaos",
         "file": "pokemons/brute-chaos.pokemon.json",
-        "revision": 1,
+        "revision": 2,
         "sourceOnly": true
       }
     },
@@ -4809,12 +5079,12 @@
       "artId": null,
       "artUrl": "pokemons/artes/brute-chaos-despertado.png",
       "status": "published",
-      "revision": 1,
+      "revision": 2,
       "updatedAt": null,
       "repository": {
         "key": "brute-chaos/despertado",
         "file": "pokemons/brute-chaos.pokemon.json",
-        "revision": 1,
+        "revision": 2,
         "sourceOnly": true
       },
       "trigger": {
@@ -4865,5 +5135,5 @@
       }
     }
   ],
-  "hash": "bcfdf51540bb21308ec2a4d3e26ae22ffbc4640ca9f3e6fb88ae88637a95f7ab"
+  "hash": "1d5b26a2172b6086293dd9954440bfdefea62d6630b17c89155793ffd708f465"
 }
