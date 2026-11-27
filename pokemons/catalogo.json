@@ -441,7 +441,7 @@
       "abilities": [
         {
           "name": "Cryotoxin",
-          "text": "Quando acerta um golpe Ice ou Poison, o próximo golpe do outro tipo contra o mesmo alvo recebe +2d6 de dano. O bônus só pode ser ativado 1 vez por turno. A sequência é perdida se o usuário sair de campo."
+          "text": "Quando acerta um golpe Ice ou Poison, o próximo golpe do outro tipo contra o mesmo alvo recebe +2 dados da QD de dano. O bônus só pode ser ativado 1 vez por turno. A sequência é perdida se o usuário sair de campo."
         }
       ],
       "moves": [
@@ -736,7 +736,7 @@
       "abilities": [
         {
           "name": "Water Veil",
-          "text": "O usuário é imune a Burn e remove o status imediatamente se adquirir a Ability. Enquanto estiver com o HP cheio, também recebe -1d6 de dano Fire."
+          "text": "O usuário é imune a Burn e remove o status imediatamente se adquirir a Ability. Enquanto estiver com o HP cheio, também recebe −1 dado da QD de dano Fire."
         },
         {
           "name": "No Guard",
@@ -3466,7 +3466,7 @@
       "abilities": [
         {
           "name": "Torrent",
-          "text": "Quando estiver com 1/3 ou menos do HP máximo, os Moves Water do usuário causam +2d6 de dano e empurram o alvo 1 espaço ao acertarem, se o tamanho permitir. Os efeitos terminam se o HP subir acima desse limite."
+          "text": "Quando estiver com 1/3 ou menos do HP máximo, os Moves Water do usuário causam +2 dados da QD de dano e empurram o alvo 1 espaço ao acertarem, se o tamanho permitir. Os efeitos terminam se o HP subir acima desse limite."
         }
       ],
       "moves": [
@@ -3863,7 +3863,7 @@
           "accuracy": 90,
           "accuracyCanonical": 90,
           "learn": "Lv. 34",
-          "text": "O usuário produz um assobio fúnebre que atravessa o corpo do alvo. Se o alvo estiver com a Precisão reduzida, o golpe recebe +1d6 de dano. Caso o alvo esteja sob Confusion, Infatuation ou outra condição mental, o bônus aumenta para +2d6. Apenas o maior bônus é aplicado.\n\nTags: Sonoro.\nPokémon listados: monomoi, soulito, thesilbon.\nRegra de aprendizado: É considerado um move sonoro. Apenas o maior bônus de dano é aplicado."
+          "text": "O usuário produz um assobio fúnebre que atravessa o corpo do alvo. Se o alvo estiver com a Precisão reduzida, o golpe recebe +1 dado da QD de dano. Caso o alvo esteja sob Confusion, Infatuation ou outra condição mental, o bônus aumenta para +2 dados da QD. Apenas o maior bônus é aplicado.\n\nTags: Sonoro.\nPokémon listados: monomoi, soulito, thesilbon.\nRegra de aprendizado: É considerado um move sonoro. Apenas o maior bônus de dano é aplicado."
         },
         {
           "name": "Toxic Spikes",
@@ -4136,7 +4136,7 @@
       "abilities": [
         {
           "name": "Funeral Whistle",
-          "text": "O assobio de Thesilbon atravessa corpos e perturba diretamente a alma de quem o escuta. Moves sonoros são considerados Ghost para receber STAB. O STAB de moves sonoros passa a conceder +2d6, em vez de +1d6. Quando um move sonoro acerta, o alvo perde 1 estágio de Accuracy por 3 rodadas. Caso o alvo erre um Move enquanto estiver sob esse efeito, Thesilbon recebe +1 estágio de Speed, que permanece até ser removido. O aumento de Speed só pode acontecer 1 vez por turno."
+          "text": "O assobio de Thesilbon atravessa corpos e perturba diretamente a alma de quem o escuta. Moves sonoros são considerados Ghost para receber STAB. O STAB de moves sonoros passa a conceder +2 dados da QD, em vez de +1 dado da QD. Quando um move sonoro acerta, o alvo perde 1 estágio de Accuracy por 3 rodadas. Caso o alvo erre um Move enquanto estiver sob esse efeito, Thesilbon recebe +1 estágio de Speed, que permanece até ser removido. O aumento de Speed só pode acontecer 1 vez por turno."
         }
       ],
       "moves": [
@@ -4288,7 +4288,7 @@
           "accuracy": 90,
           "accuracyCanonical": 90,
           "learn": "Lv. 34 / herdado",
-          "text": "O usuário produz um assobio fúnebre que atravessa o corpo do alvo. Se o alvo estiver com a Precisão reduzida, o golpe recebe +1d6 de dano. Caso o alvo esteja sob Confusion, Infatuation ou outra condição mental, o bônus aumenta para +2d6. Apenas o maior bônus é aplicado.\n\nTags: Sonoro.\nPokémon listados: monomoi, soulito, thesilbon.\nRegra de aprendizado: É considerado um move sonoro. Apenas o maior bônus de dano é aplicado."
+          "text": "O usuário produz um assobio fúnebre que atravessa o corpo do alvo. Se o alvo estiver com a Precisão reduzida, o golpe recebe +1 dado da QD de dano. Caso o alvo esteja sob Confusion, Infatuation ou outra condição mental, o bônus aumenta para +2 dados da QD. Apenas o maior bônus é aplicado.\n\nTags: Sonoro.\nPokémon listados: monomoi, soulito, thesilbon.\nRegra de aprendizado: É considerado um move sonoro. Apenas o maior bônus de dano é aplicado."
         },
         {
           "name": "Toxic Spikes",
@@ -4639,7 +4639,7 @@
       "abilities": [
         {
           "name": "Cryotoxin",
-          "text": "Quando acerta um golpe Ice ou Poison, o próximo golpe do outro tipo contra o mesmo alvo recebe +2d6 de dano. O bônus só pode ser ativado 1 vez por turno. A sequência é perdida se o usuário sair de campo."
+          "text": "Quando acerta um golpe Ice ou Poison, o próximo golpe do outro tipo contra o mesmo alvo recebe +2 dados da QD de dano. O bônus só pode ser ativado 1 vez por turno. A sequência é perdida se o usuário sair de campo."
         }
       ],
       "moves": [
@@ -5118,7 +5118,7 @@
       "abilities": [
         {
           "name": "Cryotoxic Arsenal",
-          "text": "Funciona como Cryotoxin, mas o golpe recebe +3d6 de dano e reduz a Speed do alvo em 1 estágio por 3 rodadas. Só pode ser ativada 1 vez por turno."
+          "text": "Funciona como Cryotoxin, mas o golpe recebe +3 dados da QD de dano e reduz a Speed do alvo em 1 estágio por 3 rodadas. Só pode ser ativada 1 vez por turno."
         }
       ],
       "specialRules": "Mega Evolução de Toxicle. Recebe +100 BST em relação a Toxicle.",
@@ -5135,5 +5135,5 @@
       }
     }
   ],
-  "hash": "1d5b26a2172b6086293dd9954440bfdefea62d6630b17c89155793ffd708f465"
+  "hash": "2074bfb8049c8557c39640a25aef329482764dbc76da63b893e5e06377ffe4c4"
 }
